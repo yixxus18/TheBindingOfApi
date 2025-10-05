@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 5edab0d36d01aa648afbffe15cc4f572
+guid: 6e8ab5086dfd7554388889f986a9d76a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7585301827724930928
-    second: "Sin_t\xEDtulo-removebg-preview_0"
+      213: -6662169929920160184
+    second: Titulo_TBOA_0
   - first:
-      213: -5926272195750744946
-    second: "Sin_t\xEDtulo-removebg-preview_1"
+      213: -4743026224653392012
+    second: Titulo_TBOA_1
   - first:
-      213: -1760077988573729140
-    second: "Sin_t\xEDtulo-removebg-preview_2"
+      213: -3082310670214225546
+    second: Titulo_TBOA_2
   - first:
-      213: 8970245419319626125
-    second: "Sin_t\xEDtulo-removebg-preview_3"
+      213: 38134164370284788
+    second: Titulo_TBOA_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,7 +122,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Sin_t\xEDtulo-removebg-preview_0"
+      name: Titulo_TBOA_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07f6aabd2d7644960800000000000000
-      internalID: 7585301827724930928
+      spriteID: 84ed1d51fb73b83a0800000000000000
+      internalID: -6662169929920160184
       vertices: []
       indices: 
       edges: []
@@ -147,7 +147,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 075da74ae6a00e440b341bcfca69612f
+    spriteID: 100b281395c386b4fb1949fec40e5b9c
     internalID: 0
     vertices: []
     indices: 
@@ -159,7 +159,7 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":256.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      "Sin_t\xEDtulo-removebg-preview_0": 7585301827724930928
+      Titulo_TBOA_0: -6662169929920160184
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
