@@ -576,7 +576,7 @@ Camera:
   far clip plane: 10
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -746,8 +746,8 @@ MonoBehaviour:
   m_Texture: {fileID: 8400000, guid: f4d7dea3ab254fb4aaabe2ad66eafc85, type: 2}
   m_UVRect:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: -0.24
+    y: -0.25
     width: 1
     height: 1
 --- !u!222 &2027758255
