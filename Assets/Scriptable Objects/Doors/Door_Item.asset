@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Door_Item
   m_EditorClassIdentifier: Assembly-CSharp::DoorScriptable
   roomType: 1
-  horizontalDoor: {fileID: -2621423809280494995, guid: 4f23be7c55db6aa468da80c40eb09d4c, type: 3}
+  horizontalDoor: {fileID: 3999152383893300043, guid: d3b9d83c14c1d294589bd37f73baec05, type: 3}

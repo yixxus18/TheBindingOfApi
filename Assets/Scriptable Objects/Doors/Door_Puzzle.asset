@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Door_Puzzle
   m_EditorClassIdentifier: Assembly-CSharp::DoorScriptable
   roomType: 5
-  horizontalDoor: {fileID: 6217978544884666893, guid: 4c14d3df85b3e8448a54cd65f1b8f7aa, type: 3}
+  horizontalDoor: {fileID: 3999152383893300043, guid: d3b9d83c14c1d294589bd37f73baec05, type: 3}

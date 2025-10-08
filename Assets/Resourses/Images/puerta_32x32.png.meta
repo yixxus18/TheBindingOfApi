@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4454ecd5f80649d42ab91be8d852080a
+guid: aa904e94e2038c54f87694f1dd35ddec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6330579039740304479
-    second: rotate2-removebg-preview_0
+      213: 3147784869939745540
+    second: puerta_32x32_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rotate2-removebg-preview_0
+      name: puerta_32x32_0
       rect:
         serializedVersion: 2
-        x: 51
-        y: 161
-        width: 287
-        height: 334
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f5c1146881cbad750800000000000000
-      internalID: 6330579039740304479
+      spriteID: 4039b1a59ad2fab20800000000000000
+      internalID: 3147784869939745540
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rotate2-removebg-preview_0: 6330579039740304479
+      puerta_32x32_0: 3147784869939745540
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

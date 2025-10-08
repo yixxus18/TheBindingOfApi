@@ -32,28 +32,35 @@ public class RoomManager : MonoBehaviour
     {
         for (int i = createdRooms.Count - 1; i >= 0; i--)
         {
-            Destroy(createdRooms[i].gameObject);
+            if (createdRooms[i] != null)
+            {
+                Destroy(createdRooms[i].gameObject);
+            }
         }
-
         createdRooms.Clear();
-
+        int startIndex = 45;
+        int startGridX = startIndex % 10;
+        int startGridY = startIndex / 10;
         foreach (var currentCell in spawnedCells)
         {
-            var foundRoom = rooms.FirstOrDefault(x => x.roomShape == currentCell.roomShape && x.roomType == currentCell.roomType && DoesTileMatchCell(x.occupiedTiles, currentCell));
-
+            var foundRoom = rooms.FirstOrDefault(x => x.roomShape == currentCell.roomShape && x.roomType == currentCell.roomType);
             if (foundRoom == null)
             {
-                Debug.LogError($"No se encontró RoomScriptable para RoomType: {currentCell.roomType}, RoomShape: {currentCell.roomShape}");
-                continue;
+                foundRoom = rooms.FirstOrDefault(x => x.roomShape == currentCell.roomShape && x.roomType == RoomType.Regular);
+                if (foundRoom == null)
+                {
+                    Debug.LogError($"No se encontró RoomScriptable para RoomShape: {currentCell.roomShape}");
+                    continue;
+                }
             }
-            var currentPosition = currentCell.transform.position;
 
-            var convertedPosition = new Vector2(currentPosition.x * offsetX, currentPosition.y * offsetY);
-
-            var spawnedRoom = Instantiate(roomPrefab, convertedPosition, Quaternion.identity);
-
+            int gridX = currentCell.index % 10;
+            int gridY = currentCell.index / 10;
+            int deltaX = gridX - startGridX;
+            int deltaY = gridY - startGridY;
+            Vector2 roomPosition = new Vector2(deltaX * offsetX, -deltaY * offsetY);
+            var spawnedRoom = Instantiate(roomPrefab, roomPosition, Quaternion.identity);
             spawnedRoom.SetupRoom(currentCell, foundRoom);
-
             createdRooms.Add(spawnedRoom);
         }
     }

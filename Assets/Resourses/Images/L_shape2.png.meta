@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 796f42ebdc99d22418b1597c736d82c9
+guid: 5d9afba16010d904ebddc65351e1cfb6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7537847922027023016
-    second: undefined_ahora_rotame_la_dire-removebg-preview_0
+      213: -2232196391818749858
+    second: L_shape2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: undefined_ahora_rotame_la_dire-removebg-preview_0
+      name: L_shape2_0
       rect:
         serializedVersion: 2
-        x: 150
-        y: 120
-        width: 359
-        height: 128
+        x: 0
+        y: 0
+        width: 544
+        height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 855b9ac804f246790800000000000000
-      internalID: -7537847922027023016
+      spriteID: e581cb45535a501e0800000000000000
+      internalID: -2232196391818749858
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      undefined_ahora_rotame_la_dire-removebg-preview_0: -7537847922027023016
+      L_shape2_0: -2232196391818749858
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

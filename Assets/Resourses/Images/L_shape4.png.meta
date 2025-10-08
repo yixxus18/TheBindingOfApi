@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 42228727d7bfb3d4bafa2ec5a0d61e3d
+guid: 54d0afc33ade41b4790043a6190ae06c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 467325936623147562
-    second: rotate1-removebg-preview_0
+      213: 1962718354049546586
+    second: L_shape4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rotate1-removebg-preview_0
+      name: L_shape4_0
       rect:
         serializedVersion: 2
-        x: 167
-        y: 51
-        width: 334
-        height: 287
+        x: 0
+        y: 0
+        width: 720
+        height: 544
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2adfbe96764c7600800000000000000
-      internalID: 467325936623147562
+      spriteID: a59334fa1f9fc3b10800000000000000
+      internalID: 1962718354049546586
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rotate1-removebg-preview_0: 467325936623147562
+      L_shape4_0: 1962718354049546586
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 358b26928efe10a4da330b5f61028708
+guid: d3b9d83c14c1d294589bd37f73baec05
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5780987834355898018
-    second: gemini-2.5-flash-image-preview (nano-banana)_Pixel_art_boss_door__0
+      213: 3999152383893300043
+    second: Gemini_Generated_Image_wbdnv2wbdnv2wbdn_1_-removebg-preview_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gemini-2.5-flash-image-preview (nano-banana)_Pixel_art_boss_door__0
+      name: Gemini_Generated_Image_wbdnv2wbdnv2wbdn_1_-removebg-preview_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 1024
+        x: 2
+        y: 4
+        width: 60
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a653ad6ec13a3050800000000000000
-      internalID: 5780987834355898018
+      spriteID: b43ed9c97e7df7730800000000000000
+      internalID: 3999152383893300043
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gemini-2.5-flash-image-preview (nano-banana)_Pixel_art_boss_door__0: 5780987834355898018
+      Gemini_Generated_Image_wbdnv2wbdnv2wbdn_1_-removebg-preview_0: 3999152383893300043
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
