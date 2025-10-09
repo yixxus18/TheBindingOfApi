@@ -60,31 +60,9 @@ public class RoomManager : MonoBehaviour
             int deltaY = gridY - startGridY;
             Vector2 roomPosition = new Vector2(deltaX * offsetX, -deltaY * offsetY);
             var spawnedRoom = Instantiate(roomPrefab, roomPosition, Quaternion.identity);
+            spawnedRoom.transform.localScale = new Vector3(2f, 2f, 1f);
             spawnedRoom.SetupRoom(currentCell, foundRoom);
             createdRooms.Add(spawnedRoom);
         }
-    }
-
-    private bool DoesTileMatchCell(int[] occupiedTiles, Cell cell)
-    {
-        if (occupiedTiles.Length != cell.cellList.Count)
-            return false;
-
-        int minIndex = cell.cellList.Min();
-        List<int> normalizedCell = new List<int>();
-
-        foreach (int index in cell.cellList)
-        {
-            int dx = (index % 10) - (minIndex % 10);
-            int dy = (index / 10) - (minIndex / 10);
-
-            normalizedCell.Add(dy * 10 + dx);
-        }
-
-        normalizedCell.Sort();
-        int[] sortedOccupied = (int[])occupiedTiles.Clone();
-        Array.Sort(sortedOccupied);
-
-        return normalizedCell.SequenceEqual(sortedOccupied);
     }
 }

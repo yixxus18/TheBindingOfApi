@@ -53,11 +53,10 @@ public class Room : MonoBehaviour
     public void SetupOneByOne(Cell cell, int[] floorplan, List<Cell> cellList)
     {
         var currentCell = cell.cellList[0];
-
-        TryPlaceDoor(currentCell, new Vector2(0, 1.36f), EdgeDirection.Up, floorplan, cellList, cell);
-        TryPlaceDoor(currentCell, new Vector2(0, -1.36f), EdgeDirection.Down, floorplan, cellList, cell);
-        TryPlaceDoor(currentCell, new Vector2(-2.4f, 0), EdgeDirection.Left, floorplan, cellList, cell);
-        TryPlaceDoor(currentCell, new Vector2(2.4f, 0), EdgeDirection.Right, floorplan, cellList, cell);
+        TryPlaceDoor(currentCell, new Vector2(0, 1.375f), EdgeDirection.Up, floorplan, cellList, cell);
+        TryPlaceDoor(currentCell, new Vector2(0, -1.375f), EdgeDirection.Down, floorplan, cellList, cell);
+        TryPlaceDoor(currentCell, new Vector2(-2.25f, 0), EdgeDirection.Left, floorplan, cellList, cell);
+        TryPlaceDoor(currentCell, new Vector2(2.25f, 0), EdgeDirection.Right, floorplan, cellList, cell);
     }
 
     public void SetupOneByTwo(Cell cell, int[] floorplan, List<Cell> cellList)
@@ -169,16 +168,30 @@ public class Room : MonoBehaviour
         int neighbourIndex = fromIndex + GetOffset(direction);
 
         if (neighbourIndex < 0 || neighbourIndex >= floorplan.Length) return;
-
         if (floorplan[neighbourIndex] != 1) return;
 
         var foundCell = cellList.FirstOrDefault(x => x.cellList.Contains(neighbourIndex));
-
         if (foundCell == null || foundCell.roomType == RoomType.Secret) return;
 
         var door = Instantiate(RoomManager.instance.doorPrefab, transform);
+        float doorInset = .3f;
 
-        door.transform.position = (Vector2)transform.position + positionOffset;
+        switch (direction)
+        {
+            case EdgeDirection.Up:
+                positionOffset.y -= doorInset;
+                break;
+            case EdgeDirection.Down:
+                positionOffset.y += doorInset;
+                break;
+            case EdgeDirection.Left:
+                positionOffset.x += doorInset;
+                break;
+            case EdgeDirection.Right:
+                positionOffset.x -= doorInset;
+                break;
+        }
+        door.transform.localPosition = positionOffset;
 
         SetupDoor(door, direction, currentCell.roomType == RoomType.Regular ? foundCell.roomType : currentCell.roomType);
     }
@@ -194,6 +207,8 @@ public class Room : MonoBehaviour
             return;
         }
         door.SetDoorSprite(doorTypes.horizontalDoor, direction);
+        var trigger = door.gameObject.AddComponent<DoorTrigger>();
+        trigger.doorDirection = direction;
     }
 
     private DoorScriptable GetDoorOptions(RoomType roomType)
