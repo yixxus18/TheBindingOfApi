@@ -10,16 +10,18 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
+
     }
     public void ShowOptionsMenu()
     {
         PlayButtonSound();
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
+
+        if (SettingsManager.Instance != null)
+        {
+            SettingsManager.Instance.LoadSettings();
+        }
     }
 
     public void ShowMainMenu()
@@ -32,6 +34,7 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         PlayButtonSound();
+        PlayerPrefs.Save();
         Application.Quit();
         Debug.Log("Game is exiting...");
     }
