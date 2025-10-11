@@ -111,7 +111,7 @@ public class MapGenerator : MonoBehaviour
     {
         int x = index % 10;
         int y = index / 10;
-        Vector2 position = new Vector2(x * cellSize, -y * cellSize);
+        Vector2 position = new Vector2((x - 4.5f) * cellSize, -(y - 4.5f) * cellSize);
 
         Cell newCell = Instantiate(cellPrefab, position, Quaternion.identity);
         newCell.index = index;
