@@ -56,6 +56,7 @@ public class PauseMenu : MonoBehaviour
 
     public void TogglePause()
     {
+        // Reproducir sonido
         if (SettingsManager.Instance != null)
         {
             SettingsManager.Instance.PlayButtonClickSound();
@@ -79,12 +80,12 @@ public class PauseMenu : MonoBehaviour
         gameIsPaused = true;
         if (pauseButton != null)
             pauseButton.gameObject.SetActive(false);
-
         LoadCurrentSettings();
     }
 
     public void Resume()
     {
+        // Reproducir sonido
         if (SettingsManager.Instance != null)
         {
             SettingsManager.Instance.PlayButtonClickSound();
@@ -92,14 +93,16 @@ public class PauseMenu : MonoBehaviour
 
         pauseMenuPanel.SetActive(false);
         darkOverlay.SetActive(false);
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
         gameIsPaused = false;
+
         if (pauseButton != null)
             pauseButton.gameObject.SetActive(true);
     }
 
     public void LoadMainMenu()
     {
+        // Reproducir sonido
         if (SettingsManager.Instance != null)
         {
             SettingsManager.Instance.PlayButtonClickSound();
@@ -112,6 +115,7 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        // Reproducir sonido
         if (SettingsManager.Instance != null)
         {
             SettingsManager.Instance.PlayButtonClickSound();
@@ -129,6 +133,27 @@ public class PauseMenu : MonoBehaviour
             SettingsManager.Instance.masterVolumeSlider = masterVolumeSlider;
             SettingsManager.Instance.musicVolumeSlider = musicVolumeSlider;
             SettingsManager.Instance.fullscreenToggle = fullscreenToggle;
+
+            if (masterVolumeSlider != null)
+            {
+                masterVolumeSlider.onValueChanged.RemoveAllListeners();
+                masterVolumeSlider.onValueChanged.AddListener(SettingsManager.Instance.SetMasterVolume);
+                Debug.Log("Master Volume Slider conectado en PauseMenu");
+            }
+
+            if (musicVolumeSlider != null)
+            {
+                musicVolumeSlider.onValueChanged.RemoveAllListeners();
+                musicVolumeSlider.onValueChanged.AddListener(SettingsManager.Instance.SetMusicVolume);
+                Debug.Log("Music Volume Slider conectado en PauseMenu");
+            }
+
+            if (fullscreenToggle != null)
+            {
+                fullscreenToggle.onValueChanged.RemoveAllListeners();
+                fullscreenToggle.onValueChanged.AddListener(SettingsManager.Instance.SetFullscreen);
+                Debug.Log("Fullscreen Toggle conectado en PauseMenu");
+            }
 
             LoadCurrentSettings();
         }
