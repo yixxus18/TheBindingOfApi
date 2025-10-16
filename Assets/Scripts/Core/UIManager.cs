@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("Main Container")]
+    [Header("Main Menu")]
     public GameObject miniMenuContainer;
+    public GameObject menuButtonsPanel; 
+    public Button toggleMenuButton; 
     private bool isMenuOpen = false;
 
     [Header("Tabs")]
@@ -11,6 +14,17 @@ public class UIManager : MonoBehaviour
     public GameObject terminalTab;
     public GameObject codexTab;
     public GameObject objectivesTab;
+
+    void Start()
+    {
+        if (toggleMenuButton != null)
+        {
+            toggleMenuButton.onClick.AddListener(ToggleMiniMenu);
+        }
+
+        miniMenuContainer.SetActive(false);
+        menuButtonsPanel.SetActive(false);
+    }
 
     void Update()
     {
@@ -24,12 +38,19 @@ public class UIManager : MonoBehaviour
     {
         isMenuOpen = !isMenuOpen;
         miniMenuContainer.SetActive(isMenuOpen);
+        menuButtonsPanel.SetActive(isMenuOpen);
+
         Time.timeScale = isMenuOpen ? 0 : 1;
         InventorySlot.isTerminalActive = isMenuOpen;
 
-        if (isMenuOpen) OpenTab(inventoryTab);
+        if (isMenuOpen)
+        {
+            OpenTab(inventoryTab);
+        }
         else if (ApiTerminalManager.instance != null)
+        {
             ApiTerminalManager.instance.ClearTerminal();
+        }
     }
 
     public void OpenInventoryTab() => OpenTab(inventoryTab);
