@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public StatsManager statsManager;
     public DungeonObjectiveManager objectiveManager;
     public InventoryManager inventoryManager;
+    public ExpManager expManager;
 
     [Header("Databases")]
     public LoreDatabaseSO loreDatabase;
