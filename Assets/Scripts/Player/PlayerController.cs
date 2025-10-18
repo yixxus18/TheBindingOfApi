@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour
         Collider2D[] nearbyObjects = Physics2D.OverlapCircleAll(transform.position, 1.5f);
         foreach (var obj in nearbyObjects)
         {
-            // Lógica de interacción aquí
+
         }
     }
 

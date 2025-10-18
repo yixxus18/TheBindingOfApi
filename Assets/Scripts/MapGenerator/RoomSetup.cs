@@ -3,17 +3,23 @@ using System.Collections.Generic;
 
 public class RoomSetup : MonoBehaviour
 {
-    public RoomPuzzleSO puzzleDeEstaSala;
-    public List<DungeonObjective> objetivosDeEstaSala;
-    private bool isSetup = false;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    [Header("Objetivos De Esta Sala")]
+    public List<DungeonObjective> objectives;
+
+    [Header("Puzzle De Esta Sala")]
+    public RoomPuzzleSO puzzleDeEstaSala;
+
+    private void Start()
     {
-        if (!isSetup && collision.CompareTag("Player"))
+        if (DungeonObjectiveManager.instance != null && objectives.Count > 0)
+        {
+            DungeonObjectiveManager.instance.SetDungeonObjectives(objectives);
+        }
+
+        if (ApiTerminalManager.instance != null && puzzleDeEstaSala != null)
         {
             ApiTerminalManager.instance.currentRoomPuzzle = puzzleDeEstaSala;
-            DungeonObjectiveManager.instance.SetDungeonObjectives(objetivosDeEstaSala);
-            isSetup = true; 
         }
     }
 }

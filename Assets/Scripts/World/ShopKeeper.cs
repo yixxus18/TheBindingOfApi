@@ -1,16 +1,37 @@
+// ShopKeeper.cs
 using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class ShopItem
+{
+    public ItemSO item;
+    public int price;
+}
 
 public class ShopKeeper : MonoBehaviour
 {
-    public GameObject shopPanel; 
+    public GameObject shopPanel;
+    public List<ShopItem> itemsForSale;
     private bool playerInRange;
 
-    private void Update()
+    void Update()
     {
-        if (playerInRange && Input.GetButtonDown("Interact"))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            shopPanel.SetActive(!shopPanel.activeSelf);
-            Time.timeScale = shopPanel.activeSelf ? 0 : 1;
+            ToggleShop();
+        }
+    }
+
+    public void ToggleShop()
+    {
+        bool isActive = !shopPanel.activeSelf;
+        shopPanel.SetActive(isActive);
+        Time.timeScale = isActive ? 0 : 1;
+
+        if (isActive)
+        {
+            ShopManager.instance.PopulateShop(itemsForSale);
         }
     }
 
