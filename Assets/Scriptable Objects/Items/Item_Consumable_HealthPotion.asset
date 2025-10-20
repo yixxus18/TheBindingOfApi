@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: Pocion de salud
   itemDescription: Consumible , te regenera vida
-  icon: {fileID: 0}
+  icon: {fileID: -4477349825573479581, guid: d0579fa414538b74db6b82770f6da586, type: 3}
   stackSize: 10
   itemType: 0
   apiValue: 

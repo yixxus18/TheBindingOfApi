@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: Pocion GET
   itemDescription: "Fragmento de peticion\t"
-  icon: {fileID: -7670126635493115527, guid: 7392a30e8a1b24b428be056c9f471943, type: 3}
+  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
   stackSize: 5
   itemType: 1
   apiValue: GET
