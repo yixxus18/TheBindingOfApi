@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         PlayButtonSound();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("LevelSelector");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("IntroEscene");
     }
 
     private void PlayButtonSound()
