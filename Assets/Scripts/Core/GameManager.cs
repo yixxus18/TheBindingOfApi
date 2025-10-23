@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -11,15 +12,21 @@ public class GameManager : MonoBehaviour
     public DungeonObjectiveManager objectiveManager;
     public InventoryManager inventoryManager;
     public ExpManager expManager;
+    public ProgressionManager progressionManager;
 
     [Header("Databases")]
     public LoreDatabaseSO loreDatabase;
 
     private void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); return; }
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
         SaveSystem.LoadGame(codexManager, statsManager, loreDatabase);
     }
 

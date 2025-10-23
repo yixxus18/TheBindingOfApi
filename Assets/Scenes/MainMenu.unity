@@ -1835,7 +1835,6 @@ GameObject:
   - component: {fileID: 716552868}
   - component: {fileID: 716552867}
   - component: {fileID: 716552869}
-  - component: {fileID: 716552870}
   m_Layer: 0
   m_Name: SettingsManager
   m_TagString: Untagged
@@ -1973,27 +1972,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &716552870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 716552866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b27db0c9c0cbf5419e4d1cb1ccd5693, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StatsManager
-  maxHealth: 200
-  currentHealth: 0
-  power: 10
-  speed: 5
-  engineering: 1
-  weaponRange: 1.5
-  knockbackForce: 5
-  knockbackTime: 0.2
-  stunTime: 0.3
 --- !u!1 &753699408
 GameObject:
   m_ObjectHideFlags: 0

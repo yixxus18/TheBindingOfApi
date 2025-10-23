@@ -29,9 +29,6 @@ public class IntroManager : MonoBehaviour
 
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         if (videoPlayer != null)
         {
             videoPlayer.loopPointReached += OnVideoEnd;

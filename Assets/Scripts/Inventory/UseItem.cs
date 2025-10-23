@@ -5,8 +5,6 @@ public static class ItemEffects
     {
         if (item == null || item.itemType != ApiItemType.Consumable)
             return;
-
-        // Aplicar efecto de curación
         if (item.healAmount > 0)
         {
             StatsManager.instance.Heal(item.healAmount);

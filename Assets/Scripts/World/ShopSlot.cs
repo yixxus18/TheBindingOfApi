@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShopSlot : MonoBehaviour
+public class ShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI")]
     public TMP_Text itemNameText;
@@ -19,13 +20,43 @@ public class ShopSlot : MonoBehaviour
         price = newPrice;
         shopManager = manager;
 
-        itemNameText.text = itemSO.itemName;
-        itemImage.sprite = itemSO.icon;
+        if (itemSO != null)
+        {
+            itemNameText.text = itemSO.itemName;
+            if (itemSO.icon != null)
+            {
+                itemImage.sprite = itemSO.icon;
+                itemImage.enabled = true;
+            }
+            else
+            {
+                itemImage.enabled = false;
+            }
+        }
         priceText.text = price.ToString() + " $";
     }
 
     public void OnBuyButtonClicked()
     {
-        shopManager.TryBuyItem(itemSO, price);
+        if (itemSO != null)
+        {
+            shopManager.TryBuyItem(itemSO, price);
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (itemSO != null && TooltipManager.instance != null)
+        {
+            TooltipManager.instance.ShowTooltip(itemSO.itemName, itemSO.itemDescription);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (TooltipManager.instance != null)
+        {
+            TooltipManager.instance.HideTooltip();
+        }
     }
 }

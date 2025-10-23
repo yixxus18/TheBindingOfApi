@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
         {
             toggleMenuButton.onClick.AddListener(ToggleMiniMenu);
         }
+
         isGamePaused = false;
         miniMenuContainer.SetActive(false);
         menuButtonsPanel.SetActive(false);
@@ -40,15 +41,23 @@ public class UIManager : MonoBehaviour
         isGamePaused = !isGamePaused;
         miniMenuContainer.SetActive(isGamePaused);
         menuButtonsPanel.SetActive(isGamePaused);
+
         InventorySlot.isTerminalActive = isGamePaused;
 
         if (isGamePaused)
         {
             OpenTab(inventoryTab);
         }
-        else if (ApiTerminalManager.instance != null)
+        else
         {
-            ApiTerminalManager.instance.ClearTerminal();
+            if (ApiTerminalManager.instance != null)
+            {
+                ApiTerminalManager.instance.ClearTerminal();
+            }
+            if (TooltipManager.instance != null)
+            {
+                TooltipManager.instance.HideTooltip();
+            }
         }
     }
 
@@ -58,7 +67,7 @@ public class UIManager : MonoBehaviour
     public void OpenCodexTab()
     {
         OpenTab(codexTab);
-        CodexManager.instance.UpdateCodexUI();
+        if (CodexManager.instance != null) CodexManager.instance.UpdateCodexUI();
     }
 
     private void OpenTab(GameObject tabToOpen)

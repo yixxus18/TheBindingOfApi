@@ -1,0 +1,68 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class LevelDoor : MonoBehaviour
+{
+    [Header("Configuración del Nivel")]
+    public int levelIndex;
+    public string sceneNameToLoad;
+
+    [Header("Visuales")]
+    public GameObject lockedIndicator;
+    public GameObject unlockedIndicator;
+
+    private bool isUnlocked = false;
+    private bool playerInRange = false;
+
+    void Start()
+    {
+        RefreshLockState();
+    }
+
+    void OnEnable()
+    {
+        RefreshLockState();
+    }
+
+    void Update()
+    {
+        if (playerInRange && isUnlocked && Input.GetKeyDown(KeyCode.E))
+        {
+            if (GameManager.Instance != null)
+            {
+                SaveSystem.SaveGame(GameManager.Instance.codexManager, GameManager.Instance.statsManager);
+                Debug.Log("Progreso guardado antes de entrar al nivel " + levelIndex);
+            }
+
+            SceneManager.LoadScene(sceneNameToLoad);
+        }
+    }
+
+    private void RefreshLockState()
+    {
+        isUnlocked = ProgressionManager.instance.IsLevelUnlocked(levelIndex);
+        UpdateVisuals();
+    }
+
+    private void UpdateVisuals()
+    {
+        if (lockedIndicator != null) lockedIndicator.SetActive(!isUnlocked);
+        if (unlockedIndicator != null) unlockedIndicator.SetActive(isUnlocked);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+}

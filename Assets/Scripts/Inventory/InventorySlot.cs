@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler
+public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Item Data")]
     public ItemSO itemSO;
@@ -39,33 +39,28 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void UpdateUI()
     {
-        Debug.Log($"UpdateUI llamado para: {itemSO?.itemName ?? "NULL"} x{quantity}");
-
         if (itemSO == null || quantity <= 0)
         {
-            Debug.LogWarning("ItemSO es null o quantity es 0");
+            itemImage.enabled = false;
+            if (quantityText != null) quantityText.gameObject.SetActive(false);
+            if (backgroundImage != null) backgroundImage.color = new Color(1, 1, 1, 0.5f); // Un color por defecto para slots vacíos
             return;
         }
+
         if (itemImage != null)
         {
             if (itemSO.icon != null)
             {
                 itemImage.sprite = itemSO.icon;
                 itemImage.enabled = true;
-                itemImage.gameObject.SetActive(true);
                 itemImage.color = Color.white;
-
-                Debug.Log($"✅ Imagen actualizada: {itemSO.icon.name}");
             }
             else
             {
-                Debug.LogError($"❌ El ItemSO '{itemSO.itemName}' NO tiene icono asignado!");
+                itemImage.enabled = false;
             }
         }
-        else
-        {
-            Debug.LogError("❌ itemImage es NULL en el prefab!");
-        }
+
         if (quantityText != null)
         {
             if (quantity > 1)
@@ -79,14 +74,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 quantityText.gameObject.SetActive(false);
             }
         }
-        else
-        {
-            Debug.LogWarning("quantityText no asignado");
-        }
+
         if (backgroundImage != null)
         {
             backgroundImage.color = GetColorByItemType(itemSO.itemType);
-            Debug.Log($"Color de fondo cambiado a: {itemSO.itemType}");
         }
     }
 
@@ -95,17 +86,33 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         switch (type)
         {
             case ApiItemType.Method:
-                return new Color(0.4f, 0.8f, 0.4f, 1f); // Verde
+                return new Color(0.4f, 0.8f, 0.4f, 1f);
             case ApiItemType.Header:
-                return new Color(0.4f, 0.6f, 1f, 1f); // Azul
+                return new Color(0.4f, 0.6f, 1f, 1f);
             case ApiItemType.Token:
-                return new Color(1f, 0.8f, 0.4f, 1f); // Dorado
+                return new Color(1f, 0.8f, 0.4f, 1f);
             case ApiItemType.Fragment:
-                return new Color(0.8f, 0.4f, 1f, 1f); // Púrpura
+                return new Color(0.8f, 0.4f, 1f, 1f);
             case ApiItemType.Consumable:
-                return new Color(1f, 0.4f, 0.4f, 1f); // Rojo
+                return new Color(1f, 0.4f, 0.4f, 1f);
             default:
                 return Color.white;
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (itemSO != null && TooltipManager.instance != null)
+        {
+            TooltipManager.instance.ShowTooltip(itemSO.itemName, itemSO.itemDescription);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (TooltipManager.instance != null)
+        {
+            TooltipManager.instance.HideTooltip();
         }
     }
 }

@@ -1,4 +1,3 @@
-// ShopKeeper.cs
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -17,7 +16,7 @@ public class ShopKeeper : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.instance.isDialogueActive)
         {
             ToggleShop();
         }
@@ -27,11 +26,18 @@ public class ShopKeeper : MonoBehaviour
     {
         bool isActive = !shopPanel.activeSelf;
         shopPanel.SetActive(isActive);
-        Time.timeScale = isActive ? 0 : 1;
+        UIManager.isGamePaused = isActive;
 
         if (isActive)
         {
             ShopManager.instance.PopulateShop(itemsForSale);
+        }
+        else
+        {
+            if (TooltipManager.instance != null)
+            {
+                TooltipManager.instance.HideTooltip();
+            }
         }
     }
 
@@ -46,7 +52,11 @@ public class ShopKeeper : MonoBehaviour
         {
             playerInRange = false;
             shopPanel.SetActive(false);
-            Time.timeScale = 1;
+            UIManager.isGamePaused = false;
+            if (TooltipManager.instance != null)
+            {
+                TooltipManager.instance.HideTooltip();
+            }
         }
     }
 }
