@@ -3,11 +3,12 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static bool isGamePaused = false;
+
     [Header("Main Menu")]
     public GameObject miniMenuContainer;
-    public GameObject menuButtonsPanel; 
-    public Button toggleMenuButton; 
-    private bool isMenuOpen = false;
+    public GameObject menuButtonsPanel;
+    public Button toggleMenuButton;
 
     [Header("Tabs")]
     public GameObject inventoryTab;
@@ -21,14 +22,14 @@ public class UIManager : MonoBehaviour
         {
             toggleMenuButton.onClick.AddListener(ToggleMiniMenu);
         }
-
+        isGamePaused = false;
         miniMenuContainer.SetActive(false);
         menuButtonsPanel.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.C))
         {
             ToggleMiniMenu();
         }
@@ -36,14 +37,12 @@ public class UIManager : MonoBehaviour
 
     public void ToggleMiniMenu()
     {
-        isMenuOpen = !isMenuOpen;
-        miniMenuContainer.SetActive(isMenuOpen);
-        menuButtonsPanel.SetActive(isMenuOpen);
+        isGamePaused = !isGamePaused;
+        miniMenuContainer.SetActive(isGamePaused);
+        menuButtonsPanel.SetActive(isGamePaused);
+        InventorySlot.isTerminalActive = isGamePaused;
 
-        Time.timeScale = isMenuOpen ? 0 : 1;
-        InventorySlot.isTerminalActive = isMenuOpen;
-
-        if (isMenuOpen)
+        if (isGamePaused)
         {
             OpenTab(inventoryTab);
         }

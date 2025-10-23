@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     private DialogueSO currentDialogue;
     private int dialogueIndex;
     public bool isDialogueActive { get; private set; }
+    private bool isWaitingForChoice = false;
 
     private Coroutine typingCoroutine;
 
@@ -36,11 +37,20 @@ public class DialogueManager : MonoBehaviour
         dialogueCanvasGroup.blocksRaycasts = false;
     }
 
+    private void Update()
+    {
+        if (isDialogueActive && !isWaitingForChoice && Input.GetKeyDown(KeyCode.E))
+        {
+            AdvanceDialogue();
+        }
+    }
+
     public void StartDialogue(DialogueSO dialogue)
     {
         if (isDialogueActive) return;
 
         isDialogueActive = true;
+        isWaitingForChoice = false;
         currentDialogue = dialogue;
         dialogueIndex = 0;
 
@@ -86,6 +96,7 @@ public class DialogueManager : MonoBehaviour
 
     private void ShowNextDialogueLine()
     {
+        isWaitingForChoice = false;
         ClearChoices();
         DialogueLine line = currentDialogue.lines[dialogueIndex];
         portriat.sprite = line.speaker.portrait;
@@ -101,18 +112,19 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSecondsRealtime(typingSpeed); // Usar Realtime para que funcione con Time.timeScale = 0
+            yield return new WaitForSecondsRealtime(typingSpeed);
         }
         typingCoroutine = null;
     }
 
     private void ShowChoices()
     {
+        isWaitingForChoice = true;
         dialogueText.text = "";
 
         for (int i = 0; i < currentDialogue.options.Length; i++)
         {
-            if (i < choiceButtons.Length) // Chequeo de seguridad
+            if (i < choiceButtons.Length)
             {
                 var option = currentDialogue.options[i];
                 choiceButtons[i].GetComponentInChildren<TMP_Text>().text = option.optiontext;
@@ -124,6 +136,7 @@ public class DialogueManager : MonoBehaviour
 
     private void ChooseOption(DialogueSO dialogueSO)
     {
+        isWaitingForChoice = false;
         if (dialogueSO == null)
             StartCoroutine(EndDialogueProcess());
         else
@@ -154,17 +167,14 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // --- CÓDIGO CORREGIDO Y FINAL ---
     private IEnumerator FadeCanvasGroup(CanvasGroup cg, float start, float end, float duration)
     {
         float timer = 0f;
         while (timer < duration)
         {
-            // La corrección clave está aquí. Usamos Time.unscaledDeltaTime para que el fade
-            // funcione incluso si el juego está pausado (Time.timeScale = 0).
             timer += Time.unscaledDeltaTime;
             cg.alpha = Mathf.Lerp(start, end, timer / duration);
-            yield return new WaitForEndOfFrame(); // Cambiado para mayor suavidad en la UI
+            yield return new WaitForEndOfFrame();
         }
         cg.alpha = end;
         cg.interactable = (end > 0);

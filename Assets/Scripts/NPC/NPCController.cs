@@ -53,6 +53,8 @@ public class NPCController : MonoBehaviour
 
     void Update()
     {
+        if (UIManager.isGamePaused) return;
+
         if (isPaused || currentState == NPCState.Idle || currentState == NPCState.Talk)
         {
             rb.linearVelocity = Vector2.zero;
@@ -78,7 +80,7 @@ public class NPCController : MonoBehaviour
 
     private void SwitchState(NPCState newState)
     {
-        if (currentState == newState) return;
+        if (currentState == newState && Application.isPlaying) return;
 
         currentState = newState;
         StopAllCoroutines();
@@ -110,7 +112,6 @@ public class NPCController : MonoBehaviour
     private void HandlePatrol()
     {
         if (patrolPoints.Length == 0) return;
-
         if (Vector2.Distance(transform.position, currentTarget) < 0.1f)
         {
             StartCoroutine(PauseAndSetNextPatrolPoint());
@@ -120,7 +121,6 @@ public class NPCController : MonoBehaviour
             MoveTowards(currentTarget);
         }
     }
-
 
     private void HandleWander()
     {
@@ -136,7 +136,7 @@ public class NPCController : MonoBehaviour
 
     private void HandleTalkInteraction()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.instance.isDialogueActive)
         {
             FindAndStartConversation();
         }
@@ -160,14 +160,11 @@ public class NPCController : MonoBehaviour
     private IEnumerator PauseAndSetNextPatrolPoint()
     {
         if (patrolPoints.Length == 0) yield break;
-
         isPaused = true;
         if (anim != null) anim.Play("Idle");
         yield return new WaitForSeconds(pauseDuration);
-
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
         currentTarget = patrolPoints[currentPatrolIndex];
-
         isPaused = false;
         if (anim != null) anim.Play("Walk");
     }
@@ -177,11 +174,9 @@ public class NPCController : MonoBehaviour
         isPaused = true;
         if (anim != null) anim.Play("Idle");
         yield return new WaitForSeconds(pauseDuration);
-
         float randomX = Random.Range(wanderOrigin.x - wanderWidth / 2f, wanderOrigin.x + wanderWidth / 2f);
         float randomY = Random.Range(wanderOrigin.y - wanderHeight / 2f, wanderOrigin.y + wanderHeight / 2f);
         currentTarget = new Vector2(randomX, randomY);
-
         isPaused = false;
         if (anim != null) anim.Play("Walk");
     }
@@ -189,10 +184,7 @@ public class NPCController : MonoBehaviour
     private void FindAndStartConversation()
     {
         if (conversations.Count == 0) return;
-        if (DialogueManager.instance.isDialogueActive) return;
-
         DialogueSO conversationToStart = conversations[0];
-
         if (conversationToStart != null)
         {
             DialogueManager.instance.StartDialogue(conversationToStart);
@@ -213,6 +205,8 @@ public class NPCController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInRange = false;
+            if (!gameObject.activeInHierarchy) return;
+
             if (interactPromptAnimator != null) interactPromptAnimator.Play("close");
             SwitchState(defaultState);
         }
@@ -226,7 +220,6 @@ public class NPCController : MonoBehaviour
             Vector2 origin = Application.isPlaying ? wanderOrigin : (Vector2)transform.position;
             Gizmos.DrawWireCube(origin, new Vector3(wanderWidth, wanderHeight, 0));
         }
-
         if (defaultState == NPCState.Patrol && patrolPoints.Length > 0)
         {
             Gizmos.color = Color.green;
