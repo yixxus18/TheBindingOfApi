@@ -27,7 +27,9 @@ public class RoomManager : MonoBehaviour
 
     [Header("Tilemap References")]
     public Tilemap floorTilemap;
+    public Tilemap wallTilemap;
     public TileBase[] floorTiles;
+    public TileBase wallTile;
     public RoomColorMapping[] roomColorMappings;
 
     [Header("Room Size in Tiles")]
@@ -53,6 +55,7 @@ public class RoomManager : MonoBehaviour
         }
         createdRooms.Clear();
         floorTilemap.ClearAllTiles();
+        wallTilemap.ClearAllTiles();
 
         int startIndex = 45;
         int startGridX = startIndex % 10;
@@ -65,42 +68,45 @@ public class RoomManager : MonoBehaviour
             int deltaX = gridX - startGridX;
             int deltaY = gridY - startGridY;
             Vector2 roomWorldPosition = new Vector2(deltaX * offsetX, -deltaY * offsetY);
-
-            DrawRoomFloor(roomWorldPosition, currentCell.roomType);
-
+            DrawRoom(roomWorldPosition, currentCell.roomType);
             var spawnedRoomContainer = Instantiate(roomPrefab, roomWorldPosition, Quaternion.identity);
             spawnedRoomContainer.SetupRoom(currentCell);
             createdRooms.Add(spawnedRoomContainer);
         }
     }
-
-    private void DrawRoomFloor(Vector2 roomCenterWorldPos, RoomType roomType)
+    private void DrawRoom(Vector2 roomCenterWorldPos, RoomType roomType)
     {
-        Color roomColor = Color.white;
+        Color floorColor = Color.white;
         var mapping = roomColorMappings.FirstOrDefault(m => m.roomType == roomType);
         if (mapping.roomType == roomType)
         {
-            roomColor = mapping.color;
+            floorColor = mapping.color;
         }
 
         Vector3Int roomCenterCell = floorTilemap.WorldToCell(roomCenterWorldPos);
-
         int halfWidth = roomWidthInTiles / 2;
         int halfHeight = roomHeightInTiles / 2;
-
-        int startX = roomCenterCell.x - halfWidth;
-        int startY = roomCenterCell.y - halfHeight;
-
-        for (int x = 0; x < roomWidthInTiles; x++)
+        for (int x = -halfWidth - 1; x <= halfWidth; x++)
         {
-            for (int y = 0; y < roomHeightInTiles; y++)
+            for (int y = -halfHeight - 1; y <= halfHeight; y++)
+            {
+                if (x == -halfWidth - 1 || x == halfWidth || y == -halfHeight - 1 || y == halfHeight)
+                {
+                    wallTilemap.SetTile(new Vector3Int(roomCenterCell.x + x, roomCenterCell.y + y, 0), wallTile);
+                }
+            }
+        }
+
+        for (int x = -halfWidth; x < halfWidth; x++)
+        {
+            for (int y = -halfHeight; y < halfHeight; y++)
             {
                 TileBase randomTile = floorTiles[Random.Range(0, floorTiles.Length)];
-                Vector3Int tilePosition = new Vector3Int(startX + x, startY + y, 0);
+                Vector3Int tilePosition = new Vector3Int(roomCenterCell.x + x, roomCenterCell.y + y, 0);
 
                 floorTilemap.SetTile(tilePosition, randomTile);
                 floorTilemap.SetTileFlags(tilePosition, TileFlags.None);
-                floorTilemap.SetColor(tilePosition, roomColor);
+                floorTilemap.SetColor(tilePosition, floorColor);
             }
         }
     }

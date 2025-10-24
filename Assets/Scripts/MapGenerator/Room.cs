@@ -10,10 +10,33 @@ public enum EdgeDirection
     Right
 }
 
+[RequireComponent(typeof(BoxCollider2D), typeof(PolygonCollider2D))]
 public class Room : MonoBehaviour
 {
+    [Header("Component References")]
+    public PolygonCollider2D cameraConfiner;
+    private BoxCollider2D triggerCollider;
+
+    private void Awake()
+    {
+        triggerCollider = GetComponent<BoxCollider2D>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (CameraConfinerManager.instance != null && cameraConfiner != null)
+            {
+                CameraConfinerManager.instance.UpdateBounds(cameraConfiner);
+            }
+        }
+    }
+
     public void SetupRoom(Cell currentCell)
     {
+        ResizeColliders();
+
         if (currentCell.roomType == RoomType.Secret) return;
 
         var floorplan = MapGenerator.instance.getFloorPlan;
@@ -24,29 +47,61 @@ public class Room : MonoBehaviour
             case RoomShape.OneByOne:
                 SetupOneByOne(currentCell, floorplan, cellList);
                 break;
-
-                // Nota: La lógica para salas más grandes (1x2, 2x2) se complica.
-                // Por ahora, nos centraremos en que las salas 1x1 funcionen perfectamente.
-                // Puedes añadir los otros casos más adelante si los necesitas.
         }
     }
 
+    // CAMBIO: Lógica de redimensionamiento corregida para usar los valores exactos.
+    private void ResizeColliders()
+    {
+        if (RoomManager.instance == null) return;
+
+        // Usamos los Offsets del RoomManager como la fuente de verdad para el tamaño TOTAL de la sala.
+        float totalWidth = RoomManager.instance.offsetX;
+        float totalHeight = RoomManager.instance.offsetY;
+
+        // 1. Redimensionar el BoxCollider2D (para detectar al jugador).
+        // Este debe tener el tamaño total para que el trigger funcione en toda la sala.
+        if (triggerCollider != null)
+        {
+            triggerCollider.size = new Vector2(totalWidth, totalHeight);
+        }
+
+        // 2. Redimensionar el PolygonCollider2D (para los límites de la cámara).
+        // Este también debe tener el tamaño total exacto.
+        if (cameraConfiner != null)
+        {
+            float halfWidth = totalWidth / 2f;
+            float halfHeight = totalHeight / 2f;
+
+            Vector2[] points = new Vector2[4];
+            points[0] = new Vector2(-halfWidth, halfHeight);
+            points[1] = new Vector2(halfWidth, halfHeight);
+            points[2] = new Vector2(halfWidth, -halfHeight);
+            points[3] = new Vector2(-halfWidth, -halfHeight);
+
+            cameraConfiner.points = points;
+        }
+    }
+
+    // CAMBIO: Ambas puertas ahora se mueven hacia adentro.
     public void SetupOneByOne(Cell cell, int[] floorplan, List<Cell> cellList)
     {
         var currentCell = cell.cellList[0];
 
-        // Obtener los tamaños del RoomManager para que las puertas siempre estén bien posicionadas
+        // El offset se calcula sobre el tamaño TOTAL de la sala.
         float roomHalfWidth = RoomManager.instance.offsetX / 2f;
         float roomHalfHeight = RoomManager.instance.offsetY / 2f;
 
-        TryPlaceDoor(currentCell, new Vector2(0, roomHalfHeight), EdgeDirection.Up, floorplan, cellList, cell);
-        TryPlaceDoor(currentCell, new Vector2(0, -roomHalfHeight), EdgeDirection.Down, floorplan, cellList, cell);
-        TryPlaceDoor(currentCell, new Vector2(-roomHalfWidth, 0), EdgeDirection.Left, floorplan, cellList, cell);
-        TryPlaceDoor(currentCell, new Vector2(roomHalfWidth, 0), EdgeDirection.Right, floorplan, cellList, cell);
+        // Ambas puertas un poco hacia adentro para un mejor efecto visual.
+        float verticalDoorOffset = roomHalfHeight - 1.0f;
+        float horizontalDoorOffset = roomHalfWidth - 1.0f;
+
+        TryPlaceDoor(currentCell, new Vector2(0, verticalDoorOffset), EdgeDirection.Up, floorplan, cellList, cell);
+        TryPlaceDoor(currentCell, new Vector2(0, -verticalDoorOffset), EdgeDirection.Down, floorplan, cellList, cell);
+        TryPlaceDoor(currentCell, new Vector2(-horizontalDoorOffset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+        TryPlaceDoor(currentCell, new Vector2(horizontalDoorOffset, 0), EdgeDirection.Right, floorplan, cellList, cell);
     }
 
-    // El resto de tu código de puertas puede permanecer igual.
-    // Solo he copiado las funciones necesarias para que funcione.
     private void TryPlaceDoor(int fromIndex, Vector2 positionOffset, EdgeDirection direction, int[] floorplan, List<Cell> cellList, Cell currentCell)
     {
         int neighbourIndex = fromIndex + GetOffset(direction);
@@ -58,16 +113,6 @@ public class Room : MonoBehaviour
         if (foundCell == null || foundCell.roomType == RoomType.Secret) return;
 
         var door = Instantiate(RoomManager.instance.doorPrefab, transform);
-        float doorInset = 0.5f; // Ajusta este valor si la puerta aparece muy dentro o fuera
-
-        // Ajusta la posición para que quede exactamente en el borde
-        switch (direction)
-        {
-            case EdgeDirection.Up: positionOffset.y -= doorInset; break;
-            case EdgeDirection.Down: positionOffset.y += doorInset; break;
-            case EdgeDirection.Left: positionOffset.x += doorInset; break;
-            case EdgeDirection.Right: positionOffset.x -= doorInset; break;
-        }
         door.transform.localPosition = positionOffset;
 
         SetupDoor(door, direction, currentCell.roomType == RoomType.Regular ? foundCell.roomType : currentCell.roomType);
