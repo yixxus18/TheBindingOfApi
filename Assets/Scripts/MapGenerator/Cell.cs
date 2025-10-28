@@ -10,7 +10,7 @@ public enum RoomType
     Shop,          // Sala de tienda
     Boss,          // Sala del jefe final
     Secret,        // Sala secreta
-    Puzzle         // Sala con rompecabezas de petición HTTP
+    Puzzle         // Sala con rompecabezas de peticiï¿½n HTTP
 }
 
 public enum RoomShape
@@ -60,19 +60,32 @@ public class Cell : MonoBehaviour
         connectedCells.Sort();
         index = connectedCells[0];
 
-        if (connectedCells.Contains(index + 1) && connectedCells.Contains(index + 10))
+        if (connectedCells.Count == 3)
         {
-            ApplyRotation(-90);
-        }
-        else if (connectedCells.Contains(index + 1) && connectedCells.Contains(index + 11))
-        {
-            ApplyRotation(180);
-        }
-        else if (connectedCells.Contains(index + 9) && connectedCells.Contains(index + 10))
-        {
-            ApplyRotation(90);
+            int cellA = connectedCells[0];
+            int cellB = connectedCells[1];
+            int cellC = connectedCells[2];
+
+            if (cellA + 1 == cellB && cellA + 10 == cellC)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else if (cellA + 1 == cellB && cellB + 9 == cellC)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 270);
+            }
+            else if (cellA + 10 == cellB && cellB + 1 == cellC)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 90);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 180);
+            }
         }
     }
+
+
 
     public void ApplyRotation(float angle)
     {
