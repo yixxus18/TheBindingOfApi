@@ -55,37 +55,31 @@ public class Cell : MonoBehaviour
         roomShape = newRoomShape;
     }
 
-    public void RotateCell(List<int> connectedCells)
+    public void RotateCell(List<int> roomIndexes)
     {
-        connectedCells.Sort();
-        index = connectedCells[0];
+        if (roomIndexes.Count != 3) return;
 
-        if (connectedCells.Count == 3)
+        var cellA = roomIndexes[0];
+        var cellB = roomIndexes[1];
+        var cellC = roomIndexes[2];
+
+        if (cellA + 1 == cellB && cellA + 10 == cellC)
         {
-            int cellA = connectedCells[0];
-            int cellB = connectedCells[1];
-            int cellC = connectedCells[2];
-
-            if (cellA + 1 == cellB && cellA + 10 == cellC)
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-            }
-            else if (cellA + 1 == cellB && cellB + 9 == cellC)
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 270);
-            }
-            else if (cellA + 10 == cellB && cellB + 1 == cellC)
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 90);
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 180);
-            }
+            roomSprite.transform.localRotation = Quaternion.identity;
+        }
+        else if (cellA + 1 == cellB && cellB + 9 == cellC)
+        {
+            roomSprite.transform.localRotation = Quaternion.Euler(0, 0, 270f);
+        }
+        else if (cellA + 10 == cellB && cellB + 1 == cellC)
+        {
+            roomSprite.transform.localRotation = Quaternion.Euler(0, 0, 90f);
+        }
+        else if (cellA + 9 == cellB && cellA + 10 == cellC)
+        {
+            roomSprite.transform.localRotation = Quaternion.Euler(0, 0, 180f);
         }
     }
-
-
 
     public void ApplyRotation(float angle)
     {
