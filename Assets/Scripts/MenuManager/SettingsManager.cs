@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class SettingsManager : MonoBehaviour
 
     [Header("Audio Sources")]
     public AudioSource musicAudioSource;
-    public AudioSource buttonClickAudioSource; 
-    public AudioClip buttonClickSound; 
+    public AudioSource buttonClickAudioSource;
+    public AudioClip buttonClickSound;
 
     [Header("Video Settings")]
     public Toggle fullscreenToggle;
@@ -29,7 +30,6 @@ public class SettingsManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            return;
         }
     }
 
@@ -43,10 +43,61 @@ public class SettingsManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindMusicAudioSource();
-        LoadSettings();
+        FindUIReferences(scene.name);
+    }
+
+    public void FindUIReferences(string sceneName)
+    {
+        if (sceneName == "MainMenu")
+        {
+            StartCoroutine(FindMainMenuReferences());
+        }
+    }
+
+    private IEnumerator FindMainMenuReferences()
+    {
+        yield return null;
+
+        MainMenu mainMenu = FindFirstObjectByType<MainMenu>();
+        if (mainMenu != null && mainMenu.optionsMenuPanel != null)
+        {
+            Slider[] sliders = mainMenu.optionsMenuPanel.GetComponentsInChildren<Slider>(true);
+            Toggle toggle = mainMenu.optionsMenuPanel.GetComponentInChildren<Toggle>(true);
+
+            foreach (var s in sliders)
+            {
+                if (s.name.ToLower().Contains("master"))
+                {
+                    masterVolumeSlider = s;
+                }
+                else if (s.name.ToLower().Contains("music"))
+                {
+                    musicVolumeSlider = s;
+                }
+            }
+            fullscreenToggle = toggle;
+
+            if (masterVolumeSlider != null)
+            {
+                masterVolumeSlider.onValueChanged.RemoveAllListeners();
+                masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
+            }
+            if (musicVolumeSlider != null)
+            {
+                musicVolumeSlider.onValueChanged.RemoveAllListeners();
+                musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
+            }
+            if (fullscreenToggle != null)
+            {
+                fullscreenToggle.onValueChanged.RemoveAllListeners();
+                fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
+            }
+
+            LoadSettings();
+        }
     }
 
     private void SetupButtonAudioSource()
@@ -67,61 +118,6 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        FindMusicAudioSource();
-        FindUIReferences(scene.name);
-        LoadSettings();
-    }
-
-    private void FindUIReferences(string sceneName)
-    {
-        if (sceneName == "MainMenu")
-        {
-            StartCoroutine(FindMainMenuReferences());
-        }
-    }
-
-    private System.Collections.IEnumerator FindMainMenuReferences()
-    {
-        yield return null;
-        MainMenu mainMenu = FindFirstObjectByType<MainMenu>();
-
-        if (mainMenu != null)
-        {
-            Slider[] sliders = mainMenu.optionsMenu.GetComponentsInChildren<Slider>(true);
-            Toggle[] toggles = mainMenu.optionsMenu.GetComponentsInChildren<Toggle>(true);
-
-            foreach (Slider slider in sliders)
-            {
-                if (slider.name.ToLower().Contains("master"))
-                {
-                    masterVolumeSlider = slider;
-                    slider.onValueChanged.RemoveAllListeners();
-                    slider.onValueChanged.AddListener(SetMasterVolume);
-                }
-                else if (slider.name.ToLower().Contains("music"))
-                {
-                    musicVolumeSlider = slider;
-                    slider.onValueChanged.RemoveAllListeners();
-                    slider.onValueChanged.AddListener(SetMusicVolume);
-                }
-            }
-
-            foreach (Toggle toggle in toggles)
-            {
-                if (toggle.name.ToLower().Contains("fullscreen"))
-                {
-                    fullscreenToggle = toggle;
-                    toggle.onValueChanged.RemoveAllListeners();
-                    toggle.onValueChanged.AddListener(SetFullscreen);
-                }
-            }
-
-            LoadSettings();
-        }
-    }
-
     private void FindMusicAudioSource()
     {
         GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -135,7 +131,6 @@ public class SettingsManager : MonoBehaviour
     {
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("MasterVolume", volume);
-        PlayerPrefs.Save();
     }
 
     public void SetMusicVolume(float volume)
@@ -144,16 +139,13 @@ public class SettingsManager : MonoBehaviour
         {
             musicAudioSource.volume = volume;
         }
-
         PlayerPrefs.SetFloat("MusicVolume", volume);
-        PlayerPrefs.Save();
     }
 
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
         PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
-        PlayerPrefs.Save();
     }
 
     public void LoadSettings()
@@ -161,7 +153,9 @@ public class SettingsManager : MonoBehaviour
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
         AudioListener.volume = masterVolume;
         if (masterVolumeSlider != null)
+        {
             masterVolumeSlider.value = masterVolume;
+        }
 
         float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
         if (musicAudioSource != null)
@@ -169,19 +163,15 @@ public class SettingsManager : MonoBehaviour
             musicAudioSource.volume = musicVolume;
         }
         if (musicVolumeSlider != null)
+        {
             musicVolumeSlider.value = musicVolume;
+        }
 
         bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         Screen.fullScreen = isFullscreen;
         if (fullscreenToggle != null)
+        {
             fullscreenToggle.isOn = isFullscreen;
-    }
-
-    public void ResetSettings()
-    {
-        SetMasterVolume(1.0f);
-        SetMusicVolume(1.0f);
-        SetFullscreen(true);
-        LoadSettings();
+        }
     }
 }

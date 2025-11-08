@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.C))
+        if (GameInput.Instance.GetToggleMenuPressed())
         {
             ToggleMiniMenu();
         }

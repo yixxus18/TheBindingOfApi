@@ -67,13 +67,11 @@ public class PlayerController : MonoBehaviour
 
         if (canMove)
         {
-            float moveX = Input.GetAxisRaw("Horizontal");
-            float moveY = Input.GetAxisRaw("Vertical");
-            movementInput = new Vector2(moveX, moveY).normalized;
-            animator.SetFloat("horizontal", Mathf.Abs(moveX));
-            animator.SetFloat("vertical", Mathf.Abs(moveY));
+            movementInput = GameInput.Instance.GetMovementVector();
+            animator.SetFloat("horizontal", Mathf.Abs(movementInput.x));
+            animator.SetFloat("vertical", Mathf.Abs(movementInput.y));
 
-            if (moveX > 0 && transform.localScale.x < 0 || moveX < 0 && transform.localScale.x > 0)
+            if (movementInput.x > 0 && transform.localScale.x < 0 || movementInput.x < 0 && transform.localScale.x > 0)
                 Flip();
         }
         else
@@ -83,17 +81,17 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("vertical", 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.K) && attackTimer <= 0 && canMove && !isKnockedback && !isAttacking)
+        if (GameInput.Instance.GetAttackPressed() && attackTimer <= 0 && canMove && !isKnockedback && !isAttacking)
         {
             Attack();
         }
 
-        if (Input.GetKeyDown(KeyCode.J) && dodgeTimer <= 0 && canMove && !isKnockedback)
+        if (GameInput.Instance.GetDodgePressed() && dodgeTimer <= 0 && canMove && !isKnockedback)
         {
             StartCoroutine(Dodge());
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (GameInput.Instance.GetInteractPressed())
         {
             TryInteract();
         }

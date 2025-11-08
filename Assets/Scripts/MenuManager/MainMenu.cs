@@ -2,33 +2,37 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject mainMenu;
-    public GameObject optionsMenu;
+    [Header("UI Panels")]
+    [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] public GameObject optionsMenuPanel; // ¡Hazla pública para que SettingsManager pueda encontrarla!
 
+    [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip buttonClickSound;
 
-    void Start()
+    private void Start()
     {
-
+        // Asegúrate de que al inicio se muestre el menú principal
+        ShowMainMenuPanel();
     }
+
     public void ShowOptionsMenu()
     {
         PlayButtonSound();
-        mainMenu.SetActive(false);
-        optionsMenu.SetActive(true);
-
+        mainMenuPanel.SetActive(false);
+        optionsMenuPanel.SetActive(true);
         if (SettingsManager.Instance != null)
         {
+            SettingsManager.Instance.FindUIReferences("MainMenu");
             SettingsManager.Instance.LoadSettings();
         }
     }
 
-    public void ShowMainMenu()
+    public void ShowMainMenuPanel()
     {
         PlayButtonSound();
-        optionsMenu.SetActive(false);
-        mainMenu.SetActive(true);
+        if (optionsMenuPanel != null) optionsMenuPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
     }
 
     public void QuitGame()
@@ -36,7 +40,6 @@ public class MainMenu : MonoBehaviour
         PlayButtonSound();
         PlayerPrefs.Save();
         Application.Quit();
-        Debug.Log("Game is exiting...");
     }
 
     public void StartGame()

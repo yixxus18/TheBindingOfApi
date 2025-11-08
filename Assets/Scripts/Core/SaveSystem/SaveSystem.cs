@@ -1,44 +1,54 @@
 using UnityEngine;
-using System.IO;
 using System.Linq;
-using System.Collections.Generic; // AÑADIDO
+using System.Collections.Generic;
 
 public static class SaveSystem
 {
-    private static readonly string SAVE_FILE = "/player_progress.dat";
-
     public static void SaveGame(CodexManager codex, StatsManager stats)
     {
-        string path = Application.persistentDataPath + SAVE_FILE;
+        if (DatabaseManager.Instance == null)
+        {
+            Debug.LogError("DatabaseManager no fue encontrado en la escena. No se puede guardar el juego.");
+            return;
+        }
         SaveData data = new SaveData();
 
-        data.learnedRequests = codex.learnedRequests;
-        data.discoveredLoreIDs = codex.discoveredLore.Select(l => l.loreID).ToList();
         data.completedObjectiveIDs = ProgressionManager.instance.completedObjectiveIDs.ToList();
         data.highestLevelUnlocked = ProgressionManager.instance.highestLevelUnlocked;
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(path, json);
-        Debug.Log("Juego guardado en: " + path);
+        data.learnedRequests = codex.learnedRequests;
+        data.discoveredLoreIDs = codex.discoveredLore.Select(l => l.loreID).ToList();
+        data.playerEngineeringLevel = stats.engineering;
+        DatabaseManager.Instance.SaveGameData(data);
+        Debug.Log("Juego guardado en la base de datos SQLite.");
     }
 
     public static void LoadGame(CodexManager codex, StatsManager stats, LoreDatabaseSO loreDatabase)
     {
-        string path = Application.persistentDataPath + SAVE_FILE;
-        if (File.Exists(path))
+        if (DatabaseManager.Instance == null)
         {
-            string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-            ProgressionManager.instance.completedObjectiveIDs = new HashSet<string>(data.completedObjectiveIDs ?? new List<string>());
-
-            ProgressionManager.instance.highestLevelUnlocked = data.highestLevelUnlocked;
-            codex.learnedRequests = data.learnedRequests ?? new List<RequestEntry>();
-            codex.discoveredLore.Clear();
-            foreach (string id in data.discoveredLoreIDs ?? new List<string>())
-            {
-                LoreSO lore = loreDatabase.GetLoreByID(id);
-                if (lore != null) codex.discoveredLore.Add(lore);
-            }
-            Debug.Log("Juego cargado.");
+            Debug.LogError("DatabaseManager no fue encontrado en la escena. No se puede cargar el juego.");
+            return;
         }
+        SaveData data = DatabaseManager.Instance.LoadGameData();
+
+        if (data == null)
+        {
+            Debug.LogWarning("No se encontraron datos de guardado para cargar.");
+            return;
+        }
+        ProgressionManager.instance.completedObjectiveIDs = new HashSet<string>(data.completedObjectiveIDs ?? new List<string>());
+        ProgressionManager.instance.highestLevelUnlocked = data.highestLevelUnlocked;
+        codex.learnedRequests = data.learnedRequests ?? new List<RequestEntry>();
+        codex.discoveredLore.Clear();
+        foreach (string id in data.discoveredLoreIDs ?? new List<string>())
+        {
+            LoreSO lore = loreDatabase.GetLoreByID(id);
+            if (lore != null)
+            {
+                codex.discoveredLore.Add(lore);
+            }
+        }
+        stats.engineering = data.playerEngineeringLevel;
+        Debug.Log("Juego cargado desde la base de datos SQLite.");
     }
 }
