@@ -12,6 +12,8 @@ public enum ApiItemType
 [CreateAssetMenu(fileName = "New API Item", menuName = "BindingOfApi/Item")]
 public class ItemSO : ScriptableObject
 {
+    [Tooltip("ID Ãºnico para este item (ej: 'HEALTH_POTION', 'API_KEY_GET')")]
+    public string itemID;
     public string itemName;
     [TextArea] public string itemDescription;
     public Sprite icon;
@@ -19,7 +21,7 @@ public class ItemSO : ScriptableObject
 
     [Header("API Properties")]
     public ApiItemType itemType;
-    [Tooltip("El valor real de texto para la petición. Ej: 'GET', '/api/v1'")]
+    [Tooltip("El valor real de texto para la peticiï¿½n. Ej: 'GET', '/api/v1'")]
     public string apiValue;
 
     [Header("Consumable Stats")]

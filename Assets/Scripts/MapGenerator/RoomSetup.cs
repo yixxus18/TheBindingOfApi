@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class RoomSetup : MonoBehaviour
 {
-
     [Header("Objetivos De Esta Sala")]
     public List<DungeonObjective> objectives;
 
@@ -17,9 +16,13 @@ public class RoomSetup : MonoBehaviour
             DungeonObjectiveManager.instance.SetDungeonObjectives(objectives);
         }
 
-        if (ApiTerminalManager.instance != null && puzzleDeEstaSala != null)
+        if (puzzleDeEstaSala != null)
         {
-            ApiTerminalManager.instance.currentRoomPuzzle = puzzleDeEstaSala;
+            ApiTerminalManager roomTerminal = FindFirstObjectByType<ApiTerminalManager>();
+            if (roomTerminal != null)
+            {
+                roomTerminal.currentRoomPuzzle = puzzleDeEstaSala;
+            }
         }
     }
 }

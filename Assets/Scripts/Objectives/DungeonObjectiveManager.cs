@@ -80,7 +80,7 @@ public class DungeonObjectiveManager : MonoBehaviour
                 ProgressionManager.instance.UnlockNextLevel();
                 if (GameManager.Instance != null)
                 {
-                    SaveSystem.SaveGame(GameManager.Instance.codexManager, GameManager.Instance.statsManager);
+                    SaveSystem.SaveGame(GameManager.Instance.codexManager, GameManager.Instance.statsManager, GameManager.Instance.inventoryManager);
                 }
             }
         }

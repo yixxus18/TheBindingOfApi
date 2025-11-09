@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -23,7 +24,6 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         Loot.OnItemLooted += HandleItemLooted;
     }
 
@@ -37,6 +37,11 @@ public class InventoryManager : MonoBehaviour
         AddItem(item, quantity);
     }
 
+    public List<InventorySlot> GetActiveSlots()
+    {
+        return activeSlots;
+    }
+
     public bool AddItem(ItemSO item, int quantity)
     {
         if (item == null || quantity <= 0)
@@ -48,12 +53,9 @@ public class InventoryManager : MonoBehaviour
             {
                 int spaceLeft = item.stackSize - slot.quantity;
                 int amountToAdd = Mathf.Min(quantity, spaceLeft);
-
                 slot.quantity += amountToAdd;
                 slot.UpdateUI();
-
                 quantity -= amountToAdd;
-
                 if (quantity <= 0)
                     return true;
             }
@@ -63,21 +65,46 @@ public class InventoryManager : MonoBehaviour
         {
             if (activeSlots.Count >= maxSlots)
             {
-                Debug.Log("Inventario lleno!");
-                return false;
+                InventorySlot emptySlot = activeSlots.FirstOrDefault(s => s.itemSO == null);
+                if (emptySlot == null)
+                {
+                    Debug.Log("Inventario lleno!");
+                    return false;
+                }
             }
 
             InventorySlot newSlot = CreateNewSlot();
-
             int amountToAdd = Mathf.Min(quantity, item.stackSize);
             newSlot.itemSO = item;
             newSlot.quantity = amountToAdd;
             newSlot.UpdateUI();
-
             quantity -= amountToAdd;
         }
-
         return true;
+    }
+
+    public bool RemoveItem(ItemSO item, int quantity)
+    {
+        if (item == null || quantity <= 0) return false;
+
+        InventorySlot slotToRemoveFrom = activeSlots.Find(slot => slot.itemSO == item);
+
+        if (slotToRemoveFrom != null && slotToRemoveFrom.quantity >= quantity)
+        {
+            slotToRemoveFrom.quantity -= quantity;
+
+            if (slotToRemoveFrom.quantity <= 0)
+            {
+                slotToRemoveFrom.itemSO = null;
+                RemoveSlot(slotToRemoveFrom);
+            }
+            else
+            {
+                slotToRemoveFrom.UpdateUI();
+            }
+            return true;
+        }
+        return false;
     }
 
     private InventorySlot CreateNewSlot()
@@ -117,22 +144,6 @@ public class InventoryManager : MonoBehaviour
         {
             slot.UpdateUI();
         }
-    }
-
-    public bool HasItem(ItemSO item)
-    {
-        return activeSlots.Exists(slot => slot.itemSO == item && slot.quantity > 0);
-    }
-
-    public int GetItemCount(ItemSO item)
-    {
-        int total = 0;
-        foreach (var slot in activeSlots)
-        {
-            if (slot.itemSO == item)
-                total += slot.quantity;
-        }
-        return total;
     }
 
     public void ClearInventory()

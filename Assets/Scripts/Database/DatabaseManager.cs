@@ -7,11 +7,7 @@ using System.Collections.Generic;
 public class DatabaseManager : MonoBehaviour
 {
     public static DatabaseManager Instance { get; private set; }
-
     private string dbPath;
-
-    // El ID del perfil se puede gestionar desde el menú principal o la pantalla de carga en el futuro.
-    // Por ahora, lo dejamos fijo en 1.
     public int currentProfileID = 1;
 
     private void Awake()
@@ -20,13 +16,7 @@ public class DatabaseManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-
-            // La ruta a la base de datos ahora se define aquí.
             dbPath = Path.Combine(Application.persistentDataPath, "game_database.db");
-            Debug.Log($"Database path: {dbPath}");
-
-            // La inicialización solo se encarga de crear el archivo y las tablas si no existen.
-            // Ya no mantiene una conexión abierta.
             InitializeDatabase();
         }
         else
@@ -37,8 +27,6 @@ public class DatabaseManager : MonoBehaviour
 
     private void InitializeDatabase()
     {
-        // El bloque 'using' abre la conexión y la cierra AUTOMÁTICAMENTE al terminar,
-        // incluso si hay un error. Esto es crucial.
         using (var connection = new SqliteConnection($"URI=file:{dbPath}"))
         {
             connection.Open();
@@ -67,7 +55,11 @@ public class DatabaseManager : MonoBehaviour
                         PRIMARY KEY (perfil_id, puzzle_name),
                         FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
                     );
-                    -- Insertar perfil por defecto si no existe
+                    CREATE TABLE IF NOT EXISTS Inventario (
+                        perfil_id INTEGER, item_id TEXT, cantidad INTEGER,
+                        PRIMARY KEY (perfil_id, item_id),
+                        FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
+                    );
                     INSERT OR IGNORE INTO Perfil_Jugador (id, nombre_perfil) VALUES (1, 'Default Profile');
                 ";
                 command.ExecuteNonQuery();
@@ -75,20 +67,15 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    // AHORA CADA MÉTODO GESTIONA SU PROPIA CONEXIÓN. ESTO ES MÁS SEGURO Y EFICIENTE.
-
     public void SaveGameData(SaveData data)
     {
         using (var connection = new SqliteConnection($"URI=file:{dbPath}"))
         {
             connection.Open();
-            // Usamos una 'transacción' para asegurarnos de que todos los datos se guarden juntos.
-            // Si algo falla, nada se guarda, evitando datos corruptos.
             using (var transaction = connection.BeginTransaction())
             {
                 try
                 {
-                    // 1. Guardar datos del perfil
                     using (var cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = @"UPDATE Perfil_Jugador SET 
@@ -102,13 +89,11 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                     }
 
-                    // 2. Guardar Lore (Borrar los antiguos y añadir los nuevos)
                     using (var cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "DELETE FROM Lore_Descubierto WHERE perfil_id = @profileId;";
                         cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
                         cmd.ExecuteNonQuery();
-
                         foreach (var loreId in data.discoveredLoreIDs)
                         {
                             cmd.CommandText = "INSERT INTO Lore_Descubierto (perfil_id, lore_id) VALUES (@profileId, @loreId);";
@@ -117,13 +102,11 @@ public class DatabaseManager : MonoBehaviour
                         }
                     }
 
-                    // 3. Guardar Objetivos Completados
                     using (var cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "DELETE FROM Objetivo_Completado WHERE perfil_id = @profileId;";
                         cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
                         cmd.ExecuteNonQuery();
-
                         foreach (var objectiveId in data.completedObjectiveIDs)
                         {
                             cmd.CommandText = "INSERT INTO Objetivo_Completado (perfil_id, objetivo_id) VALUES (@profileId, @objectiveId);";
@@ -132,13 +115,11 @@ public class DatabaseManager : MonoBehaviour
                         }
                     }
 
-                    // 4. Guardar Requests Aprendidos
                     using (var cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = "DELETE FROM Request_Aprendido WHERE perfil_id = @profileId;";
                         cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
                         cmd.ExecuteNonQuery();
-
                         foreach (var request in data.learnedRequests)
                         {
                             cmd.CommandText = "INSERT INTO Request_Aprendido (perfil_id, puzzle_name, full_request) VALUES (@profileId, @puzzleName, @fullRequest);";
@@ -148,13 +129,24 @@ public class DatabaseManager : MonoBehaviour
                         }
                     }
 
-                    // Si todo fue bien, confirma los cambios.
+                    using (var cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "DELETE FROM Inventario WHERE perfil_id = @profileId;";
+                        cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
+                        cmd.ExecuteNonQuery();
+                        foreach (var itemData in data.inventoryItems)
+                        {
+                            cmd.CommandText = "INSERT INTO Inventario (perfil_id, item_id, cantidad) VALUES (@profileId, @itemId, @cantidad);";
+                            cmd.Parameters.Add(new SqliteParameter("@itemId", itemData.itemID));
+                            cmd.Parameters.Add(new SqliteParameter("@cantidad", itemData.quantity));
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
                     transaction.Commit();
-                    Debug.Log("Datos del juego guardados correctamente.");
                 }
                 catch (System.Exception ex)
                 {
-                    // Si algo falló, deshaz todos los cambios.
                     transaction.Rollback();
                     Debug.LogError($"Error al guardar los datos: {ex.Message}");
                 }
@@ -165,12 +157,10 @@ public class DatabaseManager : MonoBehaviour
     public SaveData LoadGameData()
     {
         SaveData data = new SaveData();
-
         using (var connection = new SqliteConnection($"URI=file:{dbPath}"))
         {
             connection.Open();
 
-            // Cargar datos del perfil
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandText = "SELECT nivel_ingenieria, highest_level_unlocked FROM Perfil_Jugador WHERE id = @profileId";
@@ -185,7 +175,6 @@ public class DatabaseManager : MonoBehaviour
                 }
             }
 
-            // Cargar lore
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandText = "SELECT lore_id FROM Lore_Descubierto WHERE perfil_id = @profileId";
@@ -196,7 +185,6 @@ public class DatabaseManager : MonoBehaviour
                 }
             }
 
-            // Cargar objetivos
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandText = "SELECT objetivo_id FROM Objetivo_Completado WHERE perfil_id = @profileId";
@@ -207,7 +195,6 @@ public class DatabaseManager : MonoBehaviour
                 }
             }
 
-            // Cargar requests
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandText = "SELECT puzzle_name, full_request FROM Request_Aprendido WHERE perfil_id = @profileId";
@@ -224,9 +211,25 @@ public class DatabaseManager : MonoBehaviour
                     }
                 }
             }
+
+            using (var cmd = connection.CreateCommand())
+            {
+                cmd.CommandText = "SELECT item_id, cantidad FROM Inventario WHERE perfil_id = @profileId";
+                cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        data.inventoryItems.Add(new InventoryItemData
+                        {
+                            itemID = reader.GetString(0),
+                            quantity = reader.GetInt32(1)
+                        });
+                    }
+                }
+            }
         }
 
-        Debug.Log("Datos del juego cargados.");
         return data;
     }
 }

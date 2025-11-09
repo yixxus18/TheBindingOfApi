@@ -16,6 +16,10 @@ public class UIManager : MonoBehaviour
     public GameObject codexTab;
     public GameObject objectivesTab;
 
+    [Header("Manager References")]
+    [Tooltip("Arrastra aquí el GameObject que tiene el ApiTerminalManager del menú de pausa.")]
+    public ApiTerminalManager menuTerminalManager;
+
     void Start()
     {
         if (toggleMenuButton != null)
@@ -41,7 +45,6 @@ public class UIManager : MonoBehaviour
         isGamePaused = !isGamePaused;
         miniMenuContainer.SetActive(isGamePaused);
         menuButtonsPanel.SetActive(isGamePaused);
-
         InventorySlot.isTerminalActive = isGamePaused;
 
         if (isGamePaused)
@@ -50,9 +53,9 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            if (ApiTerminalManager.instance != null)
+            if (menuTerminalManager != null && menuTerminalManager.terminalPanel.activeSelf)
             {
-                ApiTerminalManager.instance.ClearTerminal();
+                menuTerminalManager.CloseTerminal();
             }
             if (TooltipManager.instance != null)
             {
@@ -62,12 +65,25 @@ public class UIManager : MonoBehaviour
     }
 
     public void OpenInventoryTab() => OpenTab(inventoryTab);
-    public void OpenTerminalTab() => OpenTab(terminalTab);
+
+    public void OpenTerminalTab()
+    {
+        OpenTab(terminalTab);
+        if (menuTerminalManager != null)
+        {
+            menuTerminalManager.OpenTerminal();
+        }
+    }
+
     public void OpenObjectivesTab() => OpenTab(objectivesTab);
+
     public void OpenCodexTab()
     {
         OpenTab(codexTab);
-        if (CodexManager.instance != null) CodexManager.instance.UpdateCodexUI();
+        if (CodexManager.instance != null)
+        {
+            CodexManager.instance.UpdateCodexUI();
+        }
     }
 
     private void OpenTab(GameObject tabToOpen)

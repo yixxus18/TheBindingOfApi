@@ -3,6 +3,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SaveData
 {
+    public List<InventoryItemData> inventoryItems = new List<InventoryItemData>();
     public List<RequestEntry> learnedRequests;
     public List<string> discoveredLoreIDs;
     public int playerEngineeringLevel;
@@ -20,4 +21,11 @@ public class SaveData
         completedObjectiveIDs = new List<string>();
         highestLevelUnlocked = 0;
     }
+}
+
+[System.Serializable]
+public class InventoryItemData
+{
+    public string itemID;
+    public int quantity;
 }

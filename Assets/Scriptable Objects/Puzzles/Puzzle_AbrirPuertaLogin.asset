@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomPuzzleSO
   puzzleName: Abrir Puerta de Login
   descriptionHint: 
-  requiredMethod: POST
-  requiredUrlFragment: /auth/login
+  requiredMethod: GET
+  requiredUrlFragment: /users
   requiredHeaders: []
-  requiredBodySnippet: username
+  requiredBodySnippet: 
   successResponse: "Acceso concedido. Bienvenido. \r\n"
   failureErrorCode: '401 Unauthorized '
   OnPuzzleSolved:

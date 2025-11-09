@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Databases")]
     public LoreDatabaseSO loreDatabase;
+    public ItemDatabaseSO itemDatabase;
 
     private void Awake()
     {
@@ -26,8 +27,7 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        SaveSystem.LoadGame(codexManager, statsManager, loreDatabase);
+        SaveSystem.LoadGame(codexManager, statsManager, inventoryManager, loreDatabase, itemDatabase);
     }
 
     private void OnEnable()
@@ -56,6 +56,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveSystem.SaveGame(codexManager, statsManager);
+        SaveSystem.SaveGame(codexManager, statsManager, inventoryManager);
     }
 }

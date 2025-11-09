@@ -45,7 +45,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         PlayButtonSound();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("IntroEscene");
+        Loader.Load("IntroEscene");
     }
 
     private void PlayButtonSound()

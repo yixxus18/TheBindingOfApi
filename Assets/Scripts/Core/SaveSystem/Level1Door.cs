@@ -26,15 +26,14 @@ public class LevelDoor : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && isUnlocked && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && isUnlocked && GameInput.Instance.GetInteractPressed())
         {
             if (GameManager.Instance != null)
             {
-                SaveSystem.SaveGame(GameManager.Instance.codexManager, GameManager.Instance.statsManager);
+                SaveSystem.SaveGame(GameManager.Instance.codexManager, GameManager.Instance.statsManager, GameManager.Instance.inventoryManager);
                 Debug.Log("Progreso guardado antes de entrar al nivel " + levelIndex);
             }
-
-            SceneManager.LoadScene(sceneNameToLoad);
+            Loader.Load(sceneNameToLoad);
         }
     }
 

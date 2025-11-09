@@ -2850,6 +2850,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -12.510742
       objectReference: {fileID: 0}
+    - target: {fileID: 718039419984909537, guid: 52871b2a6ba470245913689478b70aec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1220368318075198459, guid: 52871b2a6ba470245913689478b70aec, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -173
@@ -2897,6 +2901,10 @@ PrefabInstance:
     - target: {fileID: 3749420266715906457, guid: 52871b2a6ba470245913689478b70aec, type: 3}
       propertyPath: m_Name
       value: OptionsUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749420266715906457, guid: 52871b2a6ba470245913689478b70aec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6162755241131516078, guid: 52871b2a6ba470245913689478b70aec, type: 3}
       propertyPath: m_TextWrappingMode

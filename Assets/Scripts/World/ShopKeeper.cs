@@ -10,34 +10,14 @@ public class ShopItem
 
 public class ShopKeeper : MonoBehaviour
 {
-    public GameObject shopPanel;
     public List<ShopItem> itemsForSale;
     private bool playerInRange;
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.instance.isDialogueActive)
+        if (playerInRange && GameInput.Instance.GetInteractPressed() && !DialogueManager.instance.isDialogueActive)
         {
-            ToggleShop();
-        }
-    }
-
-    public void ToggleShop()
-    {
-        bool isActive = !shopPanel.activeSelf;
-        shopPanel.SetActive(isActive);
-        UIManager.isGamePaused = isActive;
-
-        if (isActive)
-        {
-            ShopManager.instance.PopulateShop(itemsForSale);
-        }
-        else
-        {
-            if (TooltipManager.instance != null)
-            {
-                TooltipManager.instance.HideTooltip();
-            }
+            ShopManager.instance.OpenShop(itemsForSale);
         }
     }
 
@@ -48,15 +28,6 @@ public class ShopKeeper : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            playerInRange = false;
-            shopPanel.SetActive(false);
-            UIManager.isGamePaused = false;
-            if (TooltipManager.instance != null)
-            {
-                TooltipManager.instance.HideTooltip();
-            }
-        }
+        if (collision.CompareTag("Player")) playerInRange = false;
     }
 }
