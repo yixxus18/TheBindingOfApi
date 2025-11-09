@@ -8,16 +8,10 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
     public TMP_Text displayText;
 
     private ItemSO currentItem;
-    private InventorySlot sourceSlot;
 
     private void Start()
     {
         ClearSlot();
-    }
-
-    private void OnDestroy()
-    {
-        ReturnItemToInventory();
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -31,7 +25,6 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
             if (InventoryManager.instance.RemoveItem(inventorySlot.itemSO, 1))
             {
                 currentItem = inventorySlot.itemSO;
-                sourceSlot = inventorySlot;
                 UpdateSlotUI();
             }
         }
@@ -43,7 +36,6 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
         {
             InventoryManager.instance.AddItem(currentItem, 1);
             currentItem = null;
-            sourceSlot = null;
         }
     }
 
@@ -51,6 +43,11 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
     {
         ReturnItemToInventory();
         UpdateSlotUI();
+    }
+
+    public void ConsumeItem()
+    {
+        currentItem = null;
     }
 
     private bool IsValidItemType(ItemSO item)

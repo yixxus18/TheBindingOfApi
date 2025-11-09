@@ -110,6 +110,9 @@ public class ApiTerminalManager : MonoBehaviour
         {
             ShowResponse($"<color=green>200 OK</color>\n{currentRoomPuzzle.successResponse}");
             currentRoomPuzzle.OnPuzzleSolved?.Invoke();
+
+            ConfirmItemsUsed();
+
             if (DungeonObjectiveManager.instance != null)
                 DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, currentRoomPuzzle.puzzleName);
 
@@ -122,6 +125,16 @@ public class ApiTerminalManager : MonoBehaviour
         {
             ShowResponse($"<color=red>{currentRoomPuzzle.failureErrorCode} Error</color>");
         }
+    }
+
+    private void ConfirmItemsUsed()
+    {
+        if (!isCentralTerminal) return;
+
+        methodSlot?.ConsumeItem();
+        urlSlot?.ConsumeItem();
+        headerSlot?.ConsumeItem();
+        bodySlot?.ConsumeItem();
     }
 
     public void ClearTerminal()

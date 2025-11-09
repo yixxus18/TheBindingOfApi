@@ -47,6 +47,12 @@ public class CodexManager : MonoBehaviour
     {
         if (learnedRequests.Any(r => r.puzzleName == puzzleName)) return;
         learnedRequests.Add(new RequestEntry { puzzleName = puzzleName, fullRequest = $"{method} {url}" });
+
+        if (GameManager.Instance != null)
+        {
+            SaveSystem.SaveGame(this, GameManager.Instance.statsManager, GameManager.Instance.inventoryManager);
+            Debug.Log("Nueva petición aprendida y progreso guardado.");
+        }
     }
 
     public void AddLoreEntry(LoreSO lore)
