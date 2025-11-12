@@ -38,6 +38,8 @@ public class EnemyController : MonoBehaviour
     public delegate void MonsterDefeated(int exp);
     public static event MonsterDefeated OnMonsterDefeated;
 
+    private bool hasDealtDamageThisAttack;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -118,10 +120,10 @@ public class EnemyController : MonoBehaviour
 
     public void Attack()
     {
-        if (attackPoint == null)
+        if (attackPoint == null || hasDealtDamageThisAttack)
             return;
 
-        Debug.Log("🗡️ Enemigo atacando!");
+        hasDealtDamageThisAttack = true;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, weaponRange, playerLayer);
 
@@ -132,7 +134,6 @@ public class EnemyController : MonoBehaviour
             {
                 playerController.TakeDamage(damage);
                 playerController.Knockback(transform, knockbackForce, stunTime);
-                Debug.Log("✅ Player golpeado por enemigo!");
             }
         }
     }
@@ -141,13 +142,9 @@ public class EnemyController : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Debug.LogWarning("⚠️ Enemigo ya está muerto, ignorando daño");
-            return; // ✅ Ya está muerto, no hacer nada
+            return;
         }
-
         currentHealth -= amount;
-        Debug.Log($"Enemigo recibió {amount} de daño. HP: {currentHealth}/{maxHealth}");
-
         if (currentHealth <= 0)
         {
             Die();
@@ -156,10 +153,7 @@ public class EnemyController : MonoBehaviour
 
     void Die()
     {
-        Debug.Log($"💀 {gameObject.name} murió! Dando {expReward} XP");
-
         OnMonsterDefeated?.Invoke(expReward);
-
         Destroy(gameObject);
     }
 
@@ -168,8 +162,6 @@ public class EnemyController : MonoBehaviour
     public void Knockback(Transform forceTransform, float force, float kbTime, float stTime)
     {
         if (isInKnockback) return;
-
-        Debug.Log("⚡ Enemigo recibiendo knockback!");
 
         StartCoroutine(KnockbackCoroutine(forceTransform, force, kbTime, stTime));
     }
@@ -185,7 +177,6 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(stTime);
         isInKnockback = false;
         ChangeState(EnemyState.Idle);
-        Debug.Log("✅ Knockback del enemigo terminado");
     }
 
     public void ChangeState(EnemyState newState)
@@ -199,12 +190,15 @@ public class EnemyController : MonoBehaviour
 
         enemyState = newState;
 
-        if (enemyState == EnemyState.Idle)
+        if (enemyState == EnemyState.Attacking)
+        {
+            hasDealtDamageThisAttack = false;
+            anim.SetBool("isAttacking", true);
+        }
+        else if (enemyState == EnemyState.Idle)
             anim.SetBool("isIdle", true);
         else if (enemyState == EnemyState.Chasing)
             anim.SetBool("isChasing", true);
-        else if (enemyState == EnemyState.Attacking)
-            anim.SetBool("isAttacking", true);
     }
 
     private void OnDrawGizmosSelected()

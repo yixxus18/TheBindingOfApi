@@ -16,23 +16,27 @@ public static class SaveSystem
 
         data.completedObjectiveIDs = ProgressionManager.instance.completedObjectiveIDs.ToList();
         data.highestLevelUnlocked = ProgressionManager.instance.highestLevelUnlocked;
-
         data.learnedRequests = codex.learnedRequests;
         data.discoveredLoreIDs = codex.discoveredLore.Select(l => l.loreID).ToList();
-
         data.playerEngineeringLevel = stats.engineering;
 
-        foreach (var slot in inventory.GetActiveSlots())
-        {
-            if (slot.itemSO != null && slot.quantity > 0)
+        // --- INICIO DE LA CORRECCIÓN DE INVENTARIO ---
+
+        data.inventoryItems.Clear();
+
+        // Agrupar todos los items por su ID y sumar sus cantidades
+        var groupedInventory = inventory.GetActiveSlots()
+            .Where(slot => slot.itemSO != null && slot.quantity > 0)
+            .GroupBy(slot => slot.itemSO.itemID)
+            .Select(group => new InventoryItemData
             {
-                data.inventoryItems.Add(new InventoryItemData
-                {
-                    itemID = slot.itemSO.itemID,
-                    quantity = slot.quantity
-                });
-            }
-        }
+                itemID = group.Key,
+                quantity = group.Sum(slot => slot.quantity)
+            });
+
+        data.inventoryItems.AddRange(groupedInventory);
+
+        // --- FIN DE LA CORRECCIÓN DE INVENTARIO ---
 
         DatabaseManager.Instance.SaveGameData(data);
         Debug.Log("Juego guardado en la base de datos SQLite.");
@@ -56,7 +60,9 @@ public static class SaveSystem
         ProgressionManager.instance.completedObjectiveIDs = new HashSet<string>(data.completedObjectiveIDs ?? new List<string>());
         ProgressionManager.instance.highestLevelUnlocked = data.highestLevelUnlocked;
 
-        codex.learnedRequests = data.learnedRequests ?? new List<RequestEntry>();
+        codex.learnedRequests.Clear();
+        codex.learnedRequests.AddRange(data.learnedRequests ?? new List<RequestEntry>());
+
         codex.discoveredLore.Clear();
         foreach (string id in data.discoveredLoreIDs ?? new List<string>())
         {

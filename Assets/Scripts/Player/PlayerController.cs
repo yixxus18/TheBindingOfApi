@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
+    [Header("Hit Effect")]
+    public float hitEffectDuration = 0.2f;
+    private Material[] materials;
+    private int hitEffectAmountID;
+    private Coroutine hitEffectCoroutine;
+
     [Header("Movement")]
     private Vector2 movementInput;
     public bool canMove = true;
@@ -42,6 +48,13 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        hitEffectAmountID = Shader.PropertyToID("_HitEffectAmount");
+        SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        materials = new Material[spriteRenderers.Length];
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            materials[i] = spriteRenderers[i].material;
+        }
     }
 
     void Start()
@@ -169,8 +182,14 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (StatsManager.instance == null)
+        if (StatsManager.instance == null || StatsManager.instance.currentHealth <= 0)
             return;
+
+        if (hitEffectCoroutine != null)
+        {
+            StopCoroutine(hitEffectCoroutine);
+        }
+        hitEffectCoroutine = StartCoroutine(HitEffectRoutine());
 
         StatsManager.instance.TakeDamage(amount);
         UpdateHealthUI();
@@ -180,6 +199,38 @@ public class PlayerController : MonoBehaviour
 
         if (StatsManager.instance.currentHealth <= 0)
             Die();
+    }
+
+    private IEnumerator HitEffectRoutine()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < hitEffectDuration / 2)
+        {
+            elapsedTime += Time.deltaTime;
+            float lerpedAmount = Mathf.Lerp(1f, 0f, elapsedTime / (hitEffectDuration / 2));
+            for (int i = 0; i < materials.Length; i++)
+            {
+                materials[i].SetFloat(hitEffectAmountID, lerpedAmount);
+            }
+            yield return null;
+        }
+
+        elapsedTime = 0f;
+        while (elapsedTime < hitEffectDuration / 2)
+        {
+            elapsedTime += Time.deltaTime;
+            float lerpedAmount = Mathf.Lerp(0f, 1f, elapsedTime / (hitEffectDuration / 2));
+            for (int i = 0; i < materials.Length; i++)
+            {
+                materials[i].SetFloat(hitEffectAmountID, lerpedAmount);
+            }
+            yield return null;
+        }
+
+        for (int i = 0; i < materials.Length; i++)
+        {
+            materials[i].SetFloat(hitEffectAmountID, 0f);
+        }
     }
 
     public void Heal(int amount)

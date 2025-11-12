@@ -6419,25 +6419,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1046546838622021495, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_Size.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046546838622021495, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_Size.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1046546838622021495, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_Sprite
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 1448252480329919801, guid: 0c8c696388fadfb49966349a58d79b29, type: 3}
-    - target: {fileID: 1046546838622021495, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4487047944009202383, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: df932db1c0de3914b9f058174b4b0986, type: 2}
     - target: {fileID: 4506614885553485645, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.79
@@ -6478,25 +6462,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4537859140280262579, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 4537859140280262579, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6975447193081080192, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6975447193081080192, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8503490563349842020, guid: 2ee758ce3aa680643ac0248e5704b3c4, type: 3}
-      propertyPath: enemyLayer.m_Bits
-      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
