@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
-  m_Name: Gold_Item
+  m_Name: GOLD_ITEM
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemID: GOLD_CURRENCY
   itemName: Oro

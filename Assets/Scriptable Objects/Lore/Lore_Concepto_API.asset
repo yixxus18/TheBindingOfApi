@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
   loreID: CONCEPT_API_BASICS
   title: "\xBFQu\xE9 es una API? "
-  content: Una api es una api
+  content: "Una API (Application Programming Interface) es el mesero entre dos programas.
+    Define las reglas y protocolos para que dos aplicaciones puedan solicitar y compartir
+    informaci\xF3n, sin necesidad de saber c\xF3mo funciona la otra internamente."

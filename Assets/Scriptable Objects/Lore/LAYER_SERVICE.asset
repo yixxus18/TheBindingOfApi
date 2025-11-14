@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
+  m_Name: LAYER_SERVICE
+  m_EditorClassIdentifier: Assembly-CSharp::LoreSO
+  loreID: LAYER_SERVICE
+  title: Capa de Servicio SOA
+  content: "Contiene la l\xF3gica de negocio encapsulada en servicios reutilizables.
+    Cada servicio expone funcionalidades espec\xEDficas a trav\xE9s de interfaces
+    bien definidas."

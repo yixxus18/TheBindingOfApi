@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
+  m_Name: PARADIGM_SERVICES
+  m_EditorClassIdentifier: Assembly-CSharp::LoreSO
+  loreID: PARADIGM_SERVICES
+  title: Paradigma Orientado a Servicios
+  content: "Este paradigma trata a las aplicaciones como un conjunto de servicios
+    independientes que se comunican entre s\xED. Su objetivo es la reutilizaci\xF3n,
+    modularidad e interoperabilidad."

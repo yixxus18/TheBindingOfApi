@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
+  m_Name: PLATFORM_INTRO
+  m_EditorClassIdentifier: Assembly-CSharp::LoreSO
+  loreID: PLATFORM_INTRO
+  title: APIs de Plataformas Online
+  content: "APIs dise\xF1adas para interactuar con servicios de terceros como pasarelas
+    de pago, servicios de correo electr\xF3nico o plataformas de e-commerce."

@@ -16,7 +16,8 @@ MonoBehaviour:
   descriptionHint: 
   requiredMethod: GET
   requiredUrlFragment: /users
-  requiredHeaders: []
+  requiredHeaders:
+  - 
   requiredBodySnippet: 
   successResponse: "Acceso concedido. Bienvenido. \r\n"
   failureErrorCode: '401 Unauthorized '

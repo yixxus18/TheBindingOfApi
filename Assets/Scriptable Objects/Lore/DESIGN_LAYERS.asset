@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
+  m_Name: DESIGN_LAYERS
+  m_EditorClassIdentifier: Assembly-CSharp::LoreSO
+  loreID: DESIGN_LAYERS
+  title: "Separaci\xF3n de Capas"
+  content: "Organizar c\xF3digo en capas de presentaci\xF3n, l\xF3gica de negocio
+    y acceso a datos para mantener responsabilidades claras."

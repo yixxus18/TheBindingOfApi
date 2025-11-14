@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
+  m_Name: ARCHITECTURE_SOA
+  m_EditorClassIdentifier: Assembly-CSharp::LoreSO
+  loreID: ARCHITECTURE_SOA
+  title: Arquitectura SOA
+  content: "La Arquitectura Orientada a Servicios est\xE1 compuesta por capas: Acceso,
+    Procesos, Servicio y Recursos. Define los principios de dise\xF1o y est\xE1ndares
+    como XML, SOAP, WSDL, UDDI y REST"
