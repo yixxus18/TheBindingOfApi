@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        SaveSystem.LoadGame(codexManager, statsManager, inventoryManager, loreDatabase, itemDatabase);
+        SaveSystem.LoadGame(codexManager, statsManager, inventoryManager, expManager, loreDatabase, itemDatabase);
     }
 
     private void OnEnable()
@@ -56,6 +56,6 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveSystem.SaveGame(codexManager, statsManager, inventoryManager);
+        SaveSystem.SaveGame(codexManager, statsManager, inventoryManager, expManager);
     }
 }

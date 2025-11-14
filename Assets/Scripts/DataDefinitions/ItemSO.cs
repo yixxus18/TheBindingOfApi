@@ -1,12 +1,13 @@
 using UnityEngine;
+
 public enum ApiItemType
 {
-    Consumable, // Pociones de vida, mejoras de stats 
-    Method,     // GET, POST, PUT, DELETE 
-    Fragment,   // Parte de URL (ej: "/users", "?id=1") 
-    Header,     // Ej: "Content-Type: application/json" 
-    Token,      // Bearer, API Key 
-    Body        // JSON Snippets 
+    Consumable,
+    Method,
+    Fragment,
+    Header,
+    Token,
+    Body
 }
 
 [CreateAssetMenu(fileName = "New API Item", menuName = "BindingOfApi/Item")]
@@ -23,6 +24,10 @@ public class ItemSO : ScriptableObject
     public ApiItemType itemType;
     [Tooltip("El valor real de texto para la petici�n. Ej: 'GET', '/api/v1'")]
     public string apiValue;
+
+    [Header("Currency")]
+    public bool isGold;
+    public int goldAmount;
 
     [Header("Consumable Stats")]
     public int healAmount;

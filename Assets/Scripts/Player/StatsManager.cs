@@ -12,6 +12,7 @@ public class StatsManager : MonoBehaviour
     public int power = 10;
     public int speed = 5;
     public int engineering = 1;
+    public int gold = 0;
 
     [Header("Combat Stats (Opcionales)")]
     public float weaponRange = 1.5f;
@@ -30,14 +31,17 @@ public class StatsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        currentHealth = maxHealth;
+    }
+
+    public void TriggerStatsChanged()
+    {
+        OnStatsChanged?.Invoke();
     }
 
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
         if (currentHealth <= 0)
         {
             Debug.Log("Jugador derrotado");
@@ -58,8 +62,27 @@ public class StatsManager : MonoBehaviour
         currentHealth = maxHealth;
         power += 2;
         engineering += 1;
-
         Debug.Log($"¡Level Up! Power: {power}, MaxHP: {maxHealth}");
         OnStatsChanged?.Invoke();
+    }
+
+    public bool TrySpendGold(int amount)
+    {
+        if (gold >= amount)
+        {
+            gold -= amount;
+            OnStatsChanged?.Invoke();
+            return true;
+        }
+        return false;
+    }
+
+    public void AddGold(int amount)
+    {
+        if (amount > 0)
+        {
+            gold += amount;
+            OnStatsChanged?.Invoke();
+        }
     }
 }

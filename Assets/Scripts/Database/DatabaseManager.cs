@@ -38,7 +38,15 @@ public class DatabaseManager : MonoBehaviour
                         nombre_perfil TEXT NOT NULL,
                         nivel_ingenieria INTEGER DEFAULT 1,
                         highest_level_unlocked INTEGER DEFAULT 0,
-                        ultima_partida_guardada DATETIME DEFAULT CURRENT_TIMESTAMP
+                        ultima_partida_guardada DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        max_health INTEGER DEFAULT 200,      
+                        current_health INTEGER DEFAULT 200,  
+                        power INTEGER DEFAULT 10,            
+                        speed INTEGER DEFAULT 5,             
+                        gold INTEGER DEFAULT 0,
+                        level INTEGER DEFAULT 1,
+                        current_exp INTEGER DEFAULT 0,
+                        exp_to_level INTEGER DEFAULT 100
                     );
                     CREATE TABLE IF NOT EXISTS Lore_Descubierto (
                         perfil_id INTEGER, lore_id TEXT,
@@ -79,13 +87,29 @@ public class DatabaseManager : MonoBehaviour
                     using (var cmd = connection.CreateCommand())
                     {
                         cmd.CommandText = @"UPDATE Perfil_Jugador SET 
-                                            nivel_ingenieria = @nivel, 
+                                            nivel_ingenieria = @nivelIng, 
                                             highest_level_unlocked = @highest, 
-                                            ultima_partida_guardada = CURRENT_TIMESTAMP 
-                                          WHERE id = @profileId;";
-                        cmd.Parameters.Add(new SqliteParameter("@nivel", data.playerEngineeringLevel));
+                                            ultima_partida_guardada = CURRENT_TIMESTAMP,
+                                            max_health = @maxHealth,         
+                                            current_health = @currentHealth,   
+                                            power = @power,                  
+                                            speed = @speed,                  
+                                            gold = @gold,
+                                            level = @level,
+                                            current_exp = @currentExp,
+                                            exp_to_level = @expToLevel
+                                        WHERE id = @profileId;";
+                        cmd.Parameters.Add(new SqliteParameter("@nivelIng", data.playerEngineeringLevel));
                         cmd.Parameters.Add(new SqliteParameter("@highest", data.highestLevelUnlocked));
                         cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
+                        cmd.Parameters.Add(new SqliteParameter("@maxHealth", data.maxHealth));
+                        cmd.Parameters.Add(new SqliteParameter("@currentHealth", data.currentHealth));
+                        cmd.Parameters.Add(new SqliteParameter("@power", data.power));
+                        cmd.Parameters.Add(new SqliteParameter("@speed", data.speed));
+                        cmd.Parameters.Add(new SqliteParameter("@gold", data.gold));
+                        cmd.Parameters.Add(new SqliteParameter("@level", data.level));
+                        cmd.Parameters.Add(new SqliteParameter("@currentExp", data.currentExp));
+                        cmd.Parameters.Add(new SqliteParameter("@expToLevel", data.expToLevel));
                         cmd.ExecuteNonQuery();
                     }
 
@@ -96,8 +120,11 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var loreId in data.discoveredLoreIDs)
                         {
+                            var pLore = cmd.CreateParameter();
+                            pLore.ParameterName = "@loreId";
+                            pLore.Value = loreId;
+                            cmd.Parameters.Add(pLore);
                             cmd.CommandText = "INSERT INTO Lore_Descubierto (perfil_id, lore_id) VALUES (@profileId, @loreId);";
-                            cmd.Parameters.Add(new SqliteParameter("@loreId", loreId));
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -109,8 +136,11 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var objectiveId in data.completedObjectiveIDs)
                         {
+                            var pObj = cmd.CreateParameter();
+                            pObj.ParameterName = "@objectiveId";
+                            pObj.Value = objectiveId;
+                            cmd.Parameters.Add(pObj);
                             cmd.CommandText = "INSERT INTO Objetivo_Completado (perfil_id, objetivo_id) VALUES (@profileId, @objectiveId);";
-                            cmd.Parameters.Add(new SqliteParameter("@objectiveId", objectiveId));
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -122,9 +152,15 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var request in data.learnedRequests)
                         {
+                            var pName = cmd.CreateParameter();
+                            pName.ParameterName = "@puzzleName";
+                            pName.Value = request.puzzleName;
+                            var pReq = cmd.CreateParameter();
+                            pReq.ParameterName = "@fullRequest";
+                            pReq.Value = request.fullRequest;
+                            cmd.Parameters.Add(pName);
+                            cmd.Parameters.Add(pReq);
                             cmd.CommandText = "INSERT INTO Request_Aprendido (perfil_id, puzzle_name, full_request) VALUES (@profileId, @puzzleName, @fullRequest);";
-                            cmd.Parameters.Add(new SqliteParameter("@puzzleName", request.puzzleName));
-                            cmd.Parameters.Add(new SqliteParameter("@fullRequest", request.fullRequest));
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -136,9 +172,15 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var itemData in data.inventoryItems)
                         {
+                            var pId = cmd.CreateParameter();
+                            pId.ParameterName = "@itemId";
+                            pId.Value = itemData.itemID;
+                            var pQty = cmd.CreateParameter();
+                            pQty.ParameterName = "@cantidad";
+                            pQty.Value = itemData.quantity;
+                            cmd.Parameters.Add(pId);
+                            cmd.Parameters.Add(pQty);
                             cmd.CommandText = "INSERT INTO Inventario (perfil_id, item_id, cantidad) VALUES (@profileId, @itemId, @cantidad);";
-                            cmd.Parameters.Add(new SqliteParameter("@itemId", itemData.itemID));
-                            cmd.Parameters.Add(new SqliteParameter("@cantidad", itemData.quantity));
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -163,7 +205,7 @@ public class DatabaseManager : MonoBehaviour
 
             using (var cmd = connection.CreateCommand())
             {
-                cmd.CommandText = "SELECT nivel_ingenieria, highest_level_unlocked FROM Perfil_Jugador WHERE id = @profileId";
+                cmd.CommandText = "SELECT nivel_ingenieria, highest_level_unlocked, max_health, current_health, power, speed, gold, level, current_exp, exp_to_level FROM Perfil_Jugador WHERE id = @profileId";
                 cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -171,6 +213,14 @@ public class DatabaseManager : MonoBehaviour
                     {
                         data.playerEngineeringLevel = reader.GetInt32(0);
                         data.highestLevelUnlocked = reader.GetInt32(1);
+                        data.maxHealth = reader.GetInt32(2);
+                        data.currentHealth = reader.GetInt32(3);
+                        data.power = reader.GetInt32(4);
+                        data.speed = reader.GetInt32(5);
+                        data.gold = reader.GetInt32(6);
+                        data.level = reader.GetInt32(7);
+                        data.currentExp = reader.GetInt32(8);
+                        data.expToLevel = reader.GetInt32(9);
                     }
                 }
             }
@@ -229,7 +279,6 @@ public class DatabaseManager : MonoBehaviour
                 }
             }
         }
-
         return data;
     }
 }

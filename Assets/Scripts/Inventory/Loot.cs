@@ -13,7 +13,7 @@ public class Loot : MonoBehaviour
 
     [Header("Pickup Settings")]
     public bool canBePickedUp = true;
-    public float pickupDelay = 0.5f; 
+    public float pickupDelay = 0.5f;
 
     [Header("Audio (Opcional)")]
     public AudioClip pickupSound;
@@ -85,24 +85,5 @@ public class Loot : MonoBehaviour
         }
         Destroy(gameObject, 0.5f);
         Debug.Log($"Recogido: {itemSO.itemName} x{quantity}");
-    }
-
-    public static void SpawnLoot(ItemSO item, int amount, Vector3 position)
-    {
-        GameObject lootPrefab = Resources.Load<GameObject>("Prefabs/Loot");
-
-        if (lootPrefab == null)
-        {
-            Debug.LogError("No se encontró el prefab de Loot en Resources/Prefabs/Loot");
-            return;
-        }
-
-        GameObject lootObj = Instantiate(lootPrefab, position, Quaternion.identity);
-        Loot loot = lootObj.GetComponent<Loot>();
-
-        if (loot != null)
-        {
-            loot.Initialize(item, amount);
-        }
     }
 }

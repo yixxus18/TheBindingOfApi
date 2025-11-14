@@ -8,9 +8,18 @@ public class SaveData
     public List<string> discoveredLoreIDs;
     public int playerEngineeringLevel;
     public List<string> unlockedDungeons;
-
     public List<string> completedObjectiveIDs;
     public int highestLevelUnlocked;
+
+    public int maxHealth;
+    public int currentHealth;
+    public int power;
+    public int speed;
+    public int gold;
+
+    public int level;
+    public int currentExp;
+    public int expToLevel;
 
     public SaveData()
     {

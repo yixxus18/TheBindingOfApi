@@ -21,6 +21,7 @@ public class PlayerUIManager : MonoBehaviour
     public TMP_Text powerText;
     public TMP_Text speedText;
     public TMP_Text engineeringText;
+    public TMP_Text goldText;
 
     void Awake()
     {
@@ -42,10 +43,12 @@ public class PlayerUIManager : MonoBehaviour
     {
         UpdateAllUI();
     }
+
     private void UpdateAllUI()
     {
         UpdateHealthBar();
         UpdateStatsDisplay();
+        UpdateExpBar();
     }
 
     public void UpdateHealthBar()
@@ -82,7 +85,7 @@ public class PlayerUIManager : MonoBehaviour
         }
         if (levelText != null)
         {
-            levelText.text = $"Nivel{level}";
+            levelText.text = $"Nivel {level}";
         }
         if (expText != null)
         {
@@ -99,5 +102,7 @@ public class PlayerUIManager : MonoBehaviour
             speedText.text = $"Speed: {StatsManager.instance.speed}";
         if (engineeringText != null)
             engineeringText.text = $"Engineering: {StatsManager.instance.engineering}";
+        if (goldText != null)
+            goldText.text = $"Oro: {StatsManager.instance.gold}";
     }
 }

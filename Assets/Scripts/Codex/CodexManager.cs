@@ -50,7 +50,12 @@ public class CodexManager : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            SaveSystem.SaveGame(this, GameManager.Instance.statsManager, GameManager.Instance.inventoryManager);
+            SaveSystem.SaveGame(
+                this,
+                GameManager.Instance.statsManager,
+                GameManager.Instance.inventoryManager,
+                GameManager.Instance.expManager
+            );
             Debug.Log("Nueva petición aprendida y progreso guardado.");
         }
     }

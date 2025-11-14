@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour
 {
@@ -27,9 +28,13 @@ public class EnemyController : MonoBehaviour
     public float weaponRange = 1.5f;
     public float attackCooldown = 2f;
     private float attackCooldownTimer;
+    private bool hasDealtDamageThisAttack;
     public float knockbackForce = 5f;
     public float knockbackTime = 0.2f;
     public float stunTime = 0.3f;
+
+    [Header("Loot")]
+    public List<LootTableEntry> lootTable;
 
     [Header("State")]
     private EnemyState enemyState;
@@ -37,8 +42,6 @@ public class EnemyController : MonoBehaviour
 
     public delegate void MonsterDefeated(int exp);
     public static event MonsterDefeated OnMonsterDefeated;
-
-    private bool hasDealtDamageThisAttack;
 
     void Start()
     {
@@ -50,36 +53,27 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (isInKnockback)
-            return;
-
+        if (isInKnockback) return;
         if (enemyState != EnemyState.Knockback)
         {
             CheckForPlayer();
-
             if (attackCooldownTimer > 0)
                 attackCooldownTimer -= Time.deltaTime;
 
             if (enemyState == EnemyState.Chasing)
-            {
                 Chase();
-            }
             else if (enemyState == EnemyState.Attacking)
-            {
                 rb.linearVelocity = Vector2.zero;
-            }
         }
     }
 
     void CheckForPlayer()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(detectionPoint.position, playerDetectRange, playerLayer);
-
         if (hits.Length > 0)
         {
             player = hits[0].transform;
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
             if (distanceToPlayer <= attackRange && attackCooldownTimer <= 0)
             {
                 attackCooldownTimer = attackCooldown;
@@ -99,15 +93,12 @@ public class EnemyController : MonoBehaviour
 
     void Chase()
     {
-        if (player == null)
-            return;
-
+        if (player == null) return;
         if (player.position.x > transform.position.x && facingDirection == -1 ||
             player.position.x < transform.position.x && facingDirection == 1)
         {
             Flip();
         }
-
         Vector2 direction = (player.position - transform.position).normalized;
         rb.linearVelocity = direction * speed;
     }
@@ -120,13 +111,9 @@ public class EnemyController : MonoBehaviour
 
     public void Attack()
     {
-        if (attackPoint == null || hasDealtDamageThisAttack)
-            return;
-
+        if (attackPoint == null || hasDealtDamageThisAttack) return;
         hasDealtDamageThisAttack = true;
-
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, weaponRange, playerLayer);
-
         if (hits.Length > 0)
         {
             PlayerController playerController = hits[0].GetComponent<PlayerController>();
@@ -140,10 +127,7 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (currentHealth <= 0)
-        {
-            return;
-        }
+        if (currentHealth <= 0) return;
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
@@ -154,15 +138,31 @@ public class EnemyController : MonoBehaviour
     void Die()
     {
         OnMonsterDefeated?.Invoke(expReward);
+        DropLoot();
         Destroy(gameObject);
     }
 
-
+    private void DropLoot()
+    {
+        foreach (var entry in lootTable)
+        {
+            if (Random.value <= entry.dropChance)
+            {
+                if (entry.itemToDrop.isGold)
+                {
+                    StatsManager.instance.AddGold(entry.itemToDrop.goldAmount);
+                }
+                else
+                {
+                    LootSpawner.Instance.SpawnLoot(entry.itemToDrop, 1, transform.position);
+                }
+            }
+        }
+    }
 
     public void Knockback(Transform forceTransform, float force, float kbTime, float stTime)
     {
         if (isInKnockback) return;
-
         StartCoroutine(KnockbackCoroutine(forceTransform, force, kbTime, stTime));
     }
 
@@ -181,38 +181,20 @@ public class EnemyController : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
-        if (enemyState == EnemyState.Idle)
-            anim.SetBool("isIdle", false);
-        else if (enemyState == EnemyState.Chasing)
-            anim.SetBool("isChasing", false);
-        else if (enemyState == EnemyState.Attacking)
-            anim.SetBool("isAttacking", false);
+        if (enemyState == newState) return;
+
+        if (enemyState == EnemyState.Idle) anim.SetBool("isIdle", false);
+        else if (enemyState == EnemyState.Chasing) anim.SetBool("isChasing", false);
+        else if (enemyState == EnemyState.Attacking) anim.SetBool("isAttacking", false);
 
         enemyState = newState;
 
-        if (enemyState == EnemyState.Attacking)
+        if (enemyState == EnemyState.Idle) anim.SetBool("isIdle", true);
+        else if (enemyState == EnemyState.Chasing) anim.SetBool("isChasing", true);
+        else if (enemyState == EnemyState.Attacking)
         {
             hasDealtDamageThisAttack = false;
             anim.SetBool("isAttacking", true);
-        }
-        else if (enemyState == EnemyState.Idle)
-            anim.SetBool("isIdle", true);
-        else if (enemyState == EnemyState.Chasing)
-            anim.SetBool("isChasing", true);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (detectionPoint != null)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(detectionPoint.position, playerDetectRange);
-        }
-
-        if (attackPoint != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackPoint.position, weaponRange);
         }
     }
 }
