@@ -152,6 +152,12 @@ public class DialogueManager : MonoBehaviour
             CodexManager.instance.AddLoreEntry(currentDialogue.loreToUnlock);
         }
 
+        if (currentDialogue != null && currentDialogue.itemReward != null)
+        {
+            InventoryManager.instance.AddItem(currentDialogue.itemReward, currentDialogue.itemRewardQuantity);
+            Debug.Log($"Recibido del diálogo: {currentDialogue.itemReward.itemName} x{currentDialogue.itemRewardQuantity}");
+        }
+
         yield return StartCoroutine(FadeCanvasGroup(dialogueCanvasGroup, 1, 0, fadeDuration));
 
         isDialogueActive = false;

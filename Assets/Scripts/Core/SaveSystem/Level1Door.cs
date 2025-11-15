@@ -21,7 +21,12 @@ public class LevelDoor : MonoBehaviour
 
     void OnEnable()
     {
+        ProgressionManager.OnLevelUnlocked += RefreshLockState;
         RefreshLockState();
+    }
+    void OnDisable()
+    {
+        ProgressionManager.OnLevelUnlocked -= RefreshLockState;
     }
 
     void Update()

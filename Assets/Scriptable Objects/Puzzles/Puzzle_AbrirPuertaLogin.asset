@@ -12,15 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f19f6af64f2774fa3d2691835a0ce5, type: 3}
   m_Name: Puzzle_AbrirPuertaLogin
   m_EditorClassIdentifier: Assembly-CSharp::RoomPuzzleSO
+  puzzleID: UNLOCK_FIRST_LEVELDOOR
   puzzleName: Abrir Puerta de Login
   descriptionHint: 
   requiredMethod: GET
-  requiredUrlFragment: /users
+  requiredUrlFragments:
+  - /api
+  - /users
   requiredHeaders:
-  - 
-  requiredBodySnippet: 
+  - 'Accept: application/json'
+  requiredBodySnippets:
+  - '{"player":"Isaac","password":"ABC-123"}'
   successResponse: "Acceso concedido. Bienvenido. \r\n"
   failureErrorCode: '401 Unauthorized '
   OnPuzzleSolved:
     m_PersistentCalls:
       m_Calls: []
+  itemReward: {fileID: 11400000, guid: 8180fe0ab1921344597732a6267216ee, type: 2}
+  loreReward: {fileID: 11400000, guid: 0c5ebc7148c23e443a6562e026542f59, type: 2}

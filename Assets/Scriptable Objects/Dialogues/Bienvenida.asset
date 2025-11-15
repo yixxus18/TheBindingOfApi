@@ -21,3 +21,5 @@ MonoBehaviour:
     text: 'Que te vaya bien '
   options: []
   loreToUnlock: {fileID: 11400000, guid: 90277c2b8c0ee584eaaf1c06811c9866, type: 2}
+  itemReward: {fileID: 11400000, guid: 8533b8ed9d91a534e8cbf9593f691a88, type: 2}
+  itemRewardQuantity: 1

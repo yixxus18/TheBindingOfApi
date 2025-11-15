@@ -1,9 +1,11 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class ProgressionManager : MonoBehaviour
 {
     public static ProgressionManager instance;
+    public static event Action OnLevelUnlocked;
 
     public HashSet<string> completedObjectiveIDs = new HashSet<string>();
     public int highestLevelUnlocked = 0;
@@ -43,5 +45,6 @@ public class ProgressionManager : MonoBehaviour
     {
         highestLevelUnlocked++;
         Debug.Log($"¡Nivel {highestLevelUnlocked} desbloqueado!");
+        OnLevelUnlocked?.Invoke();
     }
 }

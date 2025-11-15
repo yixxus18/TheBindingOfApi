@@ -74,16 +74,15 @@ public class ApiTerminalManager : MonoBehaviour
 
     private void OnSendRequest()
     {
-        string method, fullUrl;
-        List<string> headers = new List<string>();
-        string body = "";
+        string method, fullUrl, body;
+        List<string> headers;
 
         if (isCentralTerminal)
         {
             method = methodSlot.GetCurrentItem()?.apiValue ?? "GET";
-            fullUrl = baseUrl + (urlSlot.GetCurrentItem()?.apiValue ?? "");
-            if (headerSlot.GetCurrentItem() != null) headers.Add(headerSlot.GetCurrentItem().apiValue);
-            body = bodySlot.GetCurrentItem()?.apiValue ?? "";
+            fullUrl = baseUrl + string.Join("", urlSlot.GetCurrentItems().Select(i => i.apiValue));
+            headers = headerSlot.GetCurrentItems().Select(i => i.apiValue).ToList();
+            body = string.Join("", bodySlot.GetCurrentItems().Select(i => i.apiValue));
         }
         else
         {
@@ -113,8 +112,17 @@ public class ApiTerminalManager : MonoBehaviour
 
             ConfirmItemsUsed();
 
+            if (currentRoomPuzzle.itemReward != null)
+            {
+                InventoryManager.instance.AddItem(currentRoomPuzzle.itemReward, 1);
+            }
+            if (currentRoomPuzzle.loreReward != null)
+            {
+                CodexManager.instance.AddLoreEntry(currentRoomPuzzle.loreReward);
+            }
+
             if (DungeonObjectiveManager.instance != null)
-                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, currentRoomPuzzle.puzzleName);
+                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, currentRoomPuzzle.puzzleID);
 
             if (isCentralTerminal && CodexManager.instance != null)
             {
@@ -130,11 +138,10 @@ public class ApiTerminalManager : MonoBehaviour
     private void ConfirmItemsUsed()
     {
         if (!isCentralTerminal) return;
-
-        methodSlot?.ConsumeItem();
-        urlSlot?.ConsumeItem();
-        headerSlot?.ConsumeItem();
-        bodySlot?.ConsumeItem();
+        methodSlot?.ConsumeAllItems();
+        urlSlot?.ConsumeAllItems();
+        headerSlot?.ConsumeAllItems();
+        bodySlot?.ConsumeAllItems();
     }
 
     public void ClearTerminal()

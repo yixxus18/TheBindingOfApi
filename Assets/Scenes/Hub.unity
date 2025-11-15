@@ -4132,7 +4132,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7151335025817718036, guid: 81d1a5c68795f8d47aa57a6499c2e019, type: 3}
+  m_Sprite: {fileID: -7151335025817718036, guid: 7ccd179b0ab7e6644ac778fc22fe3e56, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5920,7 +5920,7 @@ MonoBehaviour:
     isCompleted: 0
   - description: Resuelve el puzzle
     type: 1
-    targetId: Abrir Puerta de Login
+    targetId: UNLOCK_FIRST_LEVELDOOR
     requiredAmount: 1
     currentAmount: 0
     isCompleted: 0
@@ -6392,7 +6392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547fb9b3992d9234fbc0b70a7d1e23a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  portriat: {fileID: 1992081105}
+  portriat: {fileID: 567457463}
   actorName: {fileID: 160195511}
   dialogueText: {fileID: 1522114848}
   dialogueCanvasGroup: {fileID: 225643930}
@@ -30013,6 +30013,14 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 4dcd9cda07695c047bb46b5aea3ce0b3, type: 2}
     price: 1
   - item: {fileID: 11400000, guid: 005e848ae4e315548a139a00e7cd424c, type: 2}
+    price: 1
+  - item: {fileID: 11400000, guid: 1d468c7ee835c8c4a8c0ad6a67062164, type: 2}
+    price: 1
+  - item: {fileID: 11400000, guid: 7dd706252fd12494ab291ed66e52766a, type: 2}
+    price: 1
+  - item: {fileID: 11400000, guid: 01b83017ab1026942be474781de62e94, type: 2}
+    price: 1
+  - item: {fileID: 11400000, guid: 846a7142651f6d5418cb1bb6a28c1fe2, type: 2}
     price: 1
 --- !u!61 &2018786387
 BoxCollider2D:

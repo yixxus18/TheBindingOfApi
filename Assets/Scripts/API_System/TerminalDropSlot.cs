@@ -1,53 +1,70 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 
 public class TerminalDropSlot : MonoBehaviour, IDropHandler
 {
     public TerminalSlotType slotType;
     public TMP_Text displayText;
 
-    private ItemSO currentItem;
+    private List<ItemSO> currentItems = new List<ItemSO>();
 
     private void Start()
     {
         ClearSlot();
     }
 
+    private void OnDestroy()
+    {
+        ReturnAllItemsToInventory();
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         InventorySlot inventorySlot = eventData.pointerDrag.GetComponent<InventorySlot>();
+        if (inventorySlot == null || inventorySlot.itemSO == null) return;
 
-        if (inventorySlot != null && IsValidItemType(inventorySlot.itemSO))
+        // --- INICIO DE LA CORRECCIÓN ---
+
+        // 1. Guardamos una referencia al item ANTES de hacer nada más.
+        ItemSO itemToDrop = inventorySlot.itemSO;
+
+        // 2. Validamos el item que queremos soltar.
+        if (IsValidItemType(itemToDrop))
         {
-            ReturnItemToInventory();
-
-            if (InventoryManager.instance.RemoveItem(inventorySlot.itemSO, 1))
+            // 3. Intentamos quitar el item del inventario.
+            if (InventoryManager.instance.RemoveItem(itemToDrop, 1))
             {
-                currentItem = inventorySlot.itemSO;
+                // 4. Si se pudo quitar, AÑADIMOS la referencia que guardamos al principio.
+                currentItems.Add(itemToDrop);
                 UpdateSlotUI();
             }
         }
+
+        // --- FIN DE LA CORRECCIÓN ---
     }
 
-    public void ReturnItemToInventory()
+    public void ReturnAllItemsToInventory()
     {
-        if (currentItem != null)
+        if (currentItems == null) return;
+        foreach (var item in currentItems)
         {
-            InventoryManager.instance.AddItem(currentItem, 1);
-            currentItem = null;
+            if (item != null) InventoryManager.instance.AddItem(item, 1);
         }
+        currentItems.Clear();
     }
 
     public void ClearSlot()
     {
-        ReturnItemToInventory();
+        ReturnAllItemsToInventory();
         UpdateSlotUI();
     }
 
-    public void ConsumeItem()
+    public void ConsumeAllItems()
     {
-        currentItem = null;
+        currentItems.Clear();
     }
 
     private bool IsValidItemType(ItemSO item)
@@ -55,7 +72,7 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
         if (item == null) return false;
         switch (slotType)
         {
-            case TerminalSlotType.Method: return item.itemType == ApiItemType.Method;
+            case TerminalSlotType.Method: return item.itemType == ApiItemType.Method && currentItems.Count == 0;
             case TerminalSlotType.Url: return item.itemType == ApiItemType.Fragment;
             case TerminalSlotType.Header: return item.itemType == ApiItemType.Header || item.itemType == ApiItemType.Token;
             case TerminalSlotType.Body: return item.itemType == ApiItemType.Body;
@@ -65,7 +82,14 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
 
     private void UpdateSlotUI()
     {
-        displayText.text = currentItem != null ? currentItem.apiValue : GetDefaultText();
+        if (currentItems != null && currentItems.Count > 0)
+        {
+            displayText.text = string.Join("", currentItems.Where(item => item != null).Select(item => item.apiValue ?? ""));
+        }
+        else
+        {
+            displayText.text = GetDefaultText();
+        }
     }
 
     private string GetDefaultText()
@@ -80,7 +104,8 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
         }
     }
 
-    public ItemSO GetCurrentItem() => currentItem;
+    public List<ItemSO> GetCurrentItems() => currentItems;
+    public ItemSO GetCurrentItem() => currentItems.FirstOrDefault();
 }
 
 public enum TerminalSlotType { Method, Url, Header, Body }

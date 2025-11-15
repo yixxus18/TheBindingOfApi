@@ -24,4 +24,8 @@ public class DialogueSO : ScriptableObject
 
     [Header("Recompensa de Lore")]
     public LoreSO loreToUnlock;
+
+    [Header("Recompensa de Item")]
+    public ItemSO itemReward;
+    public int itemRewardQuantity = 1;
 }
