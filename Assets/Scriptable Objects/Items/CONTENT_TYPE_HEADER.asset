@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: CONTENT_TYPE_HEADER
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: CONTENT_TYPE_HEADER
+  itemID: 13
   itemName: Header Content-Type
   itemDescription: Especifica el formato de datos enviados. Necesario para resolver
     puzzles y enviar payloads correctamente.

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DB_SECURITY
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DB_SECURITY
+  loreID: 23
   title: Seguridad en APIs de Datos
   content: "Implementaci\xF3n de autenticaci\xF3n, autorizaci\xF3n, validaci\xF3n
     de entrada y prevenci\xF3n de inyecci\xF3n SQL para proteger datos sensibles."

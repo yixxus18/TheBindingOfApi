@@ -22,7 +22,8 @@ public class ApiTerminalManager : MonoBehaviour
     public TerminalDropSlot headerSlot;
     public TerminalDropSlot bodySlot;
 
-    [Header("Input Fields (Menu Terminal)")]
+    [Header("Menu Terminal Elements")]
+    public TMP_Dropdown learnedRequestsDropdown;
     public TMP_InputField methodInputField;
     public TMP_InputField urlInputField;
     public TMP_InputField headersInputField;
@@ -38,6 +39,28 @@ public class ApiTerminalManager : MonoBehaviour
         sendButton?.onClick.AddListener(OnSendRequest);
         clearButton?.onClick.AddListener(ClearTerminal);
         closeButton?.onClick.AddListener(CloseTerminal);
+
+        if (learnedRequestsDropdown != null)
+        {
+            learnedRequestsDropdown.onValueChanged.AddListener(OnLearnedRequestSelected);
+        }
+
+        RegisterAllButtonSounds();
+    }
+
+    private void RegisterAllButtonSounds()
+    {
+        Button[] allButtons = GetComponentsInChildren<Button>(true);
+        foreach (Button btn in allButtons)
+        {
+            btn.onClick.AddListener(() =>
+            {
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.menuNavigationSound);
+                }
+            });
+        }
     }
 
     private void OnDestroy()
@@ -56,6 +79,11 @@ public class ApiTerminalManager : MonoBehaviour
         currentRoomPuzzle = puzzleContext;
         terminalPanel.SetActive(true);
         ClearTerminal();
+
+        if (!isCentralTerminal)
+        {
+            PopulateLearnedRequests();
+        }
     }
 
     public void CloseTerminal()
@@ -72,15 +100,55 @@ public class ApiTerminalManager : MonoBehaviour
         currentRoomPuzzle = null;
     }
 
+    private void PopulateLearnedRequests()
+    {
+        if (learnedRequestsDropdown == null) return;
+
+        learnedRequestsDropdown.ClearOptions();
+        List<string> options = new List<string> { "Selecciona una petición aprendida..." };
+
+        if (CodexManager.instance != null)
+        {
+            options.AddRange(CodexManager.instance.learnedRequests.Select(r => r.puzzleName));
+        }
+
+        learnedRequestsDropdown.AddOptions(options);
+        learnedRequestsDropdown.value = 0;
+    }
+
+    private void OnLearnedRequestSelected(int index)
+    {
+        if (index == 0 || CodexManager.instance == null)
+        {
+            return;
+        }
+
+        RequestEntry request = CodexManager.instance.learnedRequests[index - 1];
+
+        string[] parts = request.fullRequest.Split(' ');
+        if (parts.Length >= 2)
+        {
+            if (methodInputField != null) methodInputField.text = parts[0];
+            if (urlInputField != null) urlInputField.text = parts[1];
+
+            if (headersInputField != null) headersInputField.text = "";
+            if (bodyInputField != null) bodyInputField.text = "";
+        }
+    }
+
     private void OnSendRequest()
     {
-        string method, fullUrl, body;
-        List<string> headers;
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.processingRequestSound);
+
+        string method, fullUrl;
+        List<string> headers = new List<string>();
+        string body = "";
 
         if (isCentralTerminal)
         {
             method = methodSlot.GetCurrentItem()?.apiValue ?? "GET";
-            fullUrl = baseUrl + string.Join("", urlSlot.GetCurrentItems().Select(i => i.apiValue));
+            string urlFragments = string.Join("", urlSlot.GetCurrentItems().Select(i => i.apiValue));
+            fullUrl = baseUrl + urlFragments;
             headers = headerSlot.GetCurrentItems().Select(i => i.apiValue).ToList();
             body = string.Join("", bodySlot.GetCurrentItems().Select(i => i.apiValue));
         }
@@ -107,19 +175,12 @@ public class ApiTerminalManager : MonoBehaviour
         bool isSuccess = currentRoomPuzzle.ValidateRequest(method, url, headers, body);
         if (isSuccess)
         {
+            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalSuccessSound);
+
             ShowResponse($"<color=green>200 OK</color>\n{currentRoomPuzzle.successResponse}");
             currentRoomPuzzle.OnPuzzleSolved?.Invoke();
 
             ConfirmItemsUsed();
-
-            if (currentRoomPuzzle.itemReward != null)
-            {
-                InventoryManager.instance.AddItem(currentRoomPuzzle.itemReward, 1);
-            }
-            if (currentRoomPuzzle.loreReward != null)
-            {
-                CodexManager.instance.AddLoreEntry(currentRoomPuzzle.loreReward);
-            }
 
             if (DungeonObjectiveManager.instance != null)
                 DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, currentRoomPuzzle.puzzleID);
@@ -131,6 +192,8 @@ public class ApiTerminalManager : MonoBehaviour
         }
         else
         {
+            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalErrorSound);
+
             ShowResponse($"<color=red>{currentRoomPuzzle.failureErrorCode} Error</color>");
         }
     }
@@ -138,10 +201,11 @@ public class ApiTerminalManager : MonoBehaviour
     private void ConfirmItemsUsed()
     {
         if (!isCentralTerminal) return;
-        methodSlot?.ConsumeAllItems();
-        urlSlot?.ConsumeAllItems();
-        headerSlot?.ConsumeAllItems();
-        bodySlot?.ConsumeAllItems();
+
+        methodSlot?.ConsumeItem();
+        urlSlot?.ConsumeItem();
+        headerSlot?.ConsumeItem();
+        bodySlot?.ConsumeItem();
     }
 
     public void ClearTerminal()
@@ -155,10 +219,11 @@ public class ApiTerminalManager : MonoBehaviour
         }
         else
         {
-            methodInputField.text = "";
-            urlInputField.text = "";
-            headersInputField.text = "";
-            bodyInputField.text = "";
+            if (learnedRequestsDropdown != null) learnedRequestsDropdown.value = 0;
+            if (methodInputField != null) methodInputField.text = "";
+            if (urlInputField != null) urlInputField.text = "";
+            if (headersInputField != null) headersInputField.text = "";
+            if (bodyInputField != null) bodyInputField.text = "";
         }
         responseText.text = "Esperando Petición...";
     }

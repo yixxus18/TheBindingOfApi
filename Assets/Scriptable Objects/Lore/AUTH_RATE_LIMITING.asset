@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: AUTH_RATE_LIMITING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: AUTH_RATE_LIMITING
+  loreID: 7
   title: "Limitaci\xF3n de Tasa"
   content: "Restringir el n\xFAmero de solicitudes por cliente en un per\xEDodo de
     tiempo para prevenir abuso y garantizar disponibilidad."

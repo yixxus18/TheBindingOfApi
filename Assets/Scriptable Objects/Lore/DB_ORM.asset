@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DB_ORM
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DB_ORM
+  loreID: 22
   title: Object-Relational Mapping
   content: "Los ORM como Entity Framework o SQLAlchemy simplifican la interacci\xF3n
     con bases de datos mapeando objetos de programaci\xF3n a tablas relacionales."

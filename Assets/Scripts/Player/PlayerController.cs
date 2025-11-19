@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     public int facingDirection = 1;
     private bool isKnockedback = false;
 
+    [Header("Audio Settings")]
+    public float stepInterval = 0.4f;
+    private float stepTimer = 0f;
+
     [Header("Combat")]
     public Transform attackPoint;
     public LayerMask enemyLayer;
@@ -64,11 +68,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (attackTimer > 0)
-            attackTimer -= Time.deltaTime;
-
-        if (dodgeTimer > 0)
-            dodgeTimer -= Time.deltaTime;
+        if (attackTimer > 0) attackTimer -= Time.deltaTime;
+        if (dodgeTimer > 0) dodgeTimer -= Time.deltaTime;
 
         if (isKnockedback || isDodging)
         {
@@ -86,6 +87,23 @@ public class PlayerController : MonoBehaviour
 
             if (movementInput.x > 0 && transform.localScale.x < 0 || movementInput.x < 0 && transform.localScale.x > 0)
                 Flip();
+
+            if (movementInput.magnitude > 0.1f)
+            {
+                stepTimer -= Time.deltaTime;
+                if (stepTimer <= 0f)
+                {
+                    if (AudioManager.Instance != null && AudioManager.Instance.playerStepSound != null)
+                    {
+                        AudioManager.Instance.PlaySFX(AudioManager.Instance.playerStepSound, 0.5f);
+                    }
+                    stepTimer = stepInterval;
+                }
+            }
+            else
+            {
+                stepTimer = 0f;
+            }
         }
         else
         {
@@ -112,8 +130,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isKnockedback || isDodging)
-            return;
+        if (isKnockedback || isDodging) return;
 
         if (canMove && StatsManager.instance != null)
         {
@@ -128,23 +145,24 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAttacking", true);
         hasDealtDamageThisAttack = false;
         enemiesHitThisAttack.Clear();
+
+        if (AudioManager.Instance != null && AudioManager.Instance.playerAttackSound != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.playerAttackSound);
+        }
     }
 
     public void DealDamage()
     {
-        if (hasDealtDamageThisAttack || attackPoint == null || StatsManager.instance == null)
-            return;
+        if (hasDealtDamageThisAttack || attackPoint == null || StatsManager.instance == null) return;
 
         hasDealtDamageThisAttack = true;
-
         Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPoint.position, 1.5f, enemyLayer);
 
         foreach (var enemy in enemies)
         {
             int enemyID = enemy.gameObject.GetInstanceID();
-
-            if (enemiesHitThisAttack.Contains(enemyID))
-                continue;
+            if (enemiesHitThisAttack.Contains(enemyID)) continue;
 
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
             if (enemyController != null)
@@ -182,23 +200,22 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (StatsManager.instance == null || StatsManager.instance.currentHealth <= 0)
-            return;
+        if (StatsManager.instance == null || StatsManager.instance.currentHealth <= 0) return;
 
-        if (hitEffectCoroutine != null)
+        if (AudioManager.Instance != null && AudioManager.Instance.playerHurtSound != null)
         {
-            StopCoroutine(hitEffectCoroutine);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.playerHurtSound);
         }
+
+        if (hitEffectCoroutine != null) StopCoroutine(hitEffectCoroutine);
         hitEffectCoroutine = StartCoroutine(HitEffectRoutine());
 
         StatsManager.instance.TakeDamage(amount);
         UpdateHealthUI();
 
-        if (PlayerUIManager.instance != null)
-            PlayerUIManager.instance.UpdateHealthBar();
+        if (PlayerUIManager.instance != null) PlayerUIManager.instance.UpdateHealthBar();
 
-        if (StatsManager.instance.currentHealth <= 0)
-            Die();
+        if (StatsManager.instance.currentHealth <= 0) Die();
     }
 
     private IEnumerator HitEffectRoutine()
@@ -208,41 +225,26 @@ public class PlayerController : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float lerpedAmount = Mathf.Lerp(1f, 0f, elapsedTime / (hitEffectDuration / 2));
-            for (int i = 0; i < materials.Length; i++)
-            {
-                materials[i].SetFloat(hitEffectAmountID, lerpedAmount);
-            }
+            for (int i = 0; i < materials.Length; i++) materials[i].SetFloat(hitEffectAmountID, lerpedAmount);
             yield return null;
         }
-
         elapsedTime = 0f;
         while (elapsedTime < hitEffectDuration / 2)
         {
             elapsedTime += Time.deltaTime;
             float lerpedAmount = Mathf.Lerp(0f, 1f, elapsedTime / (hitEffectDuration / 2));
-            for (int i = 0; i < materials.Length; i++)
-            {
-                materials[i].SetFloat(hitEffectAmountID, lerpedAmount);
-            }
+            for (int i = 0; i < materials.Length; i++) materials[i].SetFloat(hitEffectAmountID, lerpedAmount);
             yield return null;
         }
-
-        for (int i = 0; i < materials.Length; i++)
-        {
-            materials[i].SetFloat(hitEffectAmountID, 0f);
-        }
+        for (int i = 0; i < materials.Length; i++) materials[i].SetFloat(hitEffectAmountID, 0f);
     }
 
     public void Heal(int amount)
     {
-        if (StatsManager.instance == null)
-            return;
-
+        if (StatsManager.instance == null) return;
         StatsManager.instance.Heal(amount);
         UpdateHealthUI();
-
-        if (PlayerUIManager.instance != null)
-            PlayerUIManager.instance.UpdateHealthBar();
+        if (PlayerUIManager.instance != null) PlayerUIManager.instance.UpdateHealthBar();
     }
 
     private void UpdateHealthUI()
@@ -250,88 +252,24 @@ public class PlayerController : MonoBehaviour
         if (healthText != null && StatsManager.instance != null)
         {
             healthText.text = $"HP: {StatsManager.instance.currentHealth}/{StatsManager.instance.maxHealth}";
-
-            if (healthTextAnim != null)
-                healthTextAnim.Play("TextUpdate", -1, 0f);
+            if (healthTextAnim != null) healthTextAnim.Play("TextUpdate", -1, 0f);
         }
     }
 
     void Die()
     {
+        if (AudioManager.Instance != null && AudioManager.Instance.playerDeathSound != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.playerDeathSound);
+        }
         animator.SetTrigger("Death");
         canMove = false;
     }
 
-    public void Knockback(Transform enemy, float force, float stunTime)
-    {
-        if (isKnockedback) return;
-        StartCoroutine(KnockbackCoroutine(enemy, force, stunTime));
-    }
-
-    IEnumerator KnockbackCoroutine(Transform enemy, float force, float stunTime)
-    {
-        isKnockedback = true;
-        canMove = false;
-        Vector2 direction = (transform.position - enemy.position).normalized;
-        rb.linearVelocity = direction * force;
-        yield return new WaitForSeconds(stunTime);
-        rb.linearVelocity = Vector2.zero;
-        isKnockedback = false;
-        canMove = true;
-    }
-
-    void TryInteract()
-    {
-        Collider2D[] nearbyObjects = Physics2D.OverlapCircleAll(transform.position, 1.5f);
-        foreach (var obj in nearbyObjects)
-        {
-
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (isTransitioning)
-            return;
-
-        DoorTrigger door = other.GetComponent<DoorTrigger>();
-
-        if (door != null)
-        {
-            StartCoroutine(TransitionCooldown());
-            float playerOffsetFromWall = 3.0f;
-
-            switch (door.doorDirection)
-            {
-                case EdgeDirection.Up:
-                    transform.position += new Vector3(0, playerOffsetFromWall, 0);
-                    break;
-                case EdgeDirection.Down:
-                    transform.position -= new Vector3(0, playerOffsetFromWall, 0);
-                    break;
-                case EdgeDirection.Left:
-                    transform.position -= new Vector3(playerOffsetFromWall, 0, 0);
-                    break;
-                case EdgeDirection.Right:
-                    transform.position += new Vector3(playerOffsetFromWall, 0, 0);
-                    break;
-            }
-        }
-    }
-
-    private IEnumerator TransitionCooldown()
-    {
-        isTransitioning = true;
-        yield return new WaitForSeconds(0.5f);
-        isTransitioning = false;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-            return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, 1.5f);
-    }
+    public void Knockback(Transform enemy, float force, float stunTime) { if (isKnockedback) return; StartCoroutine(KnockbackCoroutine(enemy, force, stunTime)); }
+    IEnumerator KnockbackCoroutine(Transform enemy, float force, float stunTime) { isKnockedback = true; canMove = false; Vector2 direction = (transform.position - enemy.position).normalized; rb.linearVelocity = direction * force; yield return new WaitForSeconds(stunTime); rb.linearVelocity = Vector2.zero; isKnockedback = false; canMove = true; }
+    void TryInteract() { Collider2D[] nearbyObjects = Physics2D.OverlapCircleAll(transform.position, 1.5f); foreach (var obj in nearbyObjects) { } }
+    private void OnTriggerEnter2D(Collider2D other) { if (isTransitioning) return; DoorTrigger door = other.GetComponent<DoorTrigger>(); if (door != null) { StartCoroutine(TransitionCooldown()); float playerOffsetFromWall = 3.0f; switch (door.doorDirection) { case EdgeDirection.Up: transform.position += new Vector3(0, playerOffsetFromWall, 0); break; case EdgeDirection.Down: transform.position -= new Vector3(0, playerOffsetFromWall, 0); break; case EdgeDirection.Left: transform.position -= new Vector3(playerOffsetFromWall, 0, 0); break; case EdgeDirection.Right: transform.position += new Vector3(playerOffsetFromWall, 0, 0); break; } } }
+    private IEnumerator TransitionCooldown() { isTransitioning = true; yield return new WaitForSeconds(0.5f); isTransitioning = false; }
+    private void OnDrawGizmosSelected() { if (attackPoint == null) return; Gizmos.color = Color.red; Gizmos.DrawWireSphere(attackPoint.position, 1.5f); }
 }

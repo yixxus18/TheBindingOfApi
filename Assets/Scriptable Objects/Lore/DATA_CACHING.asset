@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DATA_CACHING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DATA_CACHING
+  loreID: 14
   title: "Estrategias de Cach\xE9"
   content: Almacenar temporalmente respuestas frecuentes para reducir carga en base
     de datos y mejorar tiempos de respuesta.

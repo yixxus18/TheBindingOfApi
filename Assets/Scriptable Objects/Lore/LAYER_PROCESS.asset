@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: LAYER_PROCESS
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: LAYER_PROCESS
+  loreID: 69
   title: Capa de Procesos SOA
   content: "Esta capa orquesta y coordina m\xFAltiples servicios para completar procesos
     de negocio complejos. Gestiona el flujo de trabajo entre diferentes servicios."

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: MAP_CHARGE_BUNDLE
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: MAP_CHARGE_BUNDLE
+  itemID: 22
   itemName: Pack de Cargos de Mapa
   itemDescription: "Paquete con 5 cargos de mapa. M\xE1s eficiente para explorar
     m\xFAltiples \xE1reas r\xE1pidamente."
   icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
-  stackSize: 10
+  stackSize: 99
   itemType: 0
   apiValue: map_charge
   isGold: 0

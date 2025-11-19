@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: AUTH_HEADER
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: AUTH_HEADER
+  itemID: 3
   itemName: Header Authorization
   itemDescription: "Autentica al jugador con el servidor. Requerido para acceder
     a \xE1reas protegidas y rutas de jefe."
   icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
-  stackSize: 1
+  stackSize: 99
   itemType: 3
   apiValue: 'Authorization: Bearer <TOKEN>'
   isGold: 0

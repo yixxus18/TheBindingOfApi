@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: GOLD_BAG
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: GOLD_BAG
+  itemID: 17
   itemName: Bolsa de Oro
   itemDescription: Contiene 10 monedas de oro. Loot valioso que aparece en cofres
     especiales y tras derrotar jefes.

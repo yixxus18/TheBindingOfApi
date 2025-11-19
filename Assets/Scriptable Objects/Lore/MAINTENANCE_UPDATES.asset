@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: MAINTENANCE_UPDATES
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: MAINTENANCE_UPDATES
+  loreID: 75
   title: Actualizaciones y Parches
   content: Mantener dependencias actualizadas, aplicar parches de seguridad y gestionar
     cambios sin interrumpir el servicio.

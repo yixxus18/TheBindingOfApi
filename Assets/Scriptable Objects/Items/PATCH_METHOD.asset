@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: PATCH_METHOD
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: PATCH_METHOD
+  itemID: 24
   itemName: "M\xE9todo PATCH"
   itemDescription: "Actualiza parcialmente un recurso. Modifica propiedades espec\xEDficas
     sin afectar todo el estado."

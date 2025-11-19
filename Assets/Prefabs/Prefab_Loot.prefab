@@ -52,7 +52,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   canBePickedUp: 1
   pickupDelay: 0.5
-  pickupSound: {fileID: 0}
 --- !u!212 &2124318191483951194
 SpriteRenderer:
   m_ObjectHideFlags: 0

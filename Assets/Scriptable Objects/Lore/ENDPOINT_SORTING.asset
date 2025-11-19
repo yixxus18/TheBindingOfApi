@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: ENDPOINT_SORTING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: ENDPOINT_SORTING
+  loreID: 49
   title: Ordenamiento
   content: Permitir a clientes especificar criterios de ordenamiento para resultados
     de colecciones.

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DESIGN_PLANNING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DESIGN_PLANNING
+  loreID: 35
   title: "Planificaci\xF3n de Arquitectura"
   content: "Planificar la estructura de la aplicaci\xF3n y arquitectura de la API
     antes de programar para asegurar escalabilidad."

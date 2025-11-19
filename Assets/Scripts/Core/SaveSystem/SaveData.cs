@@ -5,7 +5,7 @@ public class SaveData
 {
     public List<InventoryItemData> inventoryItems = new List<InventoryItemData>();
     public List<RequestEntry> learnedRequests;
-    public List<string> discoveredLoreIDs;
+    public List<int> discoveredLoreIDs;
     public int playerEngineeringLevel;
     public List<string> unlockedDungeons;
     public List<string> completedObjectiveIDs;
@@ -24,7 +24,7 @@ public class SaveData
     public SaveData()
     {
         learnedRequests = new List<RequestEntry>();
-        discoveredLoreIDs = new List<string>();
+        discoveredLoreIDs = new List<int>();
         unlockedDungeons = new List<string>();
         playerEngineeringLevel = 1;
         completedObjectiveIDs = new List<string>();
@@ -35,6 +35,6 @@ public class SaveData
 [System.Serializable]
 public class InventoryItemData
 {
-    public string itemID;
+    public int itemID;
     public int quantity;
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: GEO_GEOCODING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: GEO_GEOCODING
+  loreID: 57
   title: "Geocodificaci\xF3n"
   content: "Proceso de convertir direcciones f\xEDsicas en coordenadas geogr\xE1ficas
     (geocodificaci\xF3n directa) o viceversa (geocodificaci\xF3n inversa)."

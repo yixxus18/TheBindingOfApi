@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: URL_FRAGMENT_PUZZLES
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: URL_FRAGMENT_PUZZLES
+  itemID: 34
   itemName: Fragmento /puzzles
   itemDescription: Fragmento para acceder a rompecabezas. Permite consultar y resolver
     enigmas de las salas.
   icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
-  stackSize: 5
+  stackSize: 99
   itemType: 2
   apiValue: /puzzles
   isGold: 0

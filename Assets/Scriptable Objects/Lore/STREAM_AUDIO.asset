@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: STREAM_AUDIO
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: STREAM_AUDIO
+  loreID: 105
   title: APIs de Audio
   content: "Conexi\xF3n con servicios como Spotify, SoundCloud y Apple Music para
     reproducir m\xFAsica, crear listas de reproducci\xF3n y acceder a cat\xE1logos."

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: INTEGRATION_SERVICE_MESH
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: INTEGRATION_SERVICE_MESH
+  loreID: 67
   title: Service Mesh
   content: "Capa de infraestructura que maneja comunicaci\xF3n entre microservicios,
     con caracter\xEDsticas de observabilidad y seguridad."

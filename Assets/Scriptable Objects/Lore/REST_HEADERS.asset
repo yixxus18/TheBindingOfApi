@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: REST_HEADERS
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: REST_HEADERS
+  loreID: 88
   title: Headers HTTP
   content: Content-Type, Authorization, Accept y otros headers que controlan el comportamiento
     de requests y responses.

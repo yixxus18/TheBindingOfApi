@@ -6,11 +6,7 @@ public static class SaveSystem
 {
     public static void SaveGame(CodexManager codex, StatsManager stats, InventoryManager inventory, ExpManager expManager)
     {
-        if (DatabaseManager.Instance == null)
-        {
-            Debug.LogError("DatabaseManager no fue encontrado. No se puede guardar el juego.");
-            return;
-        }
+        if (DatabaseManager.Instance == null) return;
 
         SaveData data = new SaveData();
 
@@ -42,18 +38,9 @@ public static class SaveSystem
 
     public static void LoadGame(CodexManager codex, StatsManager stats, InventoryManager inventory, ExpManager expManager, LoreDatabaseSO loreDatabase, ItemDatabaseSO itemDatabase)
     {
-        if (DatabaseManager.Instance == null)
-        {
-            Debug.LogError("DatabaseManager no fue encontrado. No se puede cargar el juego.");
-            return;
-        }
-
+        if (DatabaseManager.Instance == null) return;
         SaveData data = DatabaseManager.Instance.LoadGameData();
-        if (data == null)
-        {
-            Debug.LogWarning("No se encontraron datos de guardado para cargar.");
-            return;
-        }
+        if (data == null) return;
 
         ProgressionManager.instance.completedObjectiveIDs = new HashSet<string>(data.completedObjectiveIDs ?? new List<string>());
         ProgressionManager.instance.highestLevelUnlocked = data.highestLevelUnlocked;
@@ -62,7 +49,7 @@ public static class SaveSystem
         codex.learnedRequests.AddRange(data.learnedRequests ?? new List<RequestEntry>());
 
         codex.discoveredLore.Clear();
-        foreach (string id in data.discoveredLoreIDs ?? new List<string>())
+        foreach (int id in data.discoveredLoreIDs ?? new List<int>())
         {
             LoreSO lore = loreDatabase.GetLoreByID(id);
             if (lore != null) codex.discoveredLore.Add(lore);

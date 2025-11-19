@@ -33,8 +33,6 @@ public class OptionsUI : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("OptionsUI Awake! Asignando listeners...");
-        // Ya no hay botón de cierre, solo se asignan los listeners de keybinding.
         moveUpButton.onClick.AddListener(() => StartRebinding(GameInput.Binding.MoveUp));
         moveDownButton.onClick.AddListener(() => StartRebinding(GameInput.Binding.MoveDown));
         moveLeftButton.onClick.AddListener(() => StartRebinding(GameInput.Binding.MoveLeft));
@@ -44,6 +42,8 @@ public class OptionsUI : MonoBehaviour
         interactButton.onClick.AddListener(() => StartRebinding(GameInput.Binding.Interact));
         pauseButton.onClick.AddListener(() => StartRebinding(GameInput.Binding.Pause));
         toggleMenuButton.onClick.AddListener(() => StartRebinding(GameInput.Binding.ToggleMenu));
+
+        RegisterAllButtonSounds();
     }
 
     private void Start()
@@ -57,8 +57,22 @@ public class OptionsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        // Cada vez que su panel contenedor se active, actualizará los textos.
         UpdateVisual();
+    }
+
+    private void RegisterAllButtonSounds()
+    {
+        Button[] allButtons = GetComponentsInChildren<Button>(true);
+        foreach (Button btn in allButtons)
+        {
+            btn.onClick.AddListener(() =>
+            {
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.menuNavigationSound);
+                }
+            });
+        }
     }
 
     private void Update()
@@ -79,7 +93,6 @@ public class OptionsUI : MonoBehaviour
 
     private void StartRebinding(GameInput.Binding binding)
     {
-        Debug.Log("StartRebinding llamado para: " + binding.ToString());
         currentBinding = binding;
         isWaitingForKey = true;
         ShowPressToRebindKey();
@@ -88,7 +101,7 @@ public class OptionsUI : MonoBehaviour
     private void UpdateVisual()
     {
         if (GameInput.Instance == null) return;
-        Debug.Log("Actualizando visual...");
+
         moveUpText.text = GameInput.Instance.GetBinding(GameInput.Binding.MoveUp).ToString();
         moveDownText.text = GameInput.Instance.GetBinding(GameInput.Binding.MoveDown).ToString();
         moveLeftText.text = GameInput.Instance.GetBinding(GameInput.Binding.MoveLeft).ToString();

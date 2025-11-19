@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DEV_DOCUMENTATION
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DEV_DOCUMENTATION
+  loreID: 39
   title: "Fase de Documentaci\xF3n"
   content: "Crear documentaci\xF3n clara con ejemplos de uso para que otros desarrolladores
     puedan consumir la API efectivamente."

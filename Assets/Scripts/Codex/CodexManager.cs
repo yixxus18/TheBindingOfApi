@@ -56,7 +56,6 @@ public class CodexManager : MonoBehaviour
                 GameManager.Instance.inventoryManager,
                 GameManager.Instance.expManager
             );
-            Debug.Log("Nueva petición aprendida y progreso guardado.");
         }
     }
 
@@ -67,7 +66,7 @@ public class CodexManager : MonoBehaviour
             discoveredLore.Add(lore);
             if (DungeonObjectiveManager.instance != null)
             {
-                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.CollectItem, lore.loreID);
+                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.CollectItem, lore.loreID.ToString());
             }
         }
     }

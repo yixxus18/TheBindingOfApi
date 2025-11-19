@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: GEO_PRIVACY
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: GEO_PRIVACY
+  loreID: 60
   title: "Privacidad en Geolocalizaci\xF3n"
   content: "Es crucial solicitar permisos expl\xEDcitos del usuario antes de acceder
     a su ubicaci\xF3n y comunicar claramente c\xF3mo se utilizar\xE1n estos datos."

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DATA_SERIALIZATION
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DATA_SERIALIZATION
+  loreID: 17
   title: "Serializaci\xF3n"
   content: "Convertir objetos de programaci\xF3n a formatos de intercambio como JSON
     o XML y viceversa."

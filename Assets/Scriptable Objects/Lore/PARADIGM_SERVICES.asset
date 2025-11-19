@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: PARADIGM_SERVICES
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: PARADIGM_SERVICES
+  loreID: 81
   title: Paradigma Orientado a Servicios
   content: "Este paradigma trata a las aplicaciones como un conjunto de servicios
     independientes que se comunican entre s\xED. Su objetivo es la reutilizaci\xF3n,

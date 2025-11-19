@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: TESTING_AUTOMATION
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: TESTING_AUTOMATION
+  loreID: 111
   title: "Automatizaci\xF3n de Pruebas"
   content: "Implementar pipelines de CI/CD que ejecuten pruebas autom\xE1ticamente
     en cada cambio de c\xF3digo."

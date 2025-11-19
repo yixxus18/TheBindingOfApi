@@ -24,6 +24,22 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         ConnectToSettingsManager();
+        RegisterAllButtonSounds();
+    }
+
+    private void RegisterAllButtonSounds()
+    {
+        Button[] allButtons = GetComponentsInChildren<Button>(true);
+        foreach (Button btn in allButtons)
+        {
+            btn.onClick.AddListener(() =>
+            {
+                if (SettingsManager.Instance != null)
+                {
+                    SettingsManager.Instance.PlayButtonClickSound();
+                }
+            });
+        }
     }
 
     void Update()

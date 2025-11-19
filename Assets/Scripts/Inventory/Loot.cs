@@ -15,9 +15,6 @@ public class Loot : MonoBehaviour
     public bool canBePickedUp = true;
     public float pickupDelay = 0.5f;
 
-    [Header("Audio (Opcional)")]
-    public AudioClip pickupSound;
-
     public static event Action<ItemSO, int> OnItemLooted;
 
     private void Start()
@@ -75,15 +72,24 @@ public class Loot : MonoBehaviour
     {
         canBePickedUp = false;
         OnItemLooted?.Invoke(itemSO, quantity);
+
         if (animator != null)
         {
             animator.Play("LootPickup");
         }
-        if (pickupSound != null)
+
+        if (AudioManager.Instance != null)
         {
-            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
+            if (itemSO.isGold && AudioManager.Instance.coinPickupSound != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.coinPickupSound);
+            }
+            else if (AudioManager.Instance.itemDropSound != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.itemDropSound);
+            }
         }
+
         Destroy(gameObject, 0.5f);
-        Debug.Log($"Recogido: {itemSO.itemName} x{quantity}");
     }
 }

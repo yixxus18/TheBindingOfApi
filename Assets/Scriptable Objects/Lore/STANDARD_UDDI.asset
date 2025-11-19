@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: STANDARD_UDDI
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: STANDARD_UDDI
+  loreID: 102
   title: Registro UDDI
   content: UDDI (Universal Description, Discovery and Integration) es un directorio
     donde las empresas pueden registrar y buscar servicios web disponibles.

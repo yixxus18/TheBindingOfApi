@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: PLATFORM_CLOUD_STORAGE
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: PLATFORM_CLOUD_STORAGE
+  loreID: 82
   title: Almacenamiento en la Nube
   content: APIs de servicios como Amazon S3, Google Cloud Storage y Dropbox para
     almacenar y recuperar archivos de forma escalable.

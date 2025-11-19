@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: STREAM_LIVE
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: STREAM_LIVE
+  loreID: 108
   title: Streaming en Vivo
   content: APIs que permiten iniciar transmisiones en vivo, gestionar chat en tiempo
     real y configurar ajustes de calidad de video.

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: CLOUD_MODELS
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: CLOUD_MODELS
+  loreID: 10
   title: Modelos de Servicio Cloud
   content: "IaaS (Infrastructure as a Service), PaaS (Platform as a Service) y SaaS
     (Software as a Service) representan diferentes niveles de abstracci\xF3n en servicios

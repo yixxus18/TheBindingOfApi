@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: SOCIAL_DATA
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: SOCIAL_DATA
+  loreID: 95
   title: "Obtenci\xF3n de Datos de Perfil"
   content: "Recuperaci\xF3n de informaci\xF3n p\xFAblica del usuario (nombre, foto,
     amigos) respetando los permisos otorgados y las pol\xEDticas de privacidad."

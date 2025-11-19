@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Consola-RAI
   m_EditorClassIdentifier: Assembly-CSharp::ActorSO
   actorName: Consola-RAI
-  portrait: {fileID: -7151335025817718036, guid: 7ccd179b0ab7e6644ac778fc22fe3e56, type: 3}
+  portrait: {fileID: 2972259109946537521, guid: c43af14586ea03b4b8dfdb94ff97503b, type: 3}

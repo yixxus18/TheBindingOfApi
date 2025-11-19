@@ -49,7 +49,7 @@ public class DatabaseManager : MonoBehaviour
                         exp_to_level INTEGER DEFAULT 100
                     );
                     CREATE TABLE IF NOT EXISTS Lore_Descubierto (
-                        perfil_id INTEGER, lore_id TEXT,
+                        perfil_id INTEGER, lore_id INTEGER,
                         PRIMARY KEY (perfil_id, lore_id),
                         FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
                     );
@@ -64,7 +64,7 @@ public class DatabaseManager : MonoBehaviour
                         FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
                     );
                     CREATE TABLE IF NOT EXISTS Inventario (
-                        perfil_id INTEGER, item_id TEXT, cantidad INTEGER,
+                        perfil_id INTEGER, item_id INTEGER, cantidad INTEGER,
                         PRIMARY KEY (perfil_id, item_id),
                         FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
                     );
@@ -231,7 +231,7 @@ public class DatabaseManager : MonoBehaviour
                 cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
                 using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read()) data.discoveredLoreIDs.Add(reader.GetString(0));
+                    while (reader.Read()) data.discoveredLoreIDs.Add(reader.GetInt32(0));
                 }
             }
 
@@ -272,7 +272,7 @@ public class DatabaseManager : MonoBehaviour
                     {
                         data.inventoryItems.Add(new InventoryItemData
                         {
-                            itemID = reader.GetString(0),
+                            itemID = reader.GetInt32(0),
                             quantity = reader.GetInt32(1)
                         });
                     }

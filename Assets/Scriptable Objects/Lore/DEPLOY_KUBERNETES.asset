@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DEPLOY_KUBERNETES
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DEPLOY_KUBERNETES
+  loreID: 30
   title: "Orquestaci\xF3n con Kubernetes"
   content: "Automatizar despliegue, escalado y gesti\xF3n de aplicaciones contenedorizadas
     en clusters de servidores."

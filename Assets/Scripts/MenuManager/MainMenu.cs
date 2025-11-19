@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [Header("UI Panels")]
     [SerializeField] private GameObject mainMenuPanel;
-    [SerializeField] public GameObject optionsMenuPanel; // ¡Hazla pública para que SettingsManager pueda encontrarla!
+    [SerializeField] public GameObject optionsMenuPanel;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -12,13 +13,27 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        // Asegúrate de que al inicio se muestre el menú principal
         ShowMainMenuPanel();
+        RegisterAllButtonSounds();
+    }
+
+    private void RegisterAllButtonSounds()
+    {
+        Button[] allButtons = GetComponentsInChildren<Button>(true);
+        foreach (Button btn in allButtons)
+        {
+            btn.onClick.AddListener(() =>
+            {
+                if (SettingsManager.Instance != null)
+                {
+                    SettingsManager.Instance.PlayButtonClickSound();
+                }
+            });
+        }
     }
 
     public void ShowOptionsMenu()
     {
-        PlayButtonSound();
         mainMenuPanel.SetActive(false);
         optionsMenuPanel.SetActive(true);
         if (SettingsManager.Instance != null)
@@ -30,29 +45,22 @@ public class MainMenu : MonoBehaviour
 
     public void ShowMainMenuPanel()
     {
-        PlayButtonSound();
         if (optionsMenuPanel != null) optionsMenuPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
     }
 
     public void QuitGame()
     {
-        PlayButtonSound();
         PlayerPrefs.Save();
         Application.Quit();
     }
 
     public void StartGame()
     {
-        PlayButtonSound();
-        Loader.Load("IntroEscene");
-    }
-
-    private void PlayButtonSound()
-    {
-        if (audioSource != null && buttonClickSound != null)
+        if (AudioManager.Instance != null && AudioManager.Instance.gameStartSound != null)
         {
-            audioSource.PlayOneShot(buttonClickSound);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.gameStartSound);
         }
+        Loader.Load("IntroEscene");
     }
 }

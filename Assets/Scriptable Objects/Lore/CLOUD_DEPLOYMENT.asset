@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: CLOUD_DEPLOYMENT
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: CLOUD_DEPLOYMENT
+  loreID: 8
   title: Modelos de Despliegue
   content: "Nubes p\xFAblicas, privadas, h\xEDbridas y comunitarias ofrecen diferentes
     balances entre control, seguridad y costos."

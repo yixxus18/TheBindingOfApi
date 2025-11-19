@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: INTEGRATION_API_GATEWAY
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: INTEGRATION_API_GATEWAY
+  loreID: 62
   title: API Gateway
   content: "Punto de entrada \xFAnico que enruta solicitudes, maneja autenticaci\xF3n,
     rate limiting y agregaci\xF3n de respuestas."

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: URL_FRAGMENTS_USER
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: FRAGMENT_USERS
+  itemID: 38
   itemName: Fragmento /users
   itemDescription: Fragmento de /users
   icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
-  stackSize: 5
+  stackSize: 99
   itemType: 2
-  apiValue: /users
+  apiValue: /user
   isGold: 0
   goldAmount: 0
   healAmount: 0

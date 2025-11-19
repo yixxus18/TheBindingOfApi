@@ -10,7 +10,7 @@ public class DungeonObjective
 {
     public string description;
     public ObjectiveType type;
-    public string targetId;
+    public string targetId; // Almacena el ID (ya sea "10" para items o "PUZZLE_01" para puzzles)
     public int requiredAmount;
     [HideInInspector] public int currentAmount;
     [HideInInspector] public bool isCompleted;
@@ -35,6 +35,7 @@ public class DungeonObjectiveManager : MonoBehaviour
         ClearObjectives();
         foreach (var obj in newObjectives)
         {
+            // Verificar si ya se completó anteriormente usando el ProgressionManager
             if (ProgressionManager.instance.IsObjectiveCompleted(obj.targetId))
             {
                 obj.isCompleted = true;
@@ -42,8 +43,28 @@ public class DungeonObjectiveManager : MonoBehaviour
             }
             else
             {
-                obj.currentAmount = 0;
-                obj.isCompleted = false;
+                // Caso especial para items: Verificar si ya los tiene en el inventario
+                if (obj.type == ObjectiveType.CollectItem && int.TryParse(obj.targetId, out int itemId))
+                {
+                    // Buscar el item en la base de datos para comprobar cantidad actual
+                    ItemSO item = GameManager.Instance.itemDatabase.GetItemByID(itemId);
+                    if (item != null)
+                    {
+                        int count = InventoryManager.instance.GetItemCount(item);
+                        obj.currentAmount = count;
+                        if (count >= obj.requiredAmount)
+                        {
+                            obj.isCompleted = true;
+                            // Marcar como completado en progresión inmediatamente si ya tiene los items
+                            ProgressionManager.instance.CompleteObjective(obj.targetId);
+                        }
+                    }
+                }
+                else
+                {
+                    obj.currentAmount = 0;
+                    obj.isCompleted = false;
+                }
             }
             currentObjectives.Add(obj);
         }
@@ -55,14 +76,19 @@ public class DungeonObjectiveManager : MonoBehaviour
     {
         foreach (var obj in currentObjectives)
         {
+            // Comparamos ID y Tipo. El ID viene como string ("10", "PUZZLE_ID")
             if (!obj.isCompleted && obj.type == type && obj.targetId == id)
             {
                 obj.currentAmount += amount;
+
+                // Si es de tipo recolección, asegurarse de no superar el máximo visualmente
                 if (obj.currentAmount >= obj.requiredAmount)
                 {
+                    obj.currentAmount = obj.requiredAmount;
                     obj.isCompleted = true;
                     ProgressionManager.instance.CompleteObjective(obj.targetId);
                 }
+
                 UpdateUI();
                 CheckForAllObjectivesCompleted();
                 return;
@@ -74,10 +100,12 @@ public class DungeonObjectiveManager : MonoBehaviour
     {
         if (currentObjectives.Count > 0 && currentObjectives.All(obj => obj.isCompleted))
         {
+            // Lógica específica del Hub
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Hub" &&
                 ProgressionManager.instance.highestLevelUnlocked == 0)
             {
                 ProgressionManager.instance.UnlockNextLevel();
+
                 if (GameManager.Instance != null)
                 {
                     SaveSystem.SaveGame(
@@ -94,13 +122,19 @@ public class DungeonObjectiveManager : MonoBehaviour
     public void UpdateUI()
     {
         foreach (Transform child in objectivesContainer) Destroy(child.gameObject);
+
         if (objectiveUIPrefab == null) return;
+
         foreach (var obj in currentObjectives)
         {
             GameObject go = Instantiate(objectiveUIPrefab, objectivesContainer);
             TMP_Text text = go.GetComponent<TMP_Text>();
-            string status = obj.isCompleted ? "<color=green>[HECHO]</color>" : $"[{obj.currentAmount}/{obj.requiredAmount}]";
-            text.text = $"{obj.description} {status}";
+
+            string colorTag = obj.isCompleted ? "<color=green>" : "<color=white>";
+            string status = obj.isCompleted ? "[HECHO]" : $"[{obj.currentAmount}/{obj.requiredAmount}]";
+
+            text.text = $"{colorTag}{obj.description} {status}</color>";
+
             if (obj.isCompleted) text.fontStyle = FontStyles.Strikethrough;
         }
     }

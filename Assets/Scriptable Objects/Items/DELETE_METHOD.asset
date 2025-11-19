@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: DELETE_METHOD
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: DELETE_METHOD
+  itemID: 15
   itemName: "M\xE9todo DELETE"
   itemDescription: "Elimina recursos. Puede destruir obst\xE1culos o remover maldiciones
     temporales del jugador."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: 8775545779219699194, guid: 28031fec25277fa4f9a04dcf2c703b3c, type: 3}
   stackSize: 99
   itemType: 1
   apiValue: DELETE

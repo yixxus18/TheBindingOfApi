@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: GEO_ROUTING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: GEO_ROUTING
+  loreID: 61
   title: "C\xE1lculo de Rutas"
   content: "Las APIs de geolocalizaci\xF3n pueden calcular rutas \xF3ptimas entre
     m\xFAltiples puntos, considerando distancia, tiempo y condiciones de tr\xE1fico."

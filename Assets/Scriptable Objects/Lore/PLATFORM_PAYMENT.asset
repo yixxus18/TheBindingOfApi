@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: PLATFORM_PAYMENT
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: PLATFORM_PAYMENT
+  loreID: 87
   title: Pasarelas de Pago
   content: "Integraci\xF3n con servicios como Stripe, PayPal y Square para procesar
     pagos de forma segura sin manejar directamente informaci\xF3n de tarjetas."

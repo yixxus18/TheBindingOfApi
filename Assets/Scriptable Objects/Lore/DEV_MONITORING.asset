@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DEV_MONITORING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DEV_MONITORING
+  loreID: 41
   title: Monitoreo y Mantenimiento
   content: "Implementar logging, m\xE9tricas y alertas para detectar problemas, optimizar
     rendimiento y planificar mejoras."

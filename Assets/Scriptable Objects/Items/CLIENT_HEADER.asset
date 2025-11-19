@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: CLIENT_HEADER
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: CLIENT_HEADER
+  itemID: 12
   itemName: Header Accept
   itemDescription: " Identifica al cliente que hace la petici\xF3n. Algunos puzzles
     requieren identificarse como \"Rogue\" o \"Isaac\"."

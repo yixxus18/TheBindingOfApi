@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: ARCHITECTURE_SOA
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: ARCHITECTURE_SOA
+  loreID: 1
   title: Arquitectura SOA
   content: "La Arquitectura Orientada a Servicios est\xE1 compuesta por capas: Acceso,
     Procesos, Servicio y Recursos. Define los principios de dise\xF1o y est\xE1ndares

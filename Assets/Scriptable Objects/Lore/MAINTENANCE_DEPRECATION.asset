@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: MAINTENANCE_DEPRECATION
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: MAINTENANCE_DEPRECATION
+  loreID: 73
   title: "Depreciaci\xF3n de Funcionalidades"
   content: "Comunicar y gestionar la eliminaci\xF3n gradual de funcionalidades obsoletas
     manteniendo compatibilidad."

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: ENDPOINT_PARAMS
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: ENDPOINT_PARAMS
+  loreID: 48
   title: "Par\xE1metros de Ruta y Query"
   content: "Par\xE1metros de ruta (/users/123) identifican recursos espec\xEDficos.
     Query parameters (?page=1&limit=10) filtran y paginan resultados."

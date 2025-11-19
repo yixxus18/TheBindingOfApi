@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DESIGN_SCALABILITY
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DESIGN_SCALABILITY
+  loreID: 37
   title: Escalabilidad
   content: "Dise\xF1ar sistemas que puedan crecer horizontalmente (m\xE1s instancias)
     o verticalmente (m\xE1s recursos) seg\xFAn demanda."

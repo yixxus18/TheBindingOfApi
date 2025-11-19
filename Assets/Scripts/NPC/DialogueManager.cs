@@ -112,6 +112,10 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayTypingSound();
+            }
             yield return new WaitForSecondsRealtime(typingSpeed);
         }
         typingCoroutine = null;

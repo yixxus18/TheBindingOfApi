@@ -26,24 +26,16 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
         InventorySlot inventorySlot = eventData.pointerDrag.GetComponent<InventorySlot>();
         if (inventorySlot == null || inventorySlot.itemSO == null) return;
 
-        // --- INICIO DE LA CORRECCIÓN ---
-
-        // 1. Guardamos una referencia al item ANTES de hacer nada más.
         ItemSO itemToDrop = inventorySlot.itemSO;
 
-        // 2. Validamos el item que queremos soltar.
         if (IsValidItemType(itemToDrop))
         {
-            // 3. Intentamos quitar el item del inventario.
             if (InventoryManager.instance.RemoveItem(itemToDrop, 1))
             {
-                // 4. Si se pudo quitar, AÑADIMOS la referencia que guardamos al principio.
                 currentItems.Add(itemToDrop);
                 UpdateSlotUI();
             }
         }
-
-        // --- FIN DE LA CORRECCIÓN ---
     }
 
     public void ReturnAllItemsToInventory()
@@ -62,7 +54,7 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
         UpdateSlotUI();
     }
 
-    public void ConsumeAllItems()
+    public void ConsumeItem()
     {
         currentItems.Clear();
     }

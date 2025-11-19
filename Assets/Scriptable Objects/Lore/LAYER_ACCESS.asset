@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: LAYER_ACCESS
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: LAYER_ACCESS
+  loreID: 68
   title: Capa de Acceso SOA
   content: "La capa de acceso gestiona la comunicaci\xF3n entre los usuarios finales
     y los servicios. Incluye interfaces web, m\xF3viles y otros puntos de entrada

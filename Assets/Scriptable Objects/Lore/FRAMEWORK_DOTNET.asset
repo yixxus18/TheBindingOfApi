@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: FRAMEWORK_DOTNET
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: FRAMEWORK_DOTNET
+  loreID: 50
   title: .NET y ASP.NET Core
   content: ASP.NET Core es un framework multiplataforma de Microsoft para construir
     APIs modernas y escalables con C#.

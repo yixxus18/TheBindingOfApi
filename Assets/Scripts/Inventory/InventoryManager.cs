@@ -42,6 +42,22 @@ public class InventoryManager : MonoBehaviour
         return activeSlots;
     }
 
+    // --- ESTA ES LA FUNCIÓN QUE FALTABA ---
+    public int GetItemCount(ItemSO item)
+    {
+        if (item == null) return 0;
+        int total = 0;
+        foreach (var slot in activeSlots)
+        {
+            if (slot.itemSO == item)
+            {
+                total += slot.quantity;
+            }
+        }
+        return total;
+    }
+    // ---------------------------------------
+
     public bool AddItem(ItemSO item, int quantity)
     {
         if (item == null || quantity <= 0)

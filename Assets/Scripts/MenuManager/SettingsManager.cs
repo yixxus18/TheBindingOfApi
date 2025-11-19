@@ -11,9 +11,7 @@ public class SettingsManager : MonoBehaviour
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
 
-    [Header("Audio Sources")]
-    public AudioSource musicAudioSource;
-    public AudioSource buttonClickAudioSource;
+    [Header("SFX Generales")]
     public AudioClip buttonClickSound;
 
     [Header("Video Settings")]
@@ -102,76 +100,57 @@ public class SettingsManager : MonoBehaviour
 
     private void SetupButtonAudioSource()
     {
-        if (buttonClickAudioSource == null)
-        {
-            buttonClickAudioSource = gameObject.AddComponent<AudioSource>();
-            buttonClickAudioSource.playOnAwake = false;
-            buttonClickAudioSource.loop = false;
-        }
+
     }
 
     public void PlayButtonClickSound()
     {
-        if (buttonClickAudioSource != null && buttonClickSound != null)
+        if (AudioManager.Instance != null && buttonClickSound != null)
         {
-            buttonClickAudioSource.PlayOneShot(buttonClickSound);
+            AudioManager.Instance.PlaySFX(buttonClickSound);
         }
     }
 
     private void FindMusicAudioSource()
     {
-        GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        if (mainCamera != null)
-        {
-            musicAudioSource = mainCamera.GetComponent<AudioSource>();
-        }
+
     }
 
     public void SetMasterVolume(float volume)
     {
-        AudioListener.volume = volume;
         PlayerPrefs.SetFloat("MasterVolume", volume);
+        PlayerPrefs.Save();
+
+        if (AudioManager.Instance != null) AudioManager.Instance.UpdateVolumes();
     }
 
     public void SetMusicVolume(float volume)
     {
-        if (musicAudioSource != null)
-        {
-            musicAudioSource.volume = volume;
-        }
         PlayerPrefs.SetFloat("MusicVolume", volume);
+        PlayerPrefs.Save();
+
+        if (AudioManager.Instance != null) AudioManager.Instance.UpdateVolumes();
     }
 
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
         PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     public void LoadSettings()
     {
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
-        AudioListener.volume = masterVolume;
-        if (masterVolumeSlider != null)
-        {
-            masterVolumeSlider.value = masterVolume;
-        }
+        if (masterVolumeSlider != null) masterVolumeSlider.value = masterVolume;
 
         float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
-        if (musicAudioSource != null)
-        {
-            musicAudioSource.volume = musicVolume;
-        }
-        if (musicVolumeSlider != null)
-        {
-            musicVolumeSlider.value = musicVolume;
-        }
+        if (musicVolumeSlider != null) musicVolumeSlider.value = musicVolume;
 
         bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
         Screen.fullScreen = isFullscreen;
-        if (fullscreenToggle != null)
-        {
-            fullscreenToggle.isOn = isFullscreen;
-        }
+        if (fullscreenToggle != null) fullscreenToggle.isOn = isFullscreen;
+
+        if (AudioManager.Instance != null) AudioManager.Instance.UpdateVolumes();
     }
 }

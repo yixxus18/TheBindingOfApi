@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: VISION_AMULET
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: VISION_AMULET
+  itemID: 40
   itemName: "Amuleto de Visi\xF3n"
   itemDescription: "Amuleto m\xEDstico necesario para inspeccionar salas especiales.
     Cumple requisitos de precondici\xF3n (428)."
   icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
-  stackSize: 1
+  stackSize: 99
   itemType: 4
   apiValue: amulet:vision
   isGold: 0

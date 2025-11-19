@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: GOLD_ITEM
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: GOLD_CURRENCY
+  itemID: 18
   itemName: Oro
   itemDescription: Oro y mas oro...
   icon: {fileID: -6094119494427996646, guid: 46042c9d726b84641a92b3a7958691dc, type: 3}

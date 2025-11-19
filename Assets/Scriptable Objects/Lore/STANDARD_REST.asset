@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: STANDARD_REST
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: STANDARD_REST
+  loreID: 100
   title: Arquitectura REST
   content: "REST (Representational State Transfer) es el estilo arquitect\xF3nico
     m\xE1s com\xFAn para APIs web. Utiliza m\xE9todos HTTP est\xE1ndar y recursos

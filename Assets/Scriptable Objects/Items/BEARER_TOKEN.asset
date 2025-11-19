@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: BEARER_TOKEN
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: BEARER_TOKEN
+  itemID: 4
   itemName: Token Bearer (JWT)
   itemDescription: "Token de autenticaci\xF3n obtenido al iniciar sesi\xF3n. Permite
     acceder a endpoints protegidos por 3600 segundos."
   icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
-  stackSize: 1
+  stackSize: 99
   itemType: 4
   apiValue: <JWT_TOKEN>
   isGold: 0

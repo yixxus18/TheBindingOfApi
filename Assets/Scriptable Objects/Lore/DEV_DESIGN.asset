@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DEV_DESIGN
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DEV_DESIGN
+  loreID: 38
   title: "Fase de Dise\xF1o"
   content: "Definir endpoints, m\xE9todos HTTP, estructura de datos, autenticaci\xF3n
     y documentaci\xF3n antes de comenzar la implementaci\xF3n."

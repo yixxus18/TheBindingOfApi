@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DB_API_INTRO
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DB_API_INTRO
+  loreID: 19
   title: APIs de Bases de Datos
   content: "Son el puente de acceso a la informaci\xF3n persistente. Permiten que
     aplicaciones web se comuniquen con sistemas gestores de bases de datos."

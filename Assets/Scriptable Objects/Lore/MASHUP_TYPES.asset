@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: MASHUP_TYPES
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: MASHUP_TYPES
+  loreID: 77
   title: Tipos de Mashups
   content: "Existen mashups de datos (combinan informaci\xF3n), de presentaci\xF3n
     (integran elementos visuales) y de l\xF3gica de negocio (combinan funcionalidades

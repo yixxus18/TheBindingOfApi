@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: CONCEPT_API_TYPES
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: CONCEPT_API_TYPES
+  loreID: 12
   title: Tipos de APIs
   content: "Las APIs se clasifican en p\xFAblicas (abiertas a todos), privadas (uso
     interno), de socios (acceso limitado) y compuestas (combinan m\xFAltiples APIs).

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DEPLOY_BACKUP
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DEPLOY_BACKUP
+  loreID: 25
   title: "Respaldo y Recuperaci\xF3n"
   content: "Establecer estrategias de backup autom\xE1tico y procedimientos de recuperaci\xF3n
     ante desastres."

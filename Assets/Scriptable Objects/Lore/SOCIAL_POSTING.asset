@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: SOCIAL_POSTING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: SOCIAL_POSTING
+  loreID: 99
   title: "Publicaci\xF3n de Contenido"
   content: "Las APIs permiten publicar actualizaciones, im\xE1genes y videos en redes
     sociales directamente desde tu aplicaci\xF3n."

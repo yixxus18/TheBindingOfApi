@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: AUTH_OAUTH2
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: AUTH_OAUTH2
+  loreID: 6
   title: OAuth 2.0
   content: "Framework de autorizaci\xF3n que permite a aplicaciones obtener acceso
     limitado a recursos de usuario sin exponer credenciales."

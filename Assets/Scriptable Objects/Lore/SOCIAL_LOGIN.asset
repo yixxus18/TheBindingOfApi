@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: SOCIAL_LOGIN
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: SOCIAL_LOGIN
+  loreID: 97
   title: Login Social
   content: "Implementaci\xF3n de inicio de sesi\xF3n utilizando cuentas de redes
     sociales, simplificando el proceso de registro y reduciendo fricci\xF3n para

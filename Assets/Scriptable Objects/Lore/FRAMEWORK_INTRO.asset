@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: FRAMEWORK_INTRO
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: FRAMEWORK_INTRO
+  loreID: 51
   title: "Introducci\xF3n a Frameworks"
   content: "Son conjuntos de herramientas, bibliotecas y patrones predefinidos que
     facilitan la creaci\xF3n r\xE1pida y estructurada de APIs."

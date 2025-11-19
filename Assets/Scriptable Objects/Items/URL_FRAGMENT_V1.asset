@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
   m_Name: URL_FRAGMENT_V1
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemID: URL_FRAGMENT_V1
+  itemID: 37
   itemName: Fragmento /v1
   itemDescription: Fragmento de versionado API. Necesario para construir la ruta
     completa /api/v1/maps/route.
   icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
-  stackSize: 5
+  stackSize: 99
   itemType: 2
   apiValue: /v1
   isGold: 0

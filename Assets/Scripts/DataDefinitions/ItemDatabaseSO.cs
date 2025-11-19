@@ -7,7 +7,7 @@ public class ItemDatabaseSO : ScriptableObject
 {
     public List<ItemSO> allItems;
 
-    public ItemSO GetItemByID(string id)
+    public ItemSO GetItemByID(int id)
     {
         return allItems.FirstOrDefault(item => item.itemID == id);
     }

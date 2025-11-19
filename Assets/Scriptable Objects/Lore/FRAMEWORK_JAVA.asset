@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: FRAMEWORK_JAVA
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: FRAMEWORK_JAVA
+  loreID: 52
   title: Java y Spring Boot
   content: "Spring Boot simplifica el desarrollo de aplicaciones Java empresariales
     con configuraci\xF3n autom\xE1tica y servidor embebido."

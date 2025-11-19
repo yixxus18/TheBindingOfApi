@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: Lore_Concepto_API
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: CONCEPT_API_BASICS
+  loreID: 72
   title: "\xBFQu\xE9 es una API? "
   content: "Una API (Application Programming Interface) es el mesero entre dos programas.
     Define las reglas y protocolos para que dos aplicaciones puedan solicitar y compartir

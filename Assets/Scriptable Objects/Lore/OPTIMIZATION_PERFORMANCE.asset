@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: OPTIMIZATION_PERFORMANCE
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: OPTIMIZATION_PERFORMANCE
+  loreID: 80
   title: "Optimizaci\xF3n de Rendimiento"
   content: "Identificar y resolver cuellos de botella mediante profiling, optimizaci\xF3n
     de queries y mejora de algoritmos."

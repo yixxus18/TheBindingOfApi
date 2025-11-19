@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: REST_STATUS_CODES
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: REST_STATUS_CODES
+  loreID: 93
   title: "C\xF3digos de Estado HTTP"
   content: 200 (OK), 201 (Created), 400 (Bad Request), 401 (Unauthorized), 404 (Not
     Found), 500 (Internal Server Error) entre otros.

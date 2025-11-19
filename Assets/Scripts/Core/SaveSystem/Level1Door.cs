@@ -24,6 +24,7 @@ public class LevelDoor : MonoBehaviour
         ProgressionManager.OnLevelUnlocked += RefreshLockState;
         RefreshLockState();
     }
+
     void OnDisable()
     {
         ProgressionManager.OnLevelUnlocked -= RefreshLockState;
@@ -31,19 +32,34 @@ public class LevelDoor : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && isUnlocked && GameInput.Instance.GetInteractPressed())
+        if (playerInRange && GameInput.Instance.GetInteractPressed())
         {
-            if (GameManager.Instance != null)
+            if (!isUnlocked)
             {
-                SaveSystem.SaveGame(
-                    GameManager.Instance.codexManager,
-                    GameManager.Instance.statsManager,
-                    GameManager.Instance.inventoryManager,
-                    GameManager.Instance.expManager
-                );
-                Debug.Log("Progreso guardado antes de entrar al nivel " + levelIndex);
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.doorLockedSound);
+                }
             }
-            Loader.Load(sceneNameToLoad);
+            else
+            {
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.levelCompleteSound);
+                }
+
+                if (GameManager.Instance != null)
+                {
+                    SaveSystem.SaveGame(
+                        GameManager.Instance.codexManager,
+                        GameManager.Instance.statsManager,
+                        GameManager.Instance.inventoryManager,
+                        GameManager.Instance.expManager
+                    );
+                    Debug.Log("Progreso guardado antes de entrar al nivel " + levelIndex);
+                }
+                Loader.Load(sceneNameToLoad);
+            }
         }
     }
 

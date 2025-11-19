@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: FRAMEWORK_NODEJS
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: FRAMEWORK_NODEJS
+  loreID: 53
   title: Node.js y Express.js
   content: "Express.js es un framework minimalista para Node.js que simplifica la
     creaci\xF3n de APIs REST con JavaScript en el servidor."

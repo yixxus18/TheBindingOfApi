@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: LAYER_SERVICE
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: LAYER_SERVICE
+  loreID: 71
   title: Capa de Servicio SOA
   content: "Contiene la l\xF3gica de negocio encapsulada en servicios reutilizables.
     Cada servicio expone funcionalidades espec\xEDficas a trav\xE9s de interfaces

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: PLATFORM_ECOMMERCE
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: PLATFORM_ECOMMERCE
+  loreID: 84
   title: APIs de E-commerce
   content: Plataformas como Shopify, WooCommerce y Magento exponen APIs para gestionar
     productos, inventario, pedidos y clientes.

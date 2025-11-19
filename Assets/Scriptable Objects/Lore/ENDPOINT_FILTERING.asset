@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: ENDPOINT_FILTERING
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: ENDPOINT_FILTERING
+  loreID: 45
   title: "Filtrado y B\xFAsqueda"
   content: " Implementar par\xE1metros para filtrar colecciones por campos espec\xEDficos
     y realizar b\xFAsquedas eficientes."

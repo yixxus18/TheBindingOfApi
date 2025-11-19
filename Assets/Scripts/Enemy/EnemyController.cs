@@ -57,78 +57,27 @@ public class EnemyController : MonoBehaviour
         if (enemyState != EnemyState.Knockback)
         {
             CheckForPlayer();
-            if (attackCooldownTimer > 0)
-                attackCooldownTimer -= Time.deltaTime;
-
-            if (enemyState == EnemyState.Chasing)
-                Chase();
-            else if (enemyState == EnemyState.Attacking)
-                rb.linearVelocity = Vector2.zero;
+            if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
+            if (enemyState == EnemyState.Chasing) Chase();
+            else if (enemyState == EnemyState.Attacking) rb.linearVelocity = Vector2.zero;
         }
     }
 
-    void CheckForPlayer()
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(detectionPoint.position, playerDetectRange, playerLayer);
-        if (hits.Length > 0)
-        {
-            player = hits[0].transform;
-            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-            if (distanceToPlayer <= attackRange && attackCooldownTimer <= 0)
-            {
-                attackCooldownTimer = attackCooldown;
-                ChangeState(EnemyState.Attacking);
-            }
-            else if (distanceToPlayer > attackRange && enemyState != EnemyState.Attacking)
-            {
-                ChangeState(EnemyState.Chasing);
-            }
-        }
-        else
-        {
-            rb.linearVelocity = Vector2.zero;
-            ChangeState(EnemyState.Idle);
-        }
-    }
-
-    void Chase()
-    {
-        if (player == null) return;
-        if (player.position.x > transform.position.x && facingDirection == -1 ||
-            player.position.x < transform.position.x && facingDirection == 1)
-        {
-            Flip();
-        }
-        Vector2 direction = (player.position - transform.position).normalized;
-        rb.linearVelocity = direction * speed;
-    }
-
-    void Flip()
-    {
-        facingDirection *= -1;
-        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-    }
-
-    public void Attack()
-    {
-        if (attackPoint == null || hasDealtDamageThisAttack) return;
-        hasDealtDamageThisAttack = true;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, weaponRange, playerLayer);
-        if (hits.Length > 0)
-        {
-            PlayerController playerController = hits[0].GetComponent<PlayerController>();
-            if (playerController != null)
-            {
-                playerController.TakeDamage(damage);
-                playerController.Knockback(transform, knockbackForce, stunTime);
-            }
-        }
-    }
+    void CheckForPlayer() { Collider2D[] hits = Physics2D.OverlapCircleAll(detectionPoint.position, playerDetectRange, playerLayer); if (hits.Length > 0) { player = hits[0].transform; float distanceToPlayer = Vector2.Distance(transform.position, player.position); if (distanceToPlayer <= attackRange && attackCooldownTimer <= 0) { attackCooldownTimer = attackCooldown; ChangeState(EnemyState.Attacking); } else if (distanceToPlayer > attackRange && enemyState != EnemyState.Attacking) { ChangeState(EnemyState.Chasing); } } else { rb.linearVelocity = Vector2.zero; ChangeState(EnemyState.Idle); } }
+    void Chase() { if (player == null) return; if (player.position.x > transform.position.x && facingDirection == -1 || player.position.x < transform.position.x && facingDirection == 1) { Flip(); } Vector2 direction = (player.position - transform.position).normalized; rb.linearVelocity = direction * speed; }
+    void Flip() { facingDirection *= -1; transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z); }
+    public void Attack() { if (attackPoint == null || hasDealtDamageThisAttack) return; hasDealtDamageThisAttack = true; Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, weaponRange, playerLayer); if (hits.Length > 0) { PlayerController playerController = hits[0].GetComponent<PlayerController>(); if (playerController != null) { playerController.TakeDamage(damage); playerController.Knockback(transform, knockbackForce, stunTime); } } }
 
     public void TakeDamage(int amount)
     {
         if (currentHealth <= 0) return;
         currentHealth -= amount;
+
+        if (AudioManager.Instance != null && AudioManager.Instance.playerHurtSound != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.playerHurtSound);
+        }
+
         if (currentHealth <= 0)
         {
             Die();
@@ -137,66 +86,21 @@ public class EnemyController : MonoBehaviour
 
     void Die()
     {
+        if (AudioManager.Instance != null && AudioManager.Instance.playerDeathSound != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.playerDeathSound);
+        }
+
         OnMonsterDefeated?.Invoke(expReward);
         DropLoot();
         Destroy(gameObject);
     }
 
-    private void DropLoot()
-    {
-        foreach (var entry in lootTable)
-        {
-            if (Random.value <= entry.dropChance)
-            {
-                if (entry.itemToDrop.isGold)
-                {
-                    StatsManager.instance.AddGold(entry.itemToDrop.goldAmount);
-                }
-                else
-                {
-                    LootSpawner.Instance.SpawnLoot(entry.itemToDrop, 1, transform.position);
-                }
-            }
-        }
-    }
-
-    public void Knockback(Transform forceTransform, float force, float kbTime, float stTime)
-    {
-        if (isInKnockback) return;
-        StartCoroutine(KnockbackCoroutine(forceTransform, force, kbTime, stTime));
-    }
-
-    IEnumerator KnockbackCoroutine(Transform forceTransform, float force, float kbTime, float stTime)
-    {
-        isInKnockback = true;
-        ChangeState(EnemyState.Knockback);
-        Vector2 direction = (transform.position - forceTransform.position).normalized;
-        rb.linearVelocity = direction * force;
-        yield return new WaitForSeconds(kbTime);
-        rb.linearVelocity = Vector2.zero;
-        yield return new WaitForSeconds(stTime);
-        isInKnockback = false;
-        ChangeState(EnemyState.Idle);
-    }
-
-    public void ChangeState(EnemyState newState)
-    {
-        if (enemyState == newState) return;
-
-        if (enemyState == EnemyState.Idle) anim.SetBool("isIdle", false);
-        else if (enemyState == EnemyState.Chasing) anim.SetBool("isChasing", false);
-        else if (enemyState == EnemyState.Attacking) anim.SetBool("isAttacking", false);
-
-        enemyState = newState;
-
-        if (enemyState == EnemyState.Idle) anim.SetBool("isIdle", true);
-        else if (enemyState == EnemyState.Chasing) anim.SetBool("isChasing", true);
-        else if (enemyState == EnemyState.Attacking)
-        {
-            hasDealtDamageThisAttack = false;
-            anim.SetBool("isAttacking", true);
-        }
-    }
+    private void DropLoot() { foreach (var entry in lootTable) { if (Random.value <= entry.dropChance) { if (entry.itemToDrop.isGold) StatsManager.instance.AddGold(entry.itemToDrop.goldAmount); else LootSpawner.Instance.SpawnLoot(entry.itemToDrop, 1, transform.position); } } }
+    public void Knockback(Transform forceTransform, float force, float kbTime, float stTime) { if (isInKnockback) return; StartCoroutine(KnockbackCoroutine(forceTransform, force, kbTime, stTime)); }
+    IEnumerator KnockbackCoroutine(Transform forceTransform, float force, float kbTime, float stTime) { isInKnockback = true; ChangeState(EnemyState.Knockback); Vector2 direction = (transform.position - forceTransform.position).normalized; rb.linearVelocity = direction * force; yield return new WaitForSeconds(kbTime); rb.linearVelocity = Vector2.zero; yield return new WaitForSeconds(stTime); isInKnockback = false; ChangeState(EnemyState.Idle); }
+    public void ChangeState(EnemyState newState) { if (enemyState == newState) return; if (enemyState == EnemyState.Idle) anim.SetBool("isIdle", false); else if (enemyState == EnemyState.Chasing) anim.SetBool("isChasing", false); else if (enemyState == EnemyState.Attacking) anim.SetBool("isAttacking", false); enemyState = newState; if (enemyState == EnemyState.Idle) anim.SetBool("isIdle", true); else if (enemyState == EnemyState.Chasing) anim.SetBool("isChasing", true); else if (enemyState == EnemyState.Attacking) { hasDealtDamageThisAttack = false; anim.SetBool("isAttacking", true); } }
+    private void OnDrawGizmosSelected() { if (detectionPoint != null) { Gizmos.color = Color.yellow; Gizmos.DrawWireSphere(detectionPoint.position, playerDetectRange); } if (attackPoint != null) { Gizmos.color = Color.red; Gizmos.DrawWireSphere(attackPoint.position, weaponRange); } }
 }
 
 public enum EnemyState

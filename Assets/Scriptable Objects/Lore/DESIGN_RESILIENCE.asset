@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: DESIGN_RESILIENCE
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: DESIGN_RESILIENCE
+  loreID: 36
   title: Resiliencia
   content: Implementar circuit breakers, reintentos y timeouts para que el sistema
     maneje fallos gracefully.

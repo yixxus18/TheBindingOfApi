@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: REST_IDEMPOTENCY
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: REST_IDEMPOTENCY
+  loreID: 90
   title: Idempotencia
   content: "Propiedad donde m\xFAltiples solicitudes id\xE9nticas tienen el mismo
     efecto que una sola. GET, PUT y DELETE son idempotentes."

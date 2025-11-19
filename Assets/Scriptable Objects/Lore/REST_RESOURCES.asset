@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5a9adca27bf5d47b8d8417d7ccb55b, type: 3}
   m_Name: REST_RESOURCES
   m_EditorClassIdentifier: Assembly-CSharp::LoreSO
-  loreID: REST_RESOURCES
+  loreID: 92
   title: Recursos y URIs
   content: "Los recursos son entidades del sistema identificadas por URIs \xFAnicos.
     Cada URI debe representar un recurso espec\xEDfico."
