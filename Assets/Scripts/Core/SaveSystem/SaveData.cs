@@ -21,6 +21,8 @@ public class SaveData
     public int currentExp;
     public int expToLevel;
 
+    public List<NPCStateData> npcStates;
+
     public SaveData()
     {
         learnedRequests = new List<RequestEntry>();
@@ -29,6 +31,7 @@ public class SaveData
         playerEngineeringLevel = 1;
         completedObjectiveIDs = new List<string>();
         highestLevelUnlocked = 0;
+        npcStates = new List<NPCStateData>();
     }
 }
 
@@ -37,4 +40,11 @@ public class InventoryItemData
 {
     public int itemID;
     public int quantity;
+}
+
+[System.Serializable]
+public class NPCStateData
+{
+    public string npcID;
+    public int conversationIndex;
 }

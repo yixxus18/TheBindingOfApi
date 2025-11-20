@@ -10,6 +10,8 @@ public class ProgressionManager : MonoBehaviour
     public HashSet<string> completedObjectiveIDs = new HashSet<string>();
     public int highestLevelUnlocked = 0;
 
+    public Dictionary<string, int> npcConversationStates = new Dictionary<string, int>();
+
     private void Awake()
     {
         if (instance == null)
@@ -32,6 +34,7 @@ public class ProgressionManager : MonoBehaviour
     {
         return levelIndex <= highestLevelUnlocked;
     }
+
     public void CompleteObjective(string objectiveId)
     {
         if (!completedObjectiveIDs.Contains(objectiveId))
@@ -46,5 +49,26 @@ public class ProgressionManager : MonoBehaviour
         highestLevelUnlocked++;
         Debug.Log($"¡Nivel {highestLevelUnlocked} desbloqueado!");
         OnLevelUnlocked?.Invoke();
+    }
+
+    public int GetNPCConversationIndex(string npcID)
+    {
+        if (npcConversationStates.ContainsKey(npcID))
+        {
+            return npcConversationStates[npcID];
+        }
+        return 0;
+    }
+
+    public void SetNPCConversationIndex(string npcID, int index)
+    {
+        if (npcConversationStates.ContainsKey(npcID))
+        {
+            npcConversationStates[npcID] = index;
+        }
+        else
+        {
+            npcConversationStates.Add(npcID, index);
+        }
     }
 }

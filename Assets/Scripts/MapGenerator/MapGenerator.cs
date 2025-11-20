@@ -15,6 +15,7 @@ public class MapGenerator : MonoBehaviour
     private int shopRoomIndex;
     private int itemRoomIndex;
     private int puzzleRoomIndex;
+
     public Cell cellPrefab;
     private float cellSize = 0.5f;
     private Queue<int> cellQueue;
@@ -36,7 +37,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private Sprite lShapeRoom;
 
     [Header("Minimap")]
-    public MinimapIcon minimapIconPrefab;
+    public GameObject minimapIconPrefab;
     public Transform minimapParent;
     public float minimapCellSize = 20f;
 
@@ -154,7 +155,7 @@ public class MapGenerator : MonoBehaviour
         newCell.cellList.Add(index);
         spawnedCells.Add(newCell);
 
-        CreateMinimapIcon(newCell);
+        RegisterCellAsMinimapIcon(newCell);
     }
 
     private bool TryPlaceRoom(int origin, int[] offsets)
@@ -230,53 +231,23 @@ public class MapGenerator : MonoBehaviour
         newCell.index = newCell.cellList[0];
         spawnedCells.Add(newCell);
 
-        CreateMinimapIcon(newCell);
+        RegisterCellAsMinimapIcon(newCell);
     }
 
-    private void CreateMinimapIcon(Cell cell)
+    private void RegisterCellAsMinimapIcon(Cell cell)
     {
-        if (MinimapManager.instance == null || minimapIconPrefab == null || minimapParent == null) return;
+        if (MinimapManager.instance == null) return;
 
-        float avgX = 0f, avgY = 0f;
-        foreach (int index in cell.cellList)
+        MinimapIcon iconScript = cell.GetComponent<MinimapIcon>();
+
+        if (iconScript != null)
         {
-            avgX += index % 10;
-            avgY += index / 10;
-        }
-        avgX /= cell.cellList.Count;
-        avgY /= cell.cellList.Count;
+            iconScript.SetState(MinimapIcon.RoomState.Hidden);
 
-        int startGridX = 45 % 10;
-        int startGridY = 45 / 10;
-        float deltaX = avgX - startGridX;
-        float deltaY = avgY - startGridY;
-
-        Vector2 minimapPosition = new Vector2(deltaX * minimapCellSize, -deltaY * minimapCellSize);
-
-        MinimapIcon icon = Instantiate(minimapIconPrefab, minimapParent);
-
-        if (icon.TryGetComponent<RectTransform>(out var rectTransform))
-        {
-            rectTransform.anchoredPosition = minimapPosition;
-
-            Vector2 newSize = new Vector2(minimapCellSize, minimapCellSize);
-            switch (cell.roomShape)
+            foreach (int subCellIndex in cell.cellList)
             {
-                case RoomShape.OneByTwo: newSize = new Vector2(minimapCellSize, minimapCellSize * 2); break;
-                case RoomShape.TwoByOne: newSize = new Vector2(minimapCellSize * 2, minimapCellSize); break;
-                case RoomShape.TwoByTwo:
-                case RoomShape.LShape: newSize = new Vector2(minimapCellSize * 2, minimapCellSize * 2); break;
+                MinimapManager.instance.RegisterMinimapIcon(subCellIndex, iconScript);
             }
-            rectTransform.sizeDelta = newSize;
-        }
-        else
-        {
-            icon.transform.localPosition = minimapPosition;
-        }
-
-        foreach (int subCellIndex in cell.cellList)
-        {
-            MinimapManager.instance.RegisterMinimapIcon(subCellIndex, icon);
         }
     }
 

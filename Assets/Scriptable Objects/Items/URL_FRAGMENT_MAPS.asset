@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Fragmento /maps
   itemDescription: "Fragmento del recurso de mapas. Permite acceder a funcionalidades
     de descubrimiento y navegaci\xF3n."
-  icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
+  icon: {fileID: -3473174383897603509, guid: 2fef2c6e793f86d41852d8d7b015aa4a, type: 3}
   stackSize: 99
   itemType: 2
   apiValue: /maps

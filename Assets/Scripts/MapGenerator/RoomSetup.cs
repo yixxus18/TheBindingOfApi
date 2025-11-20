@@ -10,22 +10,21 @@ public class RoomSetup : MonoBehaviour
         public ObjectiveType type;
         public int requiredAmount = 1;
 
-        [Header("Referencias (Usar una según el tipo)")]
-        [Tooltip("Arrastra aquí el ItemSO si el objetivo es 'Collect Item'")]
+        [Header("Referencias")]
         public ItemSO itemTarget;
-
-        [Tooltip("Arrastra aquí el RoomPuzzleSO si el objetivo es 'Solve Puzzle'")]
         public RoomPuzzleSO puzzleTarget;
-
-        [Tooltip("Usa esto solo para Jefes o IDs manuales")]
         public string manualTargetId;
     }
 
     [Header("Configuración de la Sala")]
     public List<RoomObjectiveConfig> objectivesConfiguration;
 
-    [Header("Puzzle Principal de la Sala")]
-    public RoomPuzzleSO puzzleDeEstaSala;
+    [Header("Puzzles y Terminal")]
+    [Tooltip("Arrastra aquí los puzzles que se pueden resolver en esta sala")]
+    public List<RoomPuzzleSO> puzzlesInRoom;
+
+    [Tooltip("¡IMPORTANTE! Arrastra aquí el objeto PC de la escena que tiene el script TerminalActivator")]
+    public TerminalActivator pcTerminal; // <-- CAMBIO CLAVE
 
     private void Start()
     {
@@ -50,38 +49,19 @@ public class RoomSetup : MonoBehaviour
                 isCompleted = false
             };
 
-            // Lógica inteligente para obtener el ID correcto
             switch (config.type)
             {
                 case ObjectiveType.CollectItem:
-                    if (config.itemTarget != null)
-                    {
-                        // Convierte el ID numérico del item a string automáticamente
-                        newObj.targetId = config.itemTarget.itemID.ToString();
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Objetivo de Item en {gameObject.name} no tiene ItemSO asignado.");
-                    }
+                    if (config.itemTarget != null) newObj.targetId = config.itemTarget.itemID.ToString();
                     break;
-
                 case ObjectiveType.SolvePuzzle:
-                    if (config.puzzleTarget != null)
-                    {
-                        newObj.targetId = config.puzzleTarget.puzzleID;
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Objetivo de Puzzle en {gameObject.name} no tiene RoomPuzzleSO asignado.");
-                    }
+                    if (config.puzzleTarget != null) newObj.targetId = config.puzzleTarget.puzzleID.ToString();
                     break;
-
                 case ObjectiveType.KillBoss:
                 default:
                     newObj.targetId = config.manualTargetId;
                     break;
             }
-
             finalObjectives.Add(newObj);
         }
 
@@ -90,22 +70,25 @@ public class RoomSetup : MonoBehaviour
 
     private void ConfigurarPuzzleEnTerminal()
     {
-        if (puzzleDeEstaSala == null) return;
-
-        // Buscamos el TerminalActivator en la sala (el PC)
-        TerminalActivator activator = GetComponentInChildren<TerminalActivator>();
-
-        if (activator != null)
+        // Si asignamos el PC manualmente en el inspector
+        if (pcTerminal != null)
         {
-            activator.puzzleContext = puzzleDeEstaSala;
+            // Le pasamos la lista de puzzles al PC
+            pcTerminal.puzzleContexts = puzzlesInRoom;
+            Debug.Log($"[RoomSetup] Puzzles asignados al PC '{pcTerminal.name}': {puzzlesInRoom.Count}");
         }
         else
         {
-            // Fallback por si hay un manager suelto (menos recomendado con el nuevo sistema)
-            ApiTerminalManager roomTerminal = FindFirstObjectByType<ApiTerminalManager>();
-            if (roomTerminal != null && roomTerminal.isCentralTerminal)
+            // Intento de respaldo automático (por si se te olvida asignar)
+            TerminalActivator activator = GetComponentInChildren<TerminalActivator>();
+            if (activator != null)
             {
-                roomTerminal.OpenTerminal(puzzleDeEstaSala);
+                activator.puzzleContexts = puzzlesInRoom;
+                Debug.Log($"[RoomSetup] PC encontrado automáticamente: {activator.name}");
+            }
+            else
+            {
+                Debug.LogError("[RoomSetup] ¡No se encontró ningún PC (TerminalActivator) para asignar los puzzles! Arrástralo al Inspector.");
             }
         }
     }

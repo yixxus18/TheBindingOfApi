@@ -6,6 +6,7 @@ public class MinimapManager : MonoBehaviour
     public static MinimapManager instance;
 
     private Dictionary<int, MinimapIcon> minimapIcons = new Dictionary<int, MinimapIcon>();
+
     private MinimapIcon currentRoomIcon;
 
     void Awake()
@@ -30,10 +31,19 @@ public class MinimapManager : MonoBehaviour
             {
                 currentRoomIcon.SetState(MinimapIcon.RoomState.Visited);
             }
-
             newRoomIcon.SetState(MinimapIcon.RoomState.Current);
             currentRoomIcon = newRoomIcon;
+
         }
+    }
+
+    public void RevealAllMap()
+    {
+        foreach (var icon in minimapIcons.Values)
+        {
+            icon.SetState(MinimapIcon.RoomState.Visited);
+        }
+        if (currentRoomIcon != null) currentRoomIcon.SetState(MinimapIcon.RoomState.Current);
     }
 
     public void ClearMap()

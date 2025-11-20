@@ -6,7 +6,7 @@ using System.Linq;
 [CreateAssetMenu(fileName = "New Room Puzzle", menuName = "BindingOfApi/Puzzle")]
 public class RoomPuzzleSO : ScriptableObject
 {
-    public string puzzleID;
+    public int puzzleID; // Cambiado a int para coincidir con tu sistema nuevo
     public string puzzleName;
     [TextArea] public string descriptionHint;
 
@@ -27,41 +27,29 @@ public class RoomPuzzleSO : ScriptableObject
 
     public bool ValidateRequest(string method, string url, List<string> headers, string body)
     {
-        Debug.Log($"<color=yellow>--- INICIANDO VALIDACIÓN DEL PUZZLE: {puzzleName} ---</color>");
-
         // 1. Validar Método
-        Debug.Log($"[1] Validando Método: Esperado <b>'{requiredMethod}'</b> - Recibido <b>'{method}'</b>");
-        if (method != requiredMethod)
-        {
-            Debug.LogError("❌ Falló el Mtodo.");
-            return false;
-        }
+        if (method != requiredMethod) return false;
 
-        // 2. Validar URL
-        Debug.Log($"[2] Validando URL: Recibida <b>'{url}'</b>");
+        // 2. Validar URL (Limpiando espacios para evitar errores tontos)
+        string cleanUrl = CleanString(url);
         foreach (var fragment in requiredUrlFragments)
         {
-            if (!url.Contains(fragment))
-            {
-                Debug.LogError($"❌ Falló URL. No se encontró el fragmento requerido: <b>'{fragment}'</b> en la URL enviada.");
-                return false;
-            }
+            string cleanFragment = CleanString(fragment);
+            if (!cleanUrl.Contains(cleanFragment)) return false;
         }
 
-        // 3. Validar Headers
-        Debug.Log($"[3] Validando Headers. Cantidad recibida: {headers?.Count ?? 0}");
+        // 3. Validar Headers (Limpiando espacios y saltos de línea)
         foreach (var reqHeader in requiredHeaders)
         {
-            string trimmedReq = reqHeader.Trim();
+            string cleanReqHeader = CleanString(reqHeader);
             bool headerFound = false;
 
             if (headers != null)
             {
                 foreach (var h in headers)
                 {
-                    // Logueamos cada comparación para ver si hay espacios invisibles
-                    // Debug.Log($"   Comparando: '{h.Trim()}' contra '{trimmedReq}'"); 
-                    if (h.Trim() == trimmedReq)
+                    // Comparamos versiones "limpias" de ambos lados
+                    if (CleanString(h) == cleanReqHeader)
                     {
                         headerFound = true;
                         break;
@@ -69,41 +57,26 @@ public class RoomPuzzleSO : ScriptableObject
                 }
             }
 
-            if (!headerFound)
-            {
-                Debug.LogError($"❌ Falló Header. Falta el header requerido: <b>'{trimmedReq}'</b>");
-                return false;
-            }
+            if (!headerFound) return false;
         }
 
-        // 4. Validar Body
+        // 4. Validar Body (Limpiando espacios y saltos de línea)
         string cleanBody = CleanString(body);
-        Debug.Log($"[4] Validando Body.");
-        Debug.Log($"   Body Original Recibido: '{body}'");
-        Debug.Log($"   Body Limpio (sin espacios/enters): '{cleanBody}'");
-
         foreach (var snippet in requiredBodySnippets)
         {
             if (string.IsNullOrEmpty(snippet)) continue;
 
             string cleanSnippet = CleanString(snippet);
-            Debug.Log($"   Buscando Snippet Limpio: '{cleanSnippet}'");
-
-            if (!cleanBody.Contains(cleanSnippet))
-            {
-                Debug.LogError($"❌ Falló Body. El body limpio no contiene: <b>'{cleanSnippet}'</b>");
-                return false;
-            }
+            if (!cleanBody.Contains(cleanSnippet)) return false;
         }
 
-        Debug.Log("<color=green>✅ ¡VALIDACIÓN EXITOSA! Puzzle Resuelto.</color>");
         return true;
     }
 
+    // Función mágica que elimina espacios, enters y tabulaciones
     private string CleanString(string input)
     {
         if (string.IsNullOrEmpty(input)) return "";
-        // Eliminamos espacios, saltos de línea, retornos de carro y tabulaciones
         return input.Replace(" ", "").Replace("\n", "").Replace("\r", "").Replace("\t", "");
     }
 }

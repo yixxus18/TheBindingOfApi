@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Payload Sigilo Sol
   itemDescription: "Soluci\xF3n a puzzle de tipo sol: {\"sigil\":\"sun\"}. Desbloquea
     puertas secretas en salas especiales."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: 2142475732741722921, guid: d491445fcac2a684b9115eab4ee25914, type: 3}
   stackSize: 99
   itemType: 5
   apiValue: '{"sigil":"sun"}'

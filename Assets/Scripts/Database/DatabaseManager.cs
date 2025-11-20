@@ -68,6 +68,11 @@ public class DatabaseManager : MonoBehaviour
                         PRIMARY KEY (perfil_id, item_id),
                         FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
                     );
+                    CREATE TABLE IF NOT EXISTS NPC_Estados (
+                        perfil_id INTEGER, npc_id TEXT, conversation_index INTEGER,
+                        PRIMARY KEY (perfil_id, npc_id),
+                        FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
+                    );
                     INSERT OR IGNORE INTO Perfil_Jugador (id, nombre_perfil) VALUES (1, 'Default Profile');
                 ";
                 command.ExecuteNonQuery();
@@ -120,10 +125,7 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var loreId in data.discoveredLoreIDs)
                         {
-                            var pLore = cmd.CreateParameter();
-                            pLore.ParameterName = "@loreId";
-                            pLore.Value = loreId;
-                            cmd.Parameters.Add(pLore);
+                            var pLore = cmd.CreateParameter(); pLore.ParameterName = "@loreId"; pLore.Value = loreId; cmd.Parameters.Add(pLore);
                             cmd.CommandText = "INSERT INTO Lore_Descubierto (perfil_id, lore_id) VALUES (@profileId, @loreId);";
                             cmd.ExecuteNonQuery();
                         }
@@ -136,10 +138,7 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var objectiveId in data.completedObjectiveIDs)
                         {
-                            var pObj = cmd.CreateParameter();
-                            pObj.ParameterName = "@objectiveId";
-                            pObj.Value = objectiveId;
-                            cmd.Parameters.Add(pObj);
+                            var pObj = cmd.CreateParameter(); pObj.ParameterName = "@objectiveId"; pObj.Value = objectiveId; cmd.Parameters.Add(pObj);
                             cmd.CommandText = "INSERT INTO Objetivo_Completado (perfil_id, objetivo_id) VALUES (@profileId, @objectiveId);";
                             cmd.ExecuteNonQuery();
                         }
@@ -152,14 +151,9 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var request in data.learnedRequests)
                         {
-                            var pName = cmd.CreateParameter();
-                            pName.ParameterName = "@puzzleName";
-                            pName.Value = request.puzzleName;
-                            var pReq = cmd.CreateParameter();
-                            pReq.ParameterName = "@fullRequest";
-                            pReq.Value = request.fullRequest;
-                            cmd.Parameters.Add(pName);
-                            cmd.Parameters.Add(pReq);
+                            var pName = cmd.CreateParameter(); pName.ParameterName = "@puzzleName"; pName.Value = request.puzzleName;
+                            var pReq = cmd.CreateParameter(); pReq.ParameterName = "@fullRequest"; pReq.Value = request.fullRequest;
+                            cmd.Parameters.Add(pName); cmd.Parameters.Add(pReq);
                             cmd.CommandText = "INSERT INTO Request_Aprendido (perfil_id, puzzle_name, full_request) VALUES (@profileId, @puzzleName, @fullRequest);";
                             cmd.ExecuteNonQuery();
                         }
@@ -172,15 +166,25 @@ public class DatabaseManager : MonoBehaviour
                         cmd.ExecuteNonQuery();
                         foreach (var itemData in data.inventoryItems)
                         {
-                            var pId = cmd.CreateParameter();
-                            pId.ParameterName = "@itemId";
-                            pId.Value = itemData.itemID;
-                            var pQty = cmd.CreateParameter();
-                            pQty.ParameterName = "@cantidad";
-                            pQty.Value = itemData.quantity;
-                            cmd.Parameters.Add(pId);
-                            cmd.Parameters.Add(pQty);
+                            var pId = cmd.CreateParameter(); pId.ParameterName = "@itemId"; pId.Value = itemData.itemID;
+                            var pQty = cmd.CreateParameter(); pQty.ParameterName = "@cantidad"; pQty.Value = itemData.quantity;
+                            cmd.Parameters.Add(pId); cmd.Parameters.Add(pQty);
                             cmd.CommandText = "INSERT INTO Inventario (perfil_id, item_id, cantidad) VALUES (@profileId, @itemId, @cantidad);";
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    using (var cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "DELETE FROM NPC_Estados WHERE perfil_id = @profileId;";
+                        cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
+                        cmd.ExecuteNonQuery();
+                        foreach (var npc in data.npcStates)
+                        {
+                            var pNpcId = cmd.CreateParameter(); pNpcId.ParameterName = "@npcId"; pNpcId.Value = npc.npcID;
+                            var pIndex = cmd.CreateParameter(); pIndex.ParameterName = "@idx"; pIndex.Value = npc.conversationIndex;
+                            cmd.Parameters.Add(pNpcId); cmd.Parameters.Add(pIndex);
+                            cmd.CommandText = "INSERT INTO NPC_Estados (perfil_id, npc_id, conversation_index) VALUES (@profileId, @npcId, @idx);";
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -274,6 +278,23 @@ public class DatabaseManager : MonoBehaviour
                         {
                             itemID = reader.GetInt32(0),
                             quantity = reader.GetInt32(1)
+                        });
+                    }
+                }
+            }
+
+            using (var cmd = connection.CreateCommand())
+            {
+                cmd.CommandText = "SELECT npc_id, conversation_index FROM NPC_Estados WHERE perfil_id = @profileId";
+                cmd.Parameters.Add(new SqliteParameter("@profileId", currentProfileID));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        data.npcStates.Add(new NPCStateData
+                        {
+                            npcID = reader.GetString(0),
+                            conversationIndex = reader.GetInt32(1)
                         });
                     }
                 }

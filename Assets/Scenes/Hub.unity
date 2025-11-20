@@ -6268,7 +6268,9 @@ MonoBehaviour:
     itemTarget: {fileID: 11400000, guid: 4dcd9cda07695c047bb46b5aea3ce0b3, type: 2}
     puzzleTarget: {fileID: 0}
     manualTargetId: 
-  puzzleDeEstaSala: {fileID: 11400000, guid: dc80d3c986479d84b81187fd8ec27360, type: 2}
+  puzzlesInRoom:
+  - {fileID: 11400000, guid: dc80d3c986479d84b81187fd8ec27360, type: 2}
+  pcTerminal: {fileID: 1060745968}
 --- !u!4 &867832789
 Transform:
   m_ObjectHideFlags: 0
@@ -8031,7 +8033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TerminalActivator
   centralTerminalPrefab: {fileID: 7301735438784040759, guid: bdcb1fa297b746e458aba7cd0221006f, type: 3}
-  puzzleContext: {fileID: 11400000, guid: dc80d3c986479d84b81187fd8ec27360, type: 2}
+  puzzleContexts: []
 --- !u!61 &1060745969
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23721,6 +23723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5550fe4d0b1b4b44912b130a2ef43f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCController
+  npcID: 1
+  isStaticObject: 0
   defaultState: 1
   speed: 2
   pauseDuration: 1.5
@@ -23730,8 +23734,9 @@ MonoBehaviour:
   wanderWidth: 5
   wanderHeight: 5
   interactPromptAnimator: {fileID: 1245943398}
-  conversations:
+  primaryConversations:
   - {fileID: 11400000, guid: 24642b26fa53a8349a6bff3ce51edf2e, type: 2}
+  defaultConversation: {fileID: 11400000, guid: f2f4e339ff3c04547adbaef2d2660195, type: 2}
 --- !u!61 &1412056648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29343,7 +29348,6 @@ MonoBehaviour:
   urlInputField: {fileID: 1006222965}
   headersInputField: {fileID: 1718768825}
   bodyInputField: {fileID: 142063755}
-  currentRoomPuzzle: {fileID: 0}
 --- !u!1 &1815200647
 GameObject:
   m_ObjectHideFlags: 0
@@ -31126,6 +31130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5550fe4d0b1b4b44912b130a2ef43f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCController
+  npcID: 2
+  isStaticObject: 1
   defaultState: 0
   speed: 0
   pauseDuration: 0
@@ -31133,8 +31139,10 @@ MonoBehaviour:
   wanderWidth: 0
   wanderHeight: 0
   interactPromptAnimator: {fileID: 619424975}
-  conversations:
+  primaryConversations:
   - {fileID: 11400000, guid: 32dc6e3b55ae6f943a67561a9856b98e, type: 2}
+  - {fileID: 11400000, guid: 24642b26fa53a8349a6bff3ce51edf2e, type: 2}
+  defaultConversation: {fileID: 11400000, guid: d79d812fc56813e448bc28c9445c5000, type: 2}
 --- !u!50 &1998520745
 Rigidbody2D:
   serializedVersion: 5
@@ -31323,7 +31331,7 @@ MonoBehaviour:
     price: 1
   - item: {fileID: 11400000, guid: 1d468c7ee835c8c4a8c0ad6a67062164, type: 2}
     price: 1
-  - item: {fileID: 11400000, guid: 7dd706252fd12494ab291ed66e52766a, type: 2}
+  - item: {fileID: 11400000, guid: 846a7142651f6d5418cb1bb6a28c1fe2, type: 2}
     price: 1
   - item: {fileID: 11400000, guid: 01b83017ab1026942be474781de62e94, type: 2}
     price: 1

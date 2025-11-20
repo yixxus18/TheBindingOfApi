@@ -12,6 +12,13 @@ public static class SaveSystem
 
         data.completedObjectiveIDs = ProgressionManager.instance.completedObjectiveIDs.ToList();
         data.highestLevelUnlocked = ProgressionManager.instance.highestLevelUnlocked;
+
+        data.npcStates.Clear();
+        foreach (var kvp in ProgressionManager.instance.npcConversationStates)
+        {
+            data.npcStates.Add(new NPCStateData { npcID = kvp.Key, conversationIndex = kvp.Value });
+        }
+
         data.learnedRequests = codex.learnedRequests;
         data.discoveredLoreIDs = codex.discoveredLore.Select(l => l.loreID).ToList();
 
@@ -44,6 +51,15 @@ public static class SaveSystem
 
         ProgressionManager.instance.completedObjectiveIDs = new HashSet<string>(data.completedObjectiveIDs ?? new List<string>());
         ProgressionManager.instance.highestLevelUnlocked = data.highestLevelUnlocked;
+
+        ProgressionManager.instance.npcConversationStates.Clear();
+        if (data.npcStates != null)
+        {
+            foreach (var npcData in data.npcStates)
+            {
+                ProgressionManager.instance.npcConversationStates[npcData.npcID] = npcData.conversationIndex;
+            }
+        }
 
         codex.learnedRequests.Clear();
         codex.learnedRequests.AddRange(data.learnedRequests ?? new List<RequestEntry>());

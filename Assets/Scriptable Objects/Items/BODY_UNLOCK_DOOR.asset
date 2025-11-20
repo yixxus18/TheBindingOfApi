@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Payload Desbloquear Puerta
   itemDescription: "Payload para petici\xF3n de desbloqueo: {\"doorId\":\"A-2L\",\"keyType\":\"standard\"}.
     Consume una llave."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: 1551455278211136728, guid: d491445fcac2a684b9115eab4ee25914, type: 3}
   stackSize: 99
   itemType: 5
   apiValue: '{"doorId":"A-2L","keyType":"standard"}'

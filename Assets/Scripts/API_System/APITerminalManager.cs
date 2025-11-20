@@ -29,8 +29,7 @@ public class ApiTerminalManager : MonoBehaviour
     public TMP_InputField headersInputField;
     public TMP_InputField bodyInputField;
 
-    [HideInInspector]
-    public RoomPuzzleSO currentRoomPuzzle;
+    private List<RoomPuzzleSO> activePuzzles = new List<RoomPuzzleSO>();
 
     private readonly string baseUrl = "https://www.conectop.com";
 
@@ -74,9 +73,10 @@ public class ApiTerminalManager : MonoBehaviour
         }
     }
 
-    public void OpenTerminal(RoomPuzzleSO puzzleContext = null)
+    public void OpenTerminal(List<RoomPuzzleSO> puzzles = null)
     {
-        currentRoomPuzzle = puzzleContext;
+        Debug.Log($"[ApiTerminalManager] Abriendo terminal. Puzzles recibidos: {(puzzles != null ? puzzles.Count : 0)}");
+        activePuzzles = puzzles ?? new List<RoomPuzzleSO>();
         terminalPanel.SetActive(true);
         ClearTerminal();
 
@@ -97,7 +97,7 @@ public class ApiTerminalManager : MonoBehaviour
         {
             terminalPanel.SetActive(false);
         }
-        currentRoomPuzzle = null;
+        activePuzzles.Clear();
     }
 
     private void PopulateLearnedRequests()
@@ -160,42 +160,80 @@ public class ApiTerminalManager : MonoBehaviour
             body = bodyInputField.text;
         }
 
-        if (currentRoomPuzzle != null)
+        Debug.Log($"[ApiTerminalManager] Enviando Petición: {method} {fullUrl}");
+        Debug.Log($"[ApiTerminalManager] Puzzles activos para validar: {activePuzzles.Count}");
+
+        bool puzzleSolved = false;
+        if (activePuzzles != null && activePuzzles.Count > 0)
         {
-            ValidatePuzzleRequest(method, fullUrl, headers, body);
-        }
-        else
-        {
-            ShowResponse($"<color=cyan>Simulación:</color> {method} {fullUrl}\n<color=green>200 OK</color>");
-        }
-    }
-
-    private void ValidatePuzzleRequest(string method, string url, List<string> headers, string body)
-    {
-        bool isSuccess = currentRoomPuzzle.ValidateRequest(method, url, headers, body);
-        if (isSuccess)
-        {
-            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalSuccessSound);
-
-            ShowResponse($"<color=green>200 OK</color>\n{currentRoomPuzzle.successResponse}");
-            currentRoomPuzzle.OnPuzzleSolved?.Invoke();
-
-            ConfirmItemsUsed();
-
-            if (DungeonObjectiveManager.instance != null)
-                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, currentRoomPuzzle.puzzleID);
-
-            if (isCentralTerminal && CodexManager.instance != null)
+            foreach (var puzzle in activePuzzles)
             {
-                CodexManager.instance.AddRequestEntry(currentRoomPuzzle.puzzleName, method, url.Replace(baseUrl, ""));
+                Debug.Log($"[ApiTerminalManager] Validando contra puzzle: {puzzle.puzzleName} (ID: {puzzle.puzzleID})");
+                if (ValidatePuzzleRequest(puzzle, method, fullUrl, headers, body))
+                {
+                    puzzleSolved = true;
+                    break;
+                }
             }
         }
         else
         {
-            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalErrorSound);
-
-            ShowResponse($"<color=red>{currentRoomPuzzle.failureErrorCode} Error</color>");
+            Debug.LogWarning("[ApiTerminalManager] No hay puzzles activos en la lista.");
         }
+
+        if (!puzzleSolved)
+        {
+            Debug.Log("[ApiTerminalManager] Ningún puzzle fue resuelto con esta petición.");
+            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalErrorSound);
+            ShowResponse($"<color=cyan>Simulación:</color> {method} {fullUrl}\n<color=red>Error 404 o Petición Inválida</color>");
+        }
+    }
+
+    private bool ValidatePuzzleRequest(RoomPuzzleSO puzzle, string method, string url, List<string> headers, string body)
+    {
+        bool isSuccess = puzzle.ValidateRequest(method, url, headers, body);
+        if (isSuccess)
+        {
+            Debug.Log($"[ApiTerminalManager] ¡EXITO! Puzzle resuelto: {puzzle.puzzleName}");
+
+            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalSuccessSound);
+
+            ShowResponse($"<color=green>200 OK</color>\n{puzzle.successResponse}");
+            puzzle.OnPuzzleSolved?.Invoke();
+
+            ConfirmItemsUsed();
+
+            if (puzzle.itemReward != null)
+            {
+                InventoryManager.instance.AddItem(puzzle.itemReward, 1);
+                Debug.Log($"[ApiTerminalManager] Recompensa entregada: {puzzle.itemReward.itemName}");
+            }
+            if (puzzle.loreReward != null)
+            {
+                CodexManager.instance.AddLoreEntry(puzzle.loreReward);
+            }
+
+            if (DungeonObjectiveManager.instance != null)
+            {
+                // CORRECCIÓN AQUÍ: puzzle.puzzleID.ToString()
+                string idString = puzzle.puzzleID.ToString();
+                Debug.Log($"[ApiTerminalManager] Notificando objetivo completado con ID: {idString}");
+                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, idString);
+            }
+            else
+            {
+                Debug.LogError("[ApiTerminalManager] DungeonObjectiveManager es NULL.");
+            }
+
+            if (isCentralTerminal && CodexManager.instance != null)
+            {
+                CodexManager.instance.AddRequestEntry(puzzle.puzzleName, method, url.Replace(baseUrl, ""));
+            }
+            return true;
+        }
+
+        Debug.Log($"[ApiTerminalManager] Validación fallida para {puzzle.puzzleName}.");
+        return false;
     }
 
     private void ConfirmItemsUsed()

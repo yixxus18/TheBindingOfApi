@@ -1,12 +1,22 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TerminalActivator : MonoBehaviour
 {
     public GameObject centralTerminalPrefab;
-    public RoomPuzzleSO puzzleContext;
+    public List<RoomPuzzleSO> puzzleContexts;
 
     private bool playerInRange;
     public static GameObject terminalInstance;
+
+    private void OnDestroy()
+    {
+        if (terminalInstance != null)
+        {
+            Destroy(terminalInstance);
+            terminalInstance = null;
+        }
+    }
 
     private void Update()
     {
@@ -16,10 +26,20 @@ public class TerminalActivator : MonoBehaviour
             {
                 terminalInstance = Instantiate(centralTerminalPrefab);
 
+                Transform panel = terminalInstance.transform.Find("Panel");
+                if (panel != null)
+                {
+                    panel.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogError("El prefab de la terminal no tiene un hijo llamado 'Panel'.");
+                }
+
                 ApiTerminalManager terminalManager = terminalInstance.GetComponentInChildren<ApiTerminalManager>();
                 if (terminalManager != null)
                 {
-                    terminalManager.OpenTerminal(puzzleContext);
+                    terminalManager.OpenTerminal(puzzleContexts);
                 }
             }
         }

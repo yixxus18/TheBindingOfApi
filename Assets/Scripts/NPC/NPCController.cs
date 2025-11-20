@@ -2,11 +2,17 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class NPCController : MonoBehaviour
 {
     public enum NPCState { Idle, Patrol, Wander, Talk }
-    [Tooltip("El comportamiento que tendrá el NPC cuando el jugador no esté cerca.")]
+
+    [Header("Identificación (Obligatorio para Guardado)")]
+    [Tooltip("ID único para guardar el progreso de este NPC (Ej: 'Librarian_Hub')")]
+    public string npcID;
+
+    [Header("Configuración General")]
+    public bool isStaticObject = false;
     [SerializeField] private NPCState defaultState = NPCState.Patrol;
     private NPCState currentState;
 
@@ -16,27 +22,24 @@ public class NPCController : MonoBehaviour
 
     [Header("Movimiento")]
     public float speed = 2f;
-    [Tooltip("Tiempo que el NPC se detiene antes de elegir un nuevo destino.")]
     public float pauseDuration = 1.5f;
     private bool isPaused;
     private Vector2 currentTarget;
 
     [Header("Patrol Settings")]
-    [Tooltip("Una lista de puntos que el NPC seguirá en orden.")]
     public Vector2[] patrolPoints;
     private int currentPatrolIndex = -1;
 
     [Header("Wander Settings")]
-    [Tooltip("El ancho y alto del área donde el NPC puede deambular.")]
     public float wanderWidth = 5f;
     public float wanderHeight = 5f;
     private Vector2 wanderOrigin;
 
     [Header("Talk Settings")]
-    [Tooltip("El animador para el ícono de interacción (opcional).")]
     public Animator interactPromptAnimator;
-    [Tooltip("Lista de conversaciones que este NPC puede tener.")]
-    public List<DialogueSO> conversations;
+    public List<DialogueSO> primaryConversations;
+    public DialogueSO defaultConversation;
+
     private bool playerInRange = false;
 
     void Awake()
@@ -44,6 +47,12 @@ public class NPCController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         wanderOrigin = transform.position;
+
+        if (isStaticObject)
+        {
+            defaultState = NPCState.Idle;
+            if (rb != null) rb.bodyType = RigidbodyType2D.Static;
+        }
     }
 
     void Start()
@@ -53,11 +62,20 @@ public class NPCController : MonoBehaviour
 
     void Update()
     {
+        if (isStaticObject)
+        {
+            if (playerInRange && GameInput.Instance.GetInteractPressed() && !DialogueManager.instance.isDialogueActive)
+            {
+                FindAndStartConversation();
+            }
+            return;
+        }
+
         if (UIManager.isGamePaused) return;
 
         if (isPaused || currentState == NPCState.Idle || currentState == NPCState.Talk)
         {
-            rb.linearVelocity = Vector2.zero;
+            if (rb != null) rb.linearVelocity = Vector2.zero;
         }
         else
         {
@@ -89,21 +107,24 @@ public class NPCController : MonoBehaviour
         switch (currentState)
         {
             case NPCState.Patrol:
-                rb.bodyType = RigidbodyType2D.Dynamic;
+                if (rb != null) rb.bodyType = RigidbodyType2D.Dynamic;
                 StartCoroutine(PauseAndSetNextPatrolPoint());
                 break;
             case NPCState.Wander:
-                rb.bodyType = RigidbodyType2D.Dynamic;
+                if (rb != null) rb.bodyType = RigidbodyType2D.Dynamic;
                 StartCoroutine(PauseAndSetNextWanderPoint());
                 break;
             case NPCState.Talk:
-                rb.linearVelocity = Vector2.zero;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    rb.bodyType = RigidbodyType2D.Kinematic;
+                }
                 if (anim != null) anim.Play("Idle");
                 if (interactPromptAnimator != null) interactPromptAnimator.Play("open");
                 break;
             case NPCState.Idle:
-                rb.linearVelocity = Vector2.zero;
+                if (rb != null) rb.linearVelocity = Vector2.zero;
                 if (anim != null) anim.Play("Idle");
                 break;
         }
@@ -136,7 +157,7 @@ public class NPCController : MonoBehaviour
 
     private void HandleTalkInteraction()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.instance.isDialogueActive)
+        if (playerInRange && GameInput.Instance.GetInteractPressed() && !DialogueManager.instance.isDialogueActive)
         {
             FindAndStartConversation();
         }
@@ -144,6 +165,7 @@ public class NPCController : MonoBehaviour
 
     private void MoveTowards(Vector2 target)
     {
+        if (rb == null) return;
         Vector2 direction = (target - (Vector2)transform.position).normalized;
         FlipSprite(direction.x);
         rb.linearVelocity = direction * speed;
@@ -183,8 +205,36 @@ public class NPCController : MonoBehaviour
 
     private void FindAndStartConversation()
     {
-        if (conversations.Count == 0) return;
-        DialogueSO conversationToStart = conversations[0];
+        if (string.IsNullOrEmpty(npcID))
+        {
+            Debug.LogWarning($"El NPC {gameObject.name} no tiene NPC ID asignado. El progreso no se guardará.");
+        }
+
+        DialogueSO conversationToStart = null;
+
+        int currentIndex = ProgressionManager.instance.GetNPCConversationIndex(npcID);
+
+        if (currentIndex < primaryConversations.Count)
+        {
+            conversationToStart = primaryConversations[currentIndex];
+
+            ProgressionManager.instance.SetNPCConversationIndex(npcID, currentIndex + 1);
+
+            if (GameManager.Instance != null)
+            {
+                SaveSystem.SaveGame(
+                    GameManager.Instance.codexManager,
+                    GameManager.Instance.statsManager,
+                    GameManager.Instance.inventoryManager,
+                    GameManager.Instance.expManager
+                );
+            }
+        }
+        else if (defaultConversation != null)
+        {
+            conversationToStart = defaultConversation;
+        }
+
         if (conversationToStart != null)
         {
             DialogueManager.instance.StartDialogue(conversationToStart);
@@ -196,7 +246,8 @@ public class NPCController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInRange = true;
-            SwitchState(NPCState.Talk);
+            if (!isStaticObject) SwitchState(NPCState.Talk);
+            else if (interactPromptAnimator != null) interactPromptAnimator.Play("open");
         }
     }
 
@@ -205,10 +256,11 @@ public class NPCController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInRange = false;
-            if (!gameObject.activeInHierarchy) return;
-
-            if (interactPromptAnimator != null) interactPromptAnimator.Play("close");
-            SwitchState(defaultState);
+            if (gameObject.activeInHierarchy)
+            {
+                if (interactPromptAnimator != null) interactPromptAnimator.Play("close");
+                if (!isStaticObject) SwitchState(defaultState);
+            }
         }
     }
 

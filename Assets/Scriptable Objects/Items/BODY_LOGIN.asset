@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Payload de Login
   itemDescription: "Contiene credenciales para autenticaci\xF3n: {\"player\":\"Isaac\",\"password\":\"ABC-123\"}.
     Genera token al usarse."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: -8976311154680220234, guid: d491445fcac2a684b9115eab4ee25914, type: 3}
   stackSize: 99
   itemType: 5
   apiValue: '{"player":"Isaac","password":"ABC-123"}'

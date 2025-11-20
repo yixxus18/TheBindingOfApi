@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Query Parameter Boss
   itemDescription: "Par\xE1metro de query para calcular ruta: ?to=bossRoom. Revela
     el camino hacia la sala del jefe final."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: -758484101558328131, guid: d491445fcac2a684b9115eab4ee25914, type: 3}
   stackSize: 99
   itemType: 5
   apiValue: ?to=bossRoom

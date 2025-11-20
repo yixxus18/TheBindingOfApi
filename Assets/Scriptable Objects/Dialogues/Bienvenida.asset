@@ -25,11 +25,16 @@ MonoBehaviour:
     text: "\xBFC\xF3mo llegu\xE9 aqu\xED? \xBFY c\xF3mo salgo?\""
   - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
     text: "Llegaste a trav\xE9s de una petici\xF3n fallida. Para salir, debes reparar
-      los cinco servidores corruptos y enfrentar al n\xFAcleo\r\n ADMIN_ROOT. Solo
-      entonces podr\xE1s ejecutar el comando de reinicio."
+      los  servidores corruptos y enfrentar al n\xFAcleo\r\n ADMIN_ROOT. Solo entonces
+      podr\xE1s ejecutar el comando de reinicio."
   - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
     text: "Tu objetivo actual es acceder al LOGIN SERVER (Nivel 1). Observa la puerta
       cerrada al suroeste. Para abrirla, necesitas autorizaci\xF3n del sistema."
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: 'Por un descuido la puerta del suroeste y sus alrededores se lleno de enemigos
+      , eliminalos para que no interfieran en el servidor central '
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: Oh. Ok te hare caso por el momento.
   options: []
   loreToUnlock: {fileID: 11400000, guid: 90277c2b8c0ee584eaaf1c06811c9866, type: 2}
   itemReward: {fileID: 11400000, guid: 41e94b79fa96c3c4a9f07506a9e1df0b, type: 2}
