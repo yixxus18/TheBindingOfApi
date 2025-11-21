@@ -277,7 +277,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 247
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -548,6 +548,37 @@ MonoBehaviour:
     color: {r: 0.0986899, g: 0.13062176, b: 0.3132075, a: 1}
   roomWidthInTiles: 16
   roomHeightInTiles: 12
+  roomContents:
+  - roomType: 0
+    possiblePrefabs:
+    - {fileID: 3651717864758154171, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
+    minCount: 3
+    maxCount: 10
+    spawnInCenter: 0
+  - roomType: 1
+    possiblePrefabs:
+    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
+    minCount: 1
+    maxCount: 1
+    spawnInCenter: 1
+  - roomType: 4
+    possiblePrefabs:
+    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
+    minCount: 3
+    maxCount: 5
+    spawnInCenter: 1
+  - roomType: 3
+    possiblePrefabs:
+    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
+    minCount: 1
+    maxCount: 1
+    spawnInCenter: 1
+  - roomType: 2
+    possiblePrefabs:
+    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
+    minCount: 1
+    maxCount: 1
+    spawnInCenter: 1
 --- !u!4 &431963048
 Transform:
   m_ObjectHideFlags: 0
@@ -1114,6 +1145,7 @@ MonoBehaviour:
   minimapIconPrefab: {fileID: 0}
   minimapParent: {fileID: 1829416724}
   minimapCellSize: 20
+  startingRoomDecoration: {fileID: 853415379116104092, guid: a243b5ca19e2c1245a3727bc5f85b37a, type: 3}
 --- !u!4 &926026111
 Transform:
   m_ObjectHideFlags: 0

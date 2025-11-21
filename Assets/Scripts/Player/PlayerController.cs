@@ -2,6 +2,7 @@
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,6 +64,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (StatsManager.instance != null && StatsManager.instance.currentHealth <= 0)
+        {
+            StatsManager.instance.currentHealth = StatsManager.instance.maxHealth;
+            StatsManager.instance.TriggerStatsChanged();
+        }
         UpdateHealthUI();
     }
 
@@ -262,8 +268,15 @@ public class PlayerController : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.playerDeathSound);
         }
-        animator.SetTrigger("Death");
         canMove = false;
+        StartCoroutine(RestartSceneRoutine());
+    }
+
+    private IEnumerator RestartSceneRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        string currentScene = SceneManager.GetActiveScene().name;
+        Loader.Load(currentScene);
     }
 
     public void Knockback(Transform enemy, float force, float stunTime) { if (isKnockedback) return; StartCoroutine(KnockbackCoroutine(enemy, force, stunTime)); }

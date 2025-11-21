@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 public enum EdgeDirection
 {
     Up,
@@ -11,21 +10,21 @@ public enum EdgeDirection
     Right
 }
 
-
 [RequireComponent(typeof(BoxCollider2D), typeof(PolygonCollider2D))]
 public class Room : MonoBehaviour
 {
     public PolygonCollider2D cameraConfiner;
     private BoxCollider2D triggerCollider;
     private Cell associatedCell;
+    private Cell previousCell;
 
+    private float doorInset = 1.5f;
 
     private void Awake()
     {
         triggerCollider = GetComponent<BoxCollider2D>();
     }
 
-    private Cell previousCell;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -38,9 +37,7 @@ public class Room : MonoBehaviour
             {
                 MinimapManager.instance.OnPlayerEnterRoom(associatedCell.index);
             }
-        }
-        if (collision.CompareTag("Player"))
-        {
+
             if (associatedCell != null)
             {
                 associatedCell.SetRoomState(RoomState.Current);
@@ -51,17 +48,14 @@ public class Room : MonoBehaviour
         }
     }
 
-
     public void SetupRoom(Cell currentCell)
     {
         this.associatedCell = currentCell;
         ResizeColliders(currentCell);
         if (currentCell.roomType == RoomType.Secret) return;
 
-
         var floorplan = MapGenerator.instance.getFloorPlan;
         var spawnedCells = MapGenerator.instance.getSpawnedCells;
-
 
         switch (currentCell.roomShape)
         {
@@ -102,206 +96,110 @@ public class Room : MonoBehaviour
         {
             case RoomShape.OneByOne:
                 boxSize = new Vector2(offsetX, offsetY);
-                polygonPoints = new Vector2[]
-                {
-                new Vector2(-halfOffsetX, halfOffsetY),
-                new Vector2(halfOffsetX, halfOffsetY),
-                new Vector2(halfOffsetX, -halfOffsetY),
-                new Vector2(-halfOffsetX, -halfOffsetY)
-                };
+                polygonPoints = new Vector2[] { new Vector2(-halfOffsetX, halfOffsetY), new Vector2(halfOffsetX, halfOffsetY), new Vector2(halfOffsetX, -halfOffsetY), new Vector2(-halfOffsetX, -halfOffsetY) };
                 break;
-
             case RoomShape.TwoByOne:
                 boxSize = new Vector2(offsetX * 2, offsetY);
-                polygonPoints = new Vector2[]
-                {
-                new Vector2(-offsetX, halfOffsetY),
-                new Vector2(offsetX, halfOffsetY),
-                new Vector2(offsetX, -halfOffsetY),
-                new Vector2(-offsetX, -halfOffsetY)
-                };
+                polygonPoints = new Vector2[] { new Vector2(-offsetX, halfOffsetY), new Vector2(offsetX, halfOffsetY), new Vector2(offsetX, -halfOffsetY), new Vector2(-offsetX, -halfOffsetY) };
                 break;
-
             case RoomShape.OneByTwo:
                 boxSize = new Vector2(offsetX, offsetY * 2);
-                polygonPoints = new Vector2[]
-                {
-                new Vector2(-halfOffsetX, offsetY),
-                new Vector2(halfOffsetX, offsetY),
-                new Vector2(halfOffsetX, -offsetY),
-                new Vector2(-halfOffsetX, -offsetY)
-                };
+                polygonPoints = new Vector2[] { new Vector2(-halfOffsetX, offsetY), new Vector2(halfOffsetX, offsetY), new Vector2(halfOffsetX, -offsetY), new Vector2(-halfOffsetX, -offsetY) };
                 break;
-
             case RoomShape.TwoByTwo:
                 boxSize = new Vector2(offsetX * 2, offsetY * 2);
-                polygonPoints = new Vector2[]
-                {
-                new Vector2(-offsetX, offsetY),
-                new Vector2(offsetX, offsetY),
-                new Vector2(offsetX, -offsetY),
-                new Vector2(-offsetX, -offsetY)
-                };
+                polygonPoints = new Vector2[] { new Vector2(-offsetX, offsetY), new Vector2(offsetX, offsetY), new Vector2(offsetX, -offsetY), new Vector2(-offsetX, -offsetY) };
                 break;
-
             case RoomShape.LShape:
                 boxSize = new Vector2(offsetX * 2, offsetY * 2);
-                var cellA = cell.cellList[0];
-                var cellB = cell.cellList[1];
-                var cellC = cell.cellList[2];
+                var cellA = cell.cellList[0]; var cellB = cell.cellList[1]; var cellC = cell.cellList[2];
+                float fineOffsetX = offsetX * 0.167f; float fineOffsetY = offsetY * 0.167f;
 
-                // Ajustes finos para cada rotación
-                float fineOffsetX = offsetX * 0.167f; // Un cuarto del offset X
-                float fineOffsetY = offsetY * 0.167f; // Un cuarto del offset Y
-
-                // Rotación 0° - [A][B]
-                //                [C][ ]
                 if (cellA + 1 == cellB && cellA + 10 == cellC)
                 {
-                    polygonPoints = new Vector2[]
-                    {
-                    new Vector2(-offsetX, offsetY),
-                    new Vector2(offsetX, offsetY),
-                    new Vector2(offsetX, 0),
-                    new Vector2(0, 0),
-                    new Vector2(0, -offsetY),
-                    new Vector2(-offsetX, -offsetY)
-                    };
+                    polygonPoints = new Vector2[] { new Vector2(-offsetX, offsetY), new Vector2(offsetX, offsetY), new Vector2(offsetX, 0), new Vector2(0, 0), new Vector2(0, -offsetY), new Vector2(-offsetX, -offsetY) };
                     polygonOffset = new Vector2(fineOffsetX, -fineOffsetY);
                 }
-                // Rotación 270° - [A][B]
-                //                 [ ][C]
                 else if (cellA + 1 == cellB && cellB + 9 == cellC)
                 {
-                    polygonPoints = new Vector2[]
-                    {
-                    new Vector2(-offsetX, offsetY),
-                    new Vector2(offsetX, offsetY),
-                    new Vector2(offsetX, -offsetY),
-                    new Vector2(0, -offsetY),
-                    new Vector2(0, 0),
-                    new Vector2(-offsetX, 0)
-                    };
+                    polygonPoints = new Vector2[] { new Vector2(-offsetX, offsetY), new Vector2(offsetX, offsetY), new Vector2(offsetX, -offsetY), new Vector2(0, -offsetY), new Vector2(0, 0), new Vector2(-offsetX, 0) };
                     polygonOffset = new Vector2(-fineOffsetX, -fineOffsetY);
                 }
-                // Caso duplicado - tratamos igual que la rotación 270°
                 else if (cellA + 1 == cellB && cellB + 10 == cellC)
                 {
-                    polygonPoints = new Vector2[]
-                    {
-                    new Vector2(-offsetX, offsetY),
-                    new Vector2(offsetX, offsetY),
-                    new Vector2(offsetX, -offsetY),
-                    new Vector2(0, -offsetY),
-                    new Vector2(0, 0),
-                    new Vector2(-offsetX, 0)
-                    };
+                    polygonPoints = new Vector2[] { new Vector2(-offsetX, offsetY), new Vector2(offsetX, offsetY), new Vector2(offsetX, -offsetY), new Vector2(0, -offsetY), new Vector2(0, 0), new Vector2(-offsetX, 0) };
                     polygonOffset = new Vector2(-fineOffsetX, -fineOffsetY);
                 }
-                // Rotación 90° - [A][ ]
-                //                [B][C]
                 else if (cellA + 10 == cellB && cellB + 1 == cellC)
                 {
-                    polygonPoints = new Vector2[]
-                    {
-                    new Vector2(-offsetX, offsetY),
-                    new Vector2(0, offsetY),
-                    new Vector2(0, 0),
-                    new Vector2(offsetX, 0),
-                    new Vector2(offsetX, -offsetY),
-                    new Vector2(-offsetX, -offsetY)
-                    };
+                    polygonPoints = new Vector2[] { new Vector2(-offsetX, offsetY), new Vector2(0, offsetY), new Vector2(0, 0), new Vector2(offsetX, 0), new Vector2(offsetX, -offsetY), new Vector2(-offsetX, -offsetY) };
                     polygonOffset = new Vector2(fineOffsetX, fineOffsetY);
                 }
-                // Rotación 180° - [ ][A]
-                //                 [B][C]
                 else if (cellA + 9 == cellB && cellA + 10 == cellC)
                 {
-                    polygonPoints = new Vector2[]
-                    {
-                    new Vector2(0, offsetY),
-                    new Vector2(offsetX, offsetY),
-                    new Vector2(offsetX, -offsetY),
-                    new Vector2(-offsetX, -offsetY),
-                    new Vector2(-offsetX, 0),
-                    new Vector2(0, 0)
-                    };
+                    polygonPoints = new Vector2[] { new Vector2(0, offsetY), new Vector2(offsetX, offsetY), new Vector2(offsetX, -offsetY), new Vector2(-offsetX, -offsetY), new Vector2(-offsetX, 0), new Vector2(0, 0) };
                     polygonOffset = new Vector2(-fineOffsetX, fineOffsetY);
                 }
                 break;
         }
 
-        if (triggerCollider != null)
-        {
-            triggerCollider.size = boxSize;
-        }
-
+        if (triggerCollider != null) triggerCollider.size = boxSize;
         if (cameraConfiner != null)
         {
             cameraConfiner.SetPath(0, polygonPoints);
-
-            if (cell.roomShape != RoomShape.LShape)
-            {
-                cameraConfiner.offset = new Vector2(0, verticalAdjustment);
-            }
-            else
-            {
-                // Para L-shapes, aplicar el offset calculado + el ajuste vertical
-                cameraConfiner.offset = new Vector2(polygonOffset.x, polygonOffset.y + verticalAdjustment);
-            }
+            if (cell.roomShape != RoomShape.LShape) cameraConfiner.offset = new Vector2(0, verticalAdjustment);
+            else cameraConfiner.offset = new Vector2(polygonOffset.x, polygonOffset.y + verticalAdjustment);
         }
     }
 
     public void SetupOneByOne(Cell cell, int[] floorplan, List<Cell> cellList)
     {
         var currentCell = cell.cellList[0];
-        float hOffset = RoomManager.instance.offsetX / 2f - 1.0f;
-        float vOffset = RoomManager.instance.offsetY / 2f - 1.0f;
-
+        float hOffset = (RoomManager.instance.offsetX / 2f) - doorInset;
+        float vOffset = (RoomManager.instance.offsetY / 2f) - doorInset;
 
         TryPlaceDoor(currentCell, new Vector2(0, vOffset), EdgeDirection.Up, floorplan, cellList, cell);
         TryPlaceDoor(currentCell, new Vector2(0, -vOffset), EdgeDirection.Down, floorplan, cellList, cell);
         TryPlaceDoor(currentCell, new Vector2(-hOffset, 0), EdgeDirection.Left, floorplan, cellList, cell);
         TryPlaceDoor(currentCell, new Vector2(hOffset, 0), EdgeDirection.Right, floorplan, cellList, cell);
     }
+
     public void SetupOneByTwo(Cell cell, int[] floorplan, List<Cell> cellList)
     {
         if (cell.cellList.Count < 2) return;
         var cellA = cell.cellList[0];
         var cellB = cell.cellList[1];
-        float hOffset = RoomManager.instance.offsetX / 2f - 1.0f;
-        float vOuterOffset = RoomManager.instance.offsetY - 1.0f;
+        float hOffset = (RoomManager.instance.offsetX / 2f) - doorInset;
+        float vOuterOffset = RoomManager.instance.offsetY - doorInset;
         float vInnerOffset = RoomManager.instance.offsetY / 2f;
-
 
         TryPlaceDoor(cellA, new Vector2(0, vOuterOffset), EdgeDirection.Up, floorplan, cellList, cell);
         TryPlaceDoor(cellA, new Vector2(-hOffset, vInnerOffset), EdgeDirection.Left, floorplan, cellList, cell);
         TryPlaceDoor(cellA, new Vector2(hOffset, vInnerOffset), EdgeDirection.Right, floorplan, cellList, cell);
 
-
         TryPlaceDoor(cellB, new Vector2(0, -vOuterOffset), EdgeDirection.Down, floorplan, cellList, cell);
         TryPlaceDoor(cellB, new Vector2(-hOffset, -vInnerOffset), EdgeDirection.Left, floorplan, cellList, cell);
         TryPlaceDoor(cellB, new Vector2(hOffset, -vInnerOffset), EdgeDirection.Right, floorplan, cellList, cell);
     }
+
     public void SetupTwoByOne(Cell cell, int[] floorplan, List<Cell> cellList)
     {
         if (cell.cellList.Count < 2) return;
         var cellA = cell.cellList[0];
         var cellB = cell.cellList[1];
-        float hOuterOffset = RoomManager.instance.offsetX - 1.0f;
+        float hOuterOffset = RoomManager.instance.offsetX - doorInset;
         float hInnerOffset = RoomManager.instance.offsetX / 2f;
-        float vOffset = RoomManager.instance.offsetY / 2f - 1.0f;
-
+        float vOffset = (RoomManager.instance.offsetY / 2f) - doorInset;
 
         TryPlaceDoor(cellA, new Vector2(-hInnerOffset, vOffset), EdgeDirection.Up, floorplan, cellList, cell);
         TryPlaceDoor(cellA, new Vector2(-hOuterOffset, 0), EdgeDirection.Left, floorplan, cellList, cell);
         TryPlaceDoor(cellA, new Vector2(-hInnerOffset, -vOffset), EdgeDirection.Down, floorplan, cellList, cell);
 
-
         TryPlaceDoor(cellB, new Vector2(hInnerOffset, vOffset), EdgeDirection.Up, floorplan, cellList, cell);
         TryPlaceDoor(cellB, new Vector2(hInnerOffset, -vOffset), EdgeDirection.Down, floorplan, cellList, cell);
         TryPlaceDoor(cellB, new Vector2(hOuterOffset, 0), EdgeDirection.Right, floorplan, cellList, cell);
     }
+
     public void SetupTwoByTwo(Cell cell, int[] floorplan, List<Cell> cellList)
     {
         if (cell.cellList.Count < 4) return;
@@ -309,11 +207,10 @@ public class Room : MonoBehaviour
         var cellB = cell.cellList[1];
         var cellC = cell.cellList[2];
         var cellD = cell.cellList[3];
-        float hOuterOffset = RoomManager.instance.offsetX - 1.0f;
+        float hOuterOffset = RoomManager.instance.offsetX - doorInset;
         float hInnerOffset = RoomManager.instance.offsetX / 2f;
-        float vOuterOffset = RoomManager.instance.offsetY - 1.0f;
+        float vOuterOffset = RoomManager.instance.offsetY - doorInset;
         float vInnerOffset = RoomManager.instance.offsetY / 2f;
-
 
         TryPlaceDoor(cellA, new Vector2(-hInnerOffset, vOuterOffset), EdgeDirection.Up, floorplan, cellList, cell);
         TryPlaceDoor(cellB, new Vector2(hInnerOffset, vOuterOffset), EdgeDirection.Up, floorplan, cellList, cell);
@@ -324,23 +221,19 @@ public class Room : MonoBehaviour
         TryPlaceDoor(cellB, new Vector2(hOuterOffset, vInnerOffset), EdgeDirection.Right, floorplan, cellList, cell);
         TryPlaceDoor(cellD, new Vector2(hOuterOffset, -vInnerOffset), EdgeDirection.Right, floorplan, cellList, cell);
     }
+
     public void SetupLShapeRoom(Cell cell, int[] floorplan, List<Cell> cellList)
     {
         if (cell.cellList.Count < 3) return;
-
-
         var rm = RoomManager.instance;
         float offsetX = rm.offsetX;
         float offsetY = rm.offsetY;
         float h_offset_single = offsetX / 2f;
         float v_offset_single = offsetY / 2f;
-        float door_inset = 1.0f;
-
 
         var cellA = cell.cellList[0];
         var cellB = cell.cellList[1];
         var cellC = cell.cellList[2];
-
 
         if (cellA + 1 == cellB && cellA + 10 == cellC)
         {
@@ -348,13 +241,12 @@ public class Room : MonoBehaviour
             Vector2 localCenterB = new Vector2(offsetX * 2f / 3f, offsetY / 3f);
             Vector2 localCenterC = new Vector2(-offsetX / 3f, -offsetY * 2f / 3f);
 
-
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - door_inset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + door_inset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, v_offset_single - door_inset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(h_offset_single - door_inset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + door_inset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(-h_offset_single + door_inset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
         }
         else if (cellA + 1 == cellB && cellB + 9 == cellC)
         {
@@ -362,13 +254,12 @@ public class Room : MonoBehaviour
             Vector2 localCenterB = new Vector2(offsetX / 3f, offsetY / 3f);
             Vector2 localCenterC = new Vector2(offsetX / 3f, -offsetY * 2f / 3f);
 
-
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - door_inset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + door_inset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, v_offset_single - door_inset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(h_offset_single - door_inset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + door_inset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - door_inset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
         }
         else if (cellA + 10 == cellB && cellB + 1 == cellC)
         {
@@ -376,13 +267,12 @@ public class Room : MonoBehaviour
             Vector2 localCenterB = new Vector2(-offsetX / 3f, -offsetY / 3f);
             Vector2 localCenterC = new Vector2(offsetX * 2f / 3f, -offsetY / 3f);
 
-
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - door_inset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + door_inset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, -v_offset_single + door_inset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(-h_offset_single + door_inset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + door_inset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - door_inset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
         }
         else if (cellA + 9 == cellB && cellA + 10 == cellC)
         {
@@ -390,29 +280,28 @@ public class Room : MonoBehaviour
             Vector2 localCenterB = new Vector2(-offsetX * 2f / 3f, -offsetY / 3f);
             Vector2 localCenterC = new Vector2(offsetX / 3f, -offsetY / 3f);
 
-
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - door_inset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(h_offset_single - door_inset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, -v_offset_single + door_inset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(-h_offset_single + door_inset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + door_inset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - door_inset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
+            TryPlaceDoor(cellA, localCenterA + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
+            TryPlaceDoor(cellB, localCenterB + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
+            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
         }
     }
+
     private void TryPlaceDoor(int fromIndex, Vector2 positionOffset, EdgeDirection direction, int[] floorplan, List<Cell> cellList, Cell currentCell)
     {
         int neighbourIndex = fromIndex + GetOffset(direction);
         if (neighbourIndex < 0 || neighbourIndex >= floorplan.Length || floorplan[neighbourIndex] != 1) return;
 
-
         var foundCell = cellList.FirstOrDefault(x => x.cellList.Contains(neighbourIndex));
         if (foundCell == null || foundCell.roomType == RoomType.Secret) return;
-
 
         var door = Instantiate(RoomManager.instance.doorPrefab, transform);
         door.transform.localPosition = positionOffset;
         SetupDoor(door, direction, currentCell.roomType == RoomType.Regular ? foundCell.roomType : currentCell.roomType);
     }
+
     private void SetupDoor(Door door, EdgeDirection direction, RoomType roomType)
     {
         var doorTypes = GetDoorOptions(roomType);
@@ -425,10 +314,12 @@ public class Room : MonoBehaviour
         var trigger = door.gameObject.AddComponent<DoorTrigger>();
         trigger.doorDirection = direction;
     }
+
     private DoorScriptable GetDoorOptions(RoomType roomType)
     {
         return RoomManager.instance.doors.FirstOrDefault(x => x.roomType == roomType);
     }
+
     private int GetOffset(EdgeDirection direction)
     {
         switch (direction)
@@ -440,5 +331,4 @@ public class Room : MonoBehaviour
         }
         return 0;
     }
-
 }

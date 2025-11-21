@@ -8,6 +8,16 @@ public class RoomManager : MonoBehaviour
     [System.Serializable]
     public struct RoomColorMapping { public RoomType roomType; public Color color; }
 
+    [System.Serializable]
+    public struct RoomContentConfig
+    {
+        public RoomType roomType;
+        public List<GameObject> possiblePrefabs;
+        public int minCount;
+        public int maxCount;
+        public bool spawnInCenter;
+    }
+
     private List<Room> createdRooms;
 
     [Header("Offset Variables")]
@@ -31,6 +41,9 @@ public class RoomManager : MonoBehaviour
     [Header("Room Size in Tiles")]
     public int roomWidthInTiles = 16;
     public int roomHeightInTiles = 11;
+
+    [Header("Room Content Configuration")]
+    public List<RoomContentConfig> roomContents;
 
     public static RoomManager instance;
 
@@ -59,8 +72,57 @@ public class RoomManager : MonoBehaviour
 
             Vector2 roomWorldPosition = CalculateRoomWorldPosition(roomCell, startGridX, startGridY);
             var spawnedRoomContainer = Instantiate(roomPrefab, roomWorldPosition, Quaternion.identity);
+
             spawnedRoomContainer.SetupRoom(roomCell);
+            SpawnRoomContent(spawnedRoomContainer, roomCell);
+
             createdRooms.Add(spawnedRoomContainer);
+        }
+    }
+
+    private void SpawnRoomContent(Room roomContainer, Cell cell)
+    {
+        if (cell.index == 45)
+        {
+            return;
+        }
+        RoomContentConfig config = roomContents.FirstOrDefault(c => c.roomType == cell.roomType);
+
+        if (config.possiblePrefabs == null || config.possiblePrefabs.Count == 0) return;
+
+        if (cell.roomType == RoomType.Shop)
+        {
+            float spacing = 4.0f;
+            float startX = -(config.possiblePrefabs.Count - 1) * spacing / 2f;
+
+            for (int i = 0; i < config.possiblePrefabs.Count; i++)
+            {
+                if (config.possiblePrefabs[i] != null)
+                {
+                    Vector3 spawnPos = roomContainer.transform.position + new Vector3(startX + (i * spacing), 0, 0);
+                    Instantiate(config.possiblePrefabs[i], spawnPos, Quaternion.identity, roomContainer.transform);
+                }
+            }
+        }
+        else if (config.spawnInCenter)
+        {
+            GameObject prefabToSpawn = config.possiblePrefabs[Random.Range(0, config.possiblePrefabs.Count)];
+            Instantiate(prefabToSpawn, roomContainer.transform.position, Quaternion.identity, roomContainer.transform);
+        }
+        else
+        {
+            int count = Random.Range(config.minCount, config.maxCount + 1);
+            float rangeX = (roomWidthInTiles / 2f) - 2f;
+            float rangeY = (roomHeightInTiles / 2f) - 2f;
+
+            for (int i = 0; i < count; i++)
+            {
+                GameObject prefabToSpawn = config.possiblePrefabs[Random.Range(0, config.possiblePrefabs.Count)];
+                Vector2 randomPos = new Vector2(Random.Range(-rangeX, rangeX), Random.Range(-rangeY, rangeY));
+                Vector3 spawnPos = roomContainer.transform.position + (Vector3)randomPos;
+                spawnPos.z = -1f; // Forzamos que esté un poco "por encima" del suelo
+                Instantiate(prefabToSpawn, spawnPos, Quaternion.identity, roomContainer.transform);
+            }
         }
     }
 
@@ -78,17 +140,14 @@ public class RoomManager : MonoBehaviour
         {
             Vector3Int roomCenter = GetTilemapCenterForIndex(index, startGridX, startGridY);
 
-            // 1. Dibujar el bloque principal de suelo
             for (int x = -halfWidth; x < halfWidth; x++)
             {
-                // Usamos <= halfHeight para asegurar 11 baldosas de alto si halfHeight es 5 (-5 a 5 son 11)
                 for (int y = -halfHeight; y <= halfHeight; y++)
                 {
                     floorPositions.Add(new Vector3Int(roomCenter.x + x, roomCenter.y + y, 0));
                 }
             }
 
-            // 2. Rellenar huecos horizontales (puente a la derecha)
             if (room.cellList.Contains(index + 1))
             {
                 for (int x = halfWidth; x < halfWidth + gapX; x++)
@@ -100,19 +159,17 @@ public class RoomManager : MonoBehaviour
                 }
             }
 
-            // 3. Rellenar huecos verticales (puente hacia abajo)
             if (room.cellList.Contains(index + 10))
             {
                 for (int x = -halfWidth; x < halfWidth; x++)
                 {
                     for (int y = 1; y <= gapY; y++)
                     {
-                        // Dibujamos debajo del límite inferior actual
                         floorPositions.Add(new Vector3Int(roomCenter.x + x, roomCenter.y - halfHeight - y, 0));
                     }
                 }
             }
-            // 4. Rellenar la esquina si es necesario (para salas 2x2)
+
             if (room.cellList.Contains(index + 1) && room.cellList.Contains(index + 10) && room.cellList.Contains(index + 11))
             {
                 for (int x = halfWidth; x < halfWidth + gapX; x++)
@@ -125,7 +182,6 @@ public class RoomManager : MonoBehaviour
             }
         }
 
-        // Dibujar todo el suelo recopilado
         foreach (var pos in floorPositions)
         {
             TileBase randomTile = floorTiles[Random.Range(0, floorTiles.Length)];
@@ -134,7 +190,6 @@ public class RoomManager : MonoBehaviour
             floorTilemap.SetColor(pos, roomColor);
         }
 
-        // Dibujar paredes alrededor del perímetro del suelo recopilado
         foreach (var pos in floorPositions)
         {
             for (int x = -1; x <= 1; x++)
