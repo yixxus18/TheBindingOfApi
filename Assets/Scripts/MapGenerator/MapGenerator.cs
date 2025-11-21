@@ -234,20 +234,29 @@ public class MapGenerator : MonoBehaviour
         RegisterCellAsMinimapIcon(newCell);
     }
 
+    void RevealOnlySpawnCell()
+    {
+        foreach (var cell in getSpawnedCells)
+            cell.SetRoomState(RoomState.Hidden);
+
+        var startCell = getSpawnedCells.Find(c => c.cellList.Contains(45)); // o usa el índice de spawn que uses
+        if (startCell != null)
+            startCell.SetRoomState(RoomState.Current);
+    }
+
+
     private void RegisterCellAsMinimapIcon(Cell cell)
     {
-        if (MinimapManager.instance == null) return;
-
         MinimapIcon iconScript = cell.GetComponent<MinimapIcon>();
-
         if (iconScript != null)
         {
-            iconScript.SetState(MinimapIcon.RoomState.Hidden);
+            if (cell.cellList.Contains(45))   // <-- Ajusta aquí si tu spawn cambia de índice base
+                iconScript.SetState(MinimapIcon.RoomState.Current);
+            else
+                iconScript.SetState(MinimapIcon.RoomState.Hidden);
 
             foreach (int subCellIndex in cell.cellList)
-            {
                 MinimapManager.instance.RegisterMinimapIcon(subCellIndex, iconScript);
-            }
         }
     }
 
@@ -272,6 +281,7 @@ public class MapGenerator : MonoBehaviour
 
         SpawnRoom(secretRoomIndex);
         UpdateSpecialRoomVisuals();
+        RevealOnlySpawnCell();
         RoomManager.instance.SetupRooms(spawnedCells);
     }
 

@@ -25,7 +25,7 @@ public class Room : MonoBehaviour
         triggerCollider = GetComponent<BoxCollider2D>();
     }
 
-
+    private Cell previousCell;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -37,6 +37,16 @@ public class Room : MonoBehaviour
             if (MinimapManager.instance != null && associatedCell != null)
             {
                 MinimapManager.instance.OnPlayerEnterRoom(associatedCell.index);
+            }
+        }
+        if (collision.CompareTag("Player"))
+        {
+            if (associatedCell != null)
+            {
+                associatedCell.SetRoomState(RoomState.Current);
+                if (previousCell != null && previousCell != associatedCell)
+                    previousCell.SetRoomState(RoomState.Visited);
+                previousCell = associatedCell;
             }
         }
     }
@@ -430,4 +440,5 @@ public class Room : MonoBehaviour
         }
         return 0;
     }
+
 }

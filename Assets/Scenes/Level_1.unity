@@ -1102,8 +1102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapGenerator
   cellPrefab: {fileID: 4734997197231429767, guid: 5014df72acb1c0049a4e61e9db4e9b9b, type: 3}
-  offsetX: 18
-  offsetY: 12
   item: {fileID: -2430349654397211282, guid: e273a541d8d839e4dafdb20092e9605d, type: 3}
   shop: {fileID: 5491652103975585499, guid: e273a541d8d839e4dafdb20092e9605d, type: 3}
   boss: {fileID: 2865737465513546482, guid: e273a541d8d839e4dafdb20092e9605d, type: 3}
@@ -1113,7 +1111,9 @@ MonoBehaviour:
   verticalRoom: {fileID: 3402405195937694994, guid: 811e594ecedaddb40857e156dd040e8f, type: 3}
   horizontalRoom: {fileID: 1974468878, guid: 811e594ecedaddb40857e156dd040e8f, type: 3}
   lShapeRoom: {fileID: 289743249, guid: 811e594ecedaddb40857e156dd040e8f, type: 3}
+  minimapIconPrefab: {fileID: 0}
   minimapParent: {fileID: 1829416724}
+  minimapCellSize: 20
 --- !u!4 &926026111
 Transform:
   m_ObjectHideFlags: 0
@@ -1507,7 +1507,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 2
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
