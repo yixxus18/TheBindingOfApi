@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections.Generic;
@@ -8,11 +9,17 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
 {
     public TerminalSlotType slotType;
     public TMP_Text displayText;
+    public Image methodImage;
 
     private List<ItemSO> currentItems = new List<ItemSO>();
 
     private void Start()
     {
+        if (methodImage != null)
+        {
+            methodImage.enabled = false;
+            methodImage.raycastTarget = false;
+        }
         ClearSlot();
     }
 
@@ -57,6 +64,7 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
     public void ConsumeItem()
     {
         currentItems.Clear();
+        UpdateSlotUI();
     }
 
     private bool IsValidItemType(ItemSO item)
@@ -76,11 +84,53 @@ public class TerminalDropSlot : MonoBehaviour, IDropHandler
     {
         if (currentItems != null && currentItems.Count > 0)
         {
-            displayText.text = string.Join("", currentItems.Where(item => item != null).Select(item => item.apiValue ?? ""));
+            if (slotType == TerminalSlotType.Method)
+            {
+                var item = currentItems.FirstOrDefault();
+                if (methodImage != null && item != null && item.icon != null)
+                {
+                    methodImage.sprite = item.icon;
+                    methodImage.enabled = true;
+                    methodImage.raycastTarget = false;
+                    if (displayText != null) displayText.gameObject.SetActive(false);
+                }
+                else
+                {
+                    if (methodImage != null)
+                    {
+                        methodImage.enabled = false;
+                        methodImage.raycastTarget = false;
+                    }
+                    if (displayText != null)
+                    {
+                        displayText.gameObject.SetActive(true);
+                        displayText.text = item?.apiValue ?? GetDefaultText();
+                    }
+                }
+            }
+            else
+            {
+                if (methodImage != null)
+                {
+                    methodImage.enabled = false;
+                    methodImage.raycastTarget = false;
+                }
+                if (displayText != null) displayText.gameObject.SetActive(true);
+                displayText.text = string.Join("", currentItems.Where(item => item != null).Select(item => item.apiValue ?? ""));
+            }
         }
         else
         {
-            displayText.text = GetDefaultText();
+            if (methodImage != null)
+            {
+                methodImage.enabled = false;
+                methodImage.raycastTarget = false;
+            }
+            if (displayText != null)
+            {
+                displayText.gameObject.SetActive(true);
+                displayText.text = GetDefaultText();
+            }
         }
     }
 
