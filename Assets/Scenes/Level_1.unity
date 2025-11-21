@@ -569,15 +569,22 @@ MonoBehaviour:
     spawnInCenter: 1
   - roomType: 3
     possiblePrefabs:
-    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
+    - {fileID: 3651717864758154171, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
     minCount: 1
     maxCount: 1
     spawnInCenter: 1
   - roomType: 2
     possiblePrefabs:
-    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
-    minCount: 1
-    maxCount: 1
+    - {fileID: 7274841823510977759, guid: d73ae3a06c4308141846b24cc273ce2c, type: 3}
+    - {fileID: 3955545281127690374, guid: dcb6cac58eafd3b40b14f1f69b1498d3, type: 3}
+    minCount: 2
+    maxCount: 3
+    spawnInCenter: 1
+  - roomType: 5
+    possiblePrefabs:
+    - {fileID: 3865843129787006356, guid: 456d8ddbadaf55e49b1a8733e729325e, type: 3}
+    minCount: 2
+    maxCount: 4
     spawnInCenter: 1
 --- !u!4 &431963048
 Transform:
