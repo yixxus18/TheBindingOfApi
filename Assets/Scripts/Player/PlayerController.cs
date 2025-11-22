@@ -170,11 +170,20 @@ public class PlayerController : MonoBehaviour
             int enemyID = enemy.gameObject.GetInstanceID();
             if (enemiesHitThisAttack.Contains(enemyID)) continue;
 
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            if (enemyController != null)
+            EnemyController oldEnemy = enemy.GetComponent<EnemyController>();
+            if (oldEnemy != null)
             {
-                enemyController.TakeDamage(StatsManager.instance.power);
-                enemyController.Knockback(transform, 5f, 0.2f, 0.3f);
+                oldEnemy.TakeDamage(StatsManager.instance.power);
+                oldEnemy.Knockback(transform, 5f, 0.2f, 0.3f);
+                enemiesHitThisAttack.Add(enemyID);
+                continue;
+            }
+
+            SpikedSlimeController slimeEnemy = enemy.GetComponent<SpikedSlimeController>();
+            if (slimeEnemy != null)
+            {
+                slimeEnemy.TakeDamage(StatsManager.instance.power);
+                slimeEnemy.Knockback(transform, 5f, 0.2f, 0.3f);
                 enemiesHitThisAttack.Add(enemyID);
             }
         }

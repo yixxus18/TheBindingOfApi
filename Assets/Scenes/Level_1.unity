@@ -552,7 +552,8 @@ MonoBehaviour:
   - roomType: 0
     possiblePrefabs:
     - {fileID: 3651717864758154171, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
-    minCount: 3
+    - {fileID: 2892735876600341026, guid: 6b7dc0284f0aebb4a92cbce55c69119c, type: 3}
+    minCount: 4
     maxCount: 10
     spawnInCenter: 0
   - roomType: 1
