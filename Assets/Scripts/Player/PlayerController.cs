@@ -2,6 +2,7 @@
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,6 +64,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (StatsManager.instance != null && StatsManager.instance.currentHealth <= 0)
+        {
+            StatsManager.instance.currentHealth = StatsManager.instance.maxHealth;
+            StatsManager.instance.TriggerStatsChanged();
+        }
         UpdateHealthUI();
     }
 
@@ -164,11 +170,20 @@ public class PlayerController : MonoBehaviour
             int enemyID = enemy.gameObject.GetInstanceID();
             if (enemiesHitThisAttack.Contains(enemyID)) continue;
 
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            if (enemyController != null)
+            EnemyController oldEnemy = enemy.GetComponent<EnemyController>();
+            if (oldEnemy != null)
             {
-                enemyController.TakeDamage(StatsManager.instance.power);
-                enemyController.Knockback(transform, 5f, 0.2f, 0.3f);
+                oldEnemy.TakeDamage(StatsManager.instance.power);
+                oldEnemy.Knockback(transform, 5f, 0.2f, 0.3f);
+                enemiesHitThisAttack.Add(enemyID);
+                continue;
+            }
+
+            SpikedSlimeController slimeEnemy = enemy.GetComponent<SpikedSlimeController>();
+            if (slimeEnemy != null)
+            {
+                slimeEnemy.TakeDamage(StatsManager.instance.power);
+                slimeEnemy.Knockback(transform, 5f, 0.2f, 0.3f);
                 enemiesHitThisAttack.Add(enemyID);
             }
         }
@@ -262,8 +277,15 @@ public class PlayerController : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.playerDeathSound);
         }
-        animator.SetTrigger("Death");
         canMove = false;
+        StartCoroutine(RestartSceneRoutine());
+    }
+
+    private IEnumerator RestartSceneRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        string currentScene = SceneManager.GetActiveScene().name;
+        Loader.Load(currentScene);
     }
 
     public void Knockback(Transform enemy, float force, float stunTime) { if (isKnockedback) return; StartCoroutine(KnockbackCoroutine(enemy, force, stunTime)); }

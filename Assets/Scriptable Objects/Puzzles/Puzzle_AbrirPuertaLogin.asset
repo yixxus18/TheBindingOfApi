@@ -22,8 +22,7 @@ MonoBehaviour:
   - /user
   requiredHeaders:
   - 'Accept: application/json'
-  requiredBodySnippets:
-  - '{"player":"Isaac","password":"ABC-123"}'
+  requiredBodySnippets: []
   successResponse: "Acceso concedido. Bienvenido. \r\n"
   failureErrorCode: '401 Unauthorized '
   OnPuzzleSolved:

@@ -83,9 +83,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: -431548275
+  m_SortingLayer: 1
+  m_SortingOrder: 101
   m_Sprite: {fileID: -7564668308375390351, guid: a5e4daec16a806440931f9a804ef0369, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -226,6 +226,15 @@ MonoBehaviour:
   knockbackForce: 5
   knockbackTime: 0.2
   stunTime: 0.3
+  lootTable:
+  - itemToDrop: {fileID: 11400000, guid: 8180fe0ab1921344597732a6267216ee, type: 2}
+    dropChance: 0.465
+  - itemToDrop: {fileID: 11400000, guid: b21710ebc76bfa342a9faf490a040fd6, type: 2}
+    dropChance: 0.009
+  - itemToDrop: {fileID: 11400000, guid: 4dcd9cda07695c047bb46b5aea3ce0b3, type: 2}
+    dropChance: 0.754
+  - itemToDrop: {fileID: 11400000, guid: 01b83017ab1026942be474781de62e94, type: 2}
+    dropChance: 0.668
 --- !u!95 &3415905060199774863
 Animator:
   serializedVersion: 7

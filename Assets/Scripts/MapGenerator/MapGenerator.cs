@@ -43,6 +43,8 @@ public class MapGenerator : MonoBehaviour
 
     public static MapGenerator instance;
 
+    public GameObject startingRoomDecoration;
+
     private static readonly List<int[]> roomShapes = new()
     {
         new int[]{ 1 }, new int[]{ -1 }, new int[]{ 10 }, new int[]{ -10 },
@@ -144,6 +146,7 @@ public class MapGenerator : MonoBehaviour
 
     private void SpawnRoom(int index)
     {
+
         int x = index % 10;
         int y = index / 10;
         Vector2 position = new Vector2((x - 4.5f) * cellSize, -(y - 4.5f) * cellSize);
@@ -154,7 +157,10 @@ public class MapGenerator : MonoBehaviour
         newCell.SetRoomType(RoomType.Regular);
         newCell.cellList.Add(index);
         spawnedCells.Add(newCell);
-
+        if (index == 45 && startingRoomDecoration != null)
+        {
+            Instantiate(startingRoomDecoration, position, Quaternion.identity);
+        }
         RegisterCellAsMinimapIcon(newCell);
     }
 
