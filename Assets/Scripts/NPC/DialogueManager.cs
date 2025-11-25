@@ -99,6 +99,7 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue == null || dialogueIndex >= currentDialogue.lines.Length)
         {
             StartCoroutine(EndDialogueProcess());
+
             return;
         }
 
