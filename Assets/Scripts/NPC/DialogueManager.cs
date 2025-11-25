@@ -96,11 +96,18 @@ public class DialogueManager : MonoBehaviour
 
     private void ShowNextDialogueLine()
     {
+        if (currentDialogue == null || dialogueIndex >= currentDialogue.lines.Length)
+        {
+            StartCoroutine(EndDialogueProcess());
+            return;
+        }
+
         isWaitingForChoice = false;
         ClearChoices();
         DialogueLine line = currentDialogue.lines[dialogueIndex];
-        portriat.sprite = line.speaker.portrait;
-        actorName.text = line.speaker.actorName;
+
+        if (portriat != null && line.speaker != null) portriat.sprite = line.speaker.portrait;
+        if (actorName != null && line.speaker != null) actorName.text = line.speaker.actorName;
 
         typingCoroutine = StartCoroutine(TypeSentence(line.text));
         dialogueIndex++;
