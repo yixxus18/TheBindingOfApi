@@ -22,6 +22,6 @@ MonoBehaviour:
       sino que puede cobrar vida. Esos monstruos... sol\xEDan ser funciones de 'Hola
       Mundo' que nadie cerr\xF3 correctamente."
   options: []
-  loreToUnlock: {fileID: 11400000, guid: 90277c2b8c0ee584eaaf1c06811c9866, type: 2}
+  loreToUnlock: {fileID: 11400000, guid: fa01cc2d51299f54794e95c5bceb575a, type: 2}
   itemReward: {fileID: 11400000, guid: 8533b8ed9d91a534e8cbf9593f691a88, type: 2}
   itemRewardQuantity: 1

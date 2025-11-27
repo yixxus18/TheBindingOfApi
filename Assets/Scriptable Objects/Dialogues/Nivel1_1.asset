@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: Nivel1_1
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: 'Que bueno que llegaste aqui! , eso demuestra mucho de ti, sigue asi.
+
+'
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: 'Para cada nivel tienes que completar los objetivos de cada nivel , ahora
+      tendras que derrotar al boss  y hacer la peticon del nivel. '
+  options: []
+  loreToUnlock: {fileID: 0}
+  itemReward: {fileID: 0}
+  itemRewardQuantity: 1

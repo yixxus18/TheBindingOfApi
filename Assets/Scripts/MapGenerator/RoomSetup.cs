@@ -23,8 +23,8 @@ public class RoomSetup : MonoBehaviour
     [Tooltip("Arrastra aquí los puzzles que se pueden resolver en esta sala")]
     public List<RoomPuzzleSO> puzzlesInRoom;
 
-    [Tooltip("¡IMPORTANTE! Arrastra aquí el objeto PC de la escena que tiene el script TerminalActivator")]
-    public TerminalActivator pcTerminal; // <-- CAMBIO CLAVE
+    [Tooltip("HUB: Arrástralo manual. NIVEL 1: Déjalo vacío (se asigna solo).")]
+    public TerminalActivator pcTerminal;
 
     private void Start()
     {
@@ -70,26 +70,19 @@ public class RoomSetup : MonoBehaviour
 
     private void ConfigurarPuzzleEnTerminal()
     {
-        // Si asignamos el PC manualmente en el inspector
+        if (pcTerminal == null)
+        {
+            pcTerminal = FindFirstObjectByType<TerminalActivator>();
+        }
         if (pcTerminal != null)
         {
-            // Le pasamos la lista de puzzles al PC
             pcTerminal.puzzleContexts = puzzlesInRoom;
-            Debug.Log($"[RoomSetup] Puzzles asignados al PC '{pcTerminal.name}': {puzzlesInRoom.Count}");
+            Debug.Log($"[RoomSetup] Puzzles asignados al PC '{pcTerminal.name}' existente en escena.");
         }
-        else
-        {
-            // Intento de respaldo automático (por si se te olvida asignar)
-            TerminalActivator activator = GetComponentInChildren<TerminalActivator>();
-            if (activator != null)
-            {
-                activator.puzzleContexts = puzzlesInRoom;
-                Debug.Log($"[RoomSetup] PC encontrado automáticamente: {activator.name}");
-            }
-            else
-            {
-                Debug.LogError("[RoomSetup] ¡No se encontró ningún PC (TerminalActivator) para asignar los puzzles! Arrástralo al Inspector.");
-            }
-        }
+    }
+
+    public List<RoomPuzzleSO> GetPuzzles()
+    {
+        return puzzlesInRoom;
     }
 }

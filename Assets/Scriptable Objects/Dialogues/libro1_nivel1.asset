@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: libro1_nivel1
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Voy a leer este libro a ver que  me dice
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: "Para avanzar, necesitas construir una petici\xF3n HTTP. Observa: as\xED
+      se usa el m\xE9todo GET para solicitar datos."
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: "Cada petici\xF3n tiene tres partes: el m\xE9todo (GET, POST, PUT, DELETE),
+      la URL del recurso, y los headers que\r\n contienen metadatos. Practica construyendo
+      tu primera petici\xF3n GET."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Creo que tendre que recordar esta informacion. Me va a ser util
+  options: []
+  loreToUnlock: {fileID: 11400000, guid: 0c5ebc7148c23e443a6562e026542f59, type: 2}
+  itemReward: {fileID: 11400000, guid: 005e848ae4e315548a139a00e7cd424c, type: 2}
+  itemRewardQuantity: 1

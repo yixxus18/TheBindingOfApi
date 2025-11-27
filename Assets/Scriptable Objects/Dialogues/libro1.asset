@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: libro1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
   lines:
-  - speaker: {fileID: 11400000, guid: 0171b8b691df2fd48a4fde9d56f435a9, type: 2}
-    text: hola yisus
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Voy a leer este libro a ver que  me dice
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: "Para avanzar, necesitas construir una petici\xF3n HTTP. Observa: as\xED
+      se usa el m\xE9todo GET para solicitar datos."
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: "Cada petici\xF3n tiene tres partes: el m\xE9todo (GET, POST, PUT, DELETE),
+      la URL del recurso, y los headers que\r\n contienen metadatos. Practica construyendo
+      tu primera petici\xF3n GET."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Creo que tendre que recordar esta informacion. Me va a ser util
   options: []
-  loreToUnlock: {fileID: 0}
-  itemReward: {fileID: 0}
+  loreToUnlock: {fileID: 11400000, guid: c0b9b1fbe80b4ba4ea184f52e98c4000, type: 2}
+  itemReward: {fileID: 11400000, guid: 005e848ae4e315548a139a00e7cd424c, type: 2}
   itemRewardQuantity: 1

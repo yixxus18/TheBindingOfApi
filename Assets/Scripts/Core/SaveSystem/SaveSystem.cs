@@ -13,6 +13,7 @@ public static class SaveSystem
         data.completedObjectiveIDs = ProgressionManager.instance.completedObjectiveIDs.ToList();
         data.highestLevelUnlocked = ProgressionManager.instance.highestLevelUnlocked;
 
+        // Guardar estado de NPCs
         data.npcStates.Clear();
         foreach (var kvp in ProgressionManager.instance.npcConversationStates)
         {
@@ -51,7 +52,6 @@ public static class SaveSystem
 
         ProgressionManager.instance.completedObjectiveIDs = new HashSet<string>(data.completedObjectiveIDs ?? new List<string>());
         ProgressionManager.instance.highestLevelUnlocked = data.highestLevelUnlocked;
-
         ProgressionManager.instance.npcConversationStates.Clear();
         if (data.npcStates != null)
         {

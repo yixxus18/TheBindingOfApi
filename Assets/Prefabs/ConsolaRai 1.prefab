@@ -188,10 +188,8 @@ MonoBehaviour:
   wanderWidth: 0
   wanderHeight: 0
   interactPromptAnimator: {fileID: 205260140403497314}
-  primaryConversations:
-  - {fileID: 11400000, guid: 32dc6e3b55ae6f943a67561a9856b98e, type: 2}
-  - {fileID: 11400000, guid: 24642b26fa53a8349a6bff3ce51edf2e, type: 2}
-  defaultConversation: {fileID: 11400000, guid: d79d812fc56813e448bc28c9445c5000, type: 2}
+  primaryConversations: []
+  defaultConversation: {fileID: 11400000, guid: 2632759c9a17d2043903a1d467617189, type: 2}
 --- !u!1 &8294649869009560043
 GameObject:
   m_ObjectHideFlags: 0

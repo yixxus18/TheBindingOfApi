@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public enum ObjectiveType { KillBoss, SolvePuzzle, CollectItem }
 
@@ -10,7 +12,7 @@ public class DungeonObjective
 {
     public string description;
     public ObjectiveType type;
-    public string targetId; // Almacena el ID (ya sea "10" para items o "PUZZLE_01" para puzzles)
+    public string targetId;
     public int requiredAmount;
     [HideInInspector] public int currentAmount;
     [HideInInspector] public bool isCompleted;
@@ -35,7 +37,6 @@ public class DungeonObjectiveManager : MonoBehaviour
         ClearObjectives();
         foreach (var obj in newObjectives)
         {
-            // Verificar si ya se completó anteriormente usando el ProgressionManager
             if (ProgressionManager.instance.IsObjectiveCompleted(obj.targetId))
             {
                 obj.isCompleted = true;
@@ -43,10 +44,8 @@ public class DungeonObjectiveManager : MonoBehaviour
             }
             else
             {
-                // Caso especial para items: Verificar si ya los tiene en el inventario
                 if (obj.type == ObjectiveType.CollectItem && int.TryParse(obj.targetId, out int itemId))
                 {
-                    // Buscar el item en la base de datos para comprobar cantidad actual
                     ItemSO item = GameManager.Instance.itemDatabase.GetItemByID(itemId);
                     if (item != null)
                     {
@@ -55,7 +54,6 @@ public class DungeonObjectiveManager : MonoBehaviour
                         if (count >= obj.requiredAmount)
                         {
                             obj.isCompleted = true;
-                            // Marcar como completado en progresión inmediatamente si ya tiene los items
                             ProgressionManager.instance.CompleteObjective(obj.targetId);
                         }
                     }
@@ -76,19 +74,15 @@ public class DungeonObjectiveManager : MonoBehaviour
     {
         foreach (var obj in currentObjectives)
         {
-            // Comparamos ID y Tipo. El ID viene como string ("10", "PUZZLE_ID")
             if (!obj.isCompleted && obj.type == type && obj.targetId == id)
             {
                 obj.currentAmount += amount;
-
-                // Si es de tipo recolección, asegurarse de no superar el máximo visualmente
                 if (obj.currentAmount >= obj.requiredAmount)
                 {
                     obj.currentAmount = obj.requiredAmount;
                     obj.isCompleted = true;
                     ProgressionManager.instance.CompleteObjective(obj.targetId);
                 }
-
                 UpdateUI();
                 CheckForAllObjectivesCompleted();
                 return;
@@ -100,41 +94,64 @@ public class DungeonObjectiveManager : MonoBehaviour
     {
         if (currentObjectives.Count > 0 && currentObjectives.All(obj => obj.isCompleted))
         {
-            // Lógica específica del Hub
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Hub" &&
-                ProgressionManager.instance.highestLevelUnlocked == 0)
+            if (SceneManager.GetActiveScene().name == "Hub")
             {
-                ProgressionManager.instance.UnlockNextLevel();
-
-                if (GameManager.Instance != null)
+                if (ProgressionManager.instance.highestLevelUnlocked == 0)
                 {
-                    SaveSystem.SaveGame(
-                        GameManager.Instance.codexManager,
-                        GameManager.Instance.statsManager,
-                        GameManager.Instance.inventoryManager,
-                        GameManager.Instance.expManager
-                    );
+                    ProgressionManager.instance.UnlockNextLevel();
+                    if (GameManager.Instance != null)
+                    {
+                        SaveSystem.SaveGame(
+                            GameManager.Instance.codexManager,
+                            GameManager.Instance.statsManager,
+                            GameManager.Instance.inventoryManager,
+                            GameManager.Instance.expManager
+                        );
+                    }
                 }
             }
+            else
+            {
+                StartCoroutine(LevelCompleteRoutine());
+            }
         }
+    }
+
+    private IEnumerator LevelCompleteRoutine()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.levelCompleteSound);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        ProgressionManager.instance.UnlockNextLevel();
+
+        if (GameManager.Instance != null)
+        {
+            SaveSystem.SaveGame(
+                GameManager.Instance.codexManager,
+                GameManager.Instance.statsManager,
+                GameManager.Instance.inventoryManager,
+                GameManager.Instance.expManager
+            );
+        }
+
+        Loader.Load("Hub");
     }
 
     public void UpdateUI()
     {
         foreach (Transform child in objectivesContainer) Destroy(child.gameObject);
-
         if (objectiveUIPrefab == null) return;
-
         foreach (var obj in currentObjectives)
         {
             GameObject go = Instantiate(objectiveUIPrefab, objectivesContainer);
             TMP_Text text = go.GetComponent<TMP_Text>();
-
             string colorTag = obj.isCompleted ? "<color=green>" : "<color=white>";
             string status = obj.isCompleted ? "[HECHO]" : $"[{obj.currentAmount}/{obj.requiredAmount}]";
-
             text.text = $"{colorTag}{obj.description} {status}</color>";
-
             if (obj.isCompleted) text.fontStyle = FontStyles.Strikethrough;
         }
     }

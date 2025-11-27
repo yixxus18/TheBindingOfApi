@@ -45,6 +45,6 @@ public class InventoryItemData
 [System.Serializable]
 public class NPCStateData
 {
-    public string npcID;
+    public int npcID;
     public int conversationIndex;
 }

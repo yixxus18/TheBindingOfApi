@@ -26,11 +26,13 @@ public class ExpManager : MonoBehaviour
     void OnEnable()
     {
         EnemyController.OnMonsterDefeated += GainExperience;
+        SpikedSlimeController.OnMonsterDefeated += GainExperience;
     }
 
     void OnDisable()
     {
         EnemyController.OnMonsterDefeated -= GainExperience;
+        SpikedSlimeController.OnMonsterDefeated -= GainExperience;
     }
 
     public void GainExperience(int amount)

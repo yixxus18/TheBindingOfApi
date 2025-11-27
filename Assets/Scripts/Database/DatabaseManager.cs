@@ -68,8 +68,9 @@ public class DatabaseManager : MonoBehaviour
                         PRIMARY KEY (perfil_id, item_id),
                         FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
                     );
+                    -- CORRECCIÓN AQUÍ: npc_id AHORA ES INTEGER
                     CREATE TABLE IF NOT EXISTS NPC_Estados (
-                        perfil_id INTEGER, npc_id TEXT, conversation_index INTEGER,
+                        perfil_id INTEGER, npc_id INTEGER, conversation_index INTEGER,
                         PRIMARY KEY (perfil_id, npc_id),
                         FOREIGN KEY (perfil_id) REFERENCES Perfil_Jugador(id)
                     );
@@ -79,6 +80,9 @@ public class DatabaseManager : MonoBehaviour
             }
         }
     }
+
+    // ... (El resto de métodos SaveGameData y LoadGameData NO CAMBIAN, ya estaban bien en tu versión anterior) ...
+    // Solo asegúrate de copiar el resto del script que ya tenías.
 
     public void SaveGameData(SaveData data)
     {
@@ -293,7 +297,7 @@ public class DatabaseManager : MonoBehaviour
                     {
                         data.npcStates.Add(new NPCStateData
                         {
-                            npcID = reader.GetString(0),
+                            npcID = reader.GetInt32(0),
                             conversationIndex = reader.GetInt32(1)
                         });
                     }

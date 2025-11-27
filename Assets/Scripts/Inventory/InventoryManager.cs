@@ -62,21 +62,24 @@ public class InventoryManager : MonoBehaviour
     {
         if (item == null || quantity <= 0)
             return false;
-
         foreach (var slot in activeSlots)
         {
             if (slot.itemSO == item && slot.quantity < item.stackSize)
             {
                 int spaceLeft = item.stackSize - slot.quantity;
                 int amountToAdd = Mathf.Min(quantity, spaceLeft);
+
                 slot.quantity += amountToAdd;
                 slot.UpdateUI();
+                if (DungeonObjectiveManager.instance != null)
+                {
+                    DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.CollectItem, item.itemID.ToString(), amountToAdd);
+                }
                 quantity -= amountToAdd;
                 if (quantity <= 0)
                     return true;
             }
         }
-
         while (quantity > 0)
         {
             if (activeSlots.Count >= maxSlots)
@@ -88,12 +91,15 @@ public class InventoryManager : MonoBehaviour
                     return false;
                 }
             }
-
             InventorySlot newSlot = CreateNewSlot();
             int amountToAdd = Mathf.Min(quantity, item.stackSize);
             newSlot.itemSO = item;
             newSlot.quantity = amountToAdd;
             newSlot.UpdateUI();
+            if (DungeonObjectiveManager.instance != null)
+            {
+                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.CollectItem, item.itemID.ToString(), amountToAdd);
+            }
             quantity -= amountToAdd;
         }
         return true;

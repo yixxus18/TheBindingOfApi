@@ -13,12 +13,23 @@ MonoBehaviour:
   m_Name: Pista1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
   lines:
-  - speaker: {fileID: 11400000, guid: 5441cfc1900a84149b4f19fedd511571, type: 2}
-    text: Ya mataste a todos los enemigos de la sala?
-  - speaker: {fileID: 11400000, guid: 5441cfc1900a84149b4f19fedd511571, type: 2}
-    text: Los enemigos te pueden soltar fragmentos de peticion , metodos y oro ,
-      es escencial tener los recursos necesarios para poder enviar la peticion completa
+  - speaker: {fileID: 11400000, guid: 2bc2570cb6bc0054aa8ea049127711c3, type: 2}
+    text: "Ah, una nueva petici\xF3n en el sistema. Hace tiempo que no veo una con
+      intenciones leg\xEDtimas."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: "\xBFQui\xE9n eres? \xBFC\xF3mo terminaste aqu\xED?"
+  - speaker: {fileID: 11400000, guid: 2bc2570cb6bc0054aa8ea049127711c3, type: 2}
+    text: "Era desarrolladora de este servidor, hace muchos ciclos. Un error en el
+      sistema de autenticaci\xF3n me atrap\xF3 aqu\xED.\r\n Ahora forjo tokens para
+      los que intentan escapar... aunque pocos lo logran."
+  - speaker: {fileID: 11400000, guid: 2bc2570cb6bc0054aa8ea049127711c3, type: 2}
+    text: "\"Escucha bien: la autenticaci\xF3n es la primera barrera de cualquier
+      sistema. Sin ella, no hay confianza. Un token es tu\r\n identidad digital,
+      tu llave de acceso."
+  - speaker: {fileID: 11400000, guid: 2bc2570cb6bc0054aa8ea049127711c3, type: 2}
+    text: "El m\xE9todo POST se usa para enviar credenciales al servidor. Pero recuerda:
+      siempre encripta las contrase\xF1as. Nunca\r\n las env\xEDes en texto plano."
   options: []
-  loreToUnlock: {fileID: 0}
-  itemReward: {fileID: 0}
-  itemRewardQuantity: 1
+  loreToUnlock: {fileID: 11400000, guid: cc0c638f34688a9448f020d417fc58a5, type: 2}
+  itemReward: {fileID: 11400000, guid: 954c2c2fa95d3c34389c483a9f0e4a5e, type: 2}
+  itemRewardQuantity: 3

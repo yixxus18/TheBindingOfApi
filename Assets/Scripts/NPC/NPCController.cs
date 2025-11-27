@@ -9,7 +9,7 @@ public class NPCController : MonoBehaviour
 
     [Header("Identificación (Obligatorio para Guardado)")]
     [Tooltip("ID único para guardar el progreso de este NPC (Ej: 'Librarian_Hub')")]
-    public string npcID;
+    public int npcID;
 
     [Header("Configuración General")]
     public bool isStaticObject = false;
@@ -205,9 +205,9 @@ public class NPCController : MonoBehaviour
 
     private void FindAndStartConversation()
     {
-        if (string.IsNullOrEmpty(npcID))
+        if (npcID <= 0)
         {
-            Debug.LogWarning($"El NPC {gameObject.name} no tiene NPC ID asignado. El progreso no se guardará.");
+            Debug.LogWarning($"El NPC {gameObject.name} tiene un ID 0 o negativo. El progreso podría no guardarse correctamente.");
         }
 
         DialogueSO conversationToStart = null;
@@ -246,8 +246,15 @@ public class NPCController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInRange = true;
-            if (!isStaticObject) SwitchState(NPCState.Talk);
-            else if (interactPromptAnimator != null) interactPromptAnimator.Play("open");
+            if (interactPromptAnimator != null)
+            {
+                interactPromptAnimator.gameObject.SetActive(true);
+                interactPromptAnimator.Play("open");
+            }
+            if (!isStaticObject)
+            {
+                SwitchState(NPCState.Talk);
+            }
         }
     }
 
@@ -256,10 +263,13 @@ public class NPCController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInRange = false;
-            if (gameObject.activeInHierarchy)
+            if (interactPromptAnimator != null && gameObject.activeInHierarchy)
             {
-                if (interactPromptAnimator != null) interactPromptAnimator.Play("close");
-                if (!isStaticObject) SwitchState(defaultState);
+                interactPromptAnimator.Play("close");
+            }
+            if (!isStaticObject && gameObject.activeInHierarchy)
+            {
+                SwitchState(defaultState);
             }
         }
     }

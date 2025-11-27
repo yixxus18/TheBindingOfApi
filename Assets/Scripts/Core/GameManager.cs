@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     public ExpManager expManager;
     public ProgressionManager progressionManager;
 
+    [Header("Level Managers")]
+    public MinimapManager minimapManager;
+    public MapGenerator mapGenerator;
+
     [Header("Databases")]
     public LoreDatabaseSO loreDatabase;
     public ItemDatabaseSO itemDatabase;
@@ -27,6 +31,7 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
         SaveSystem.LoadGame(codexManager, statsManager, inventoryManager, expManager, loreDatabase, itemDatabase);
     }
 
@@ -52,6 +57,9 @@ public class GameManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+
+        minimapManager = FindFirstObjectByType<MinimapManager>();
+        mapGenerator = FindFirstObjectByType<MapGenerator>();
     }
 
     private void OnApplicationQuit()

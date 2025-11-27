@@ -3,9 +3,12 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class ApiTerminalManager : MonoBehaviour
 {
+    public static event Action<int> OnAnyPuzzleSolved;
+
     [Header("Terminal Type")]
     public bool isCentralTerminal;
 
@@ -30,7 +33,6 @@ public class ApiTerminalManager : MonoBehaviour
     public TMP_InputField bodyInputField;
 
     private List<RoomPuzzleSO> activePuzzles = new List<RoomPuzzleSO>();
-
     private readonly string baseUrl = "https://www.conectop.com";
 
     private void Start()
@@ -75,7 +77,6 @@ public class ApiTerminalManager : MonoBehaviour
 
     public void OpenTerminal(List<RoomPuzzleSO> puzzles = null)
     {
-        Debug.Log($"[ApiTerminalManager] Abriendo terminal. Puzzles recibidos: {(puzzles != null ? puzzles.Count : 0)}");
         activePuzzles = puzzles ?? new List<RoomPuzzleSO>();
         terminalPanel.SetActive(true);
         ClearTerminal();
@@ -124,13 +125,11 @@ public class ApiTerminalManager : MonoBehaviour
         }
 
         RequestEntry request = CodexManager.instance.learnedRequests[index - 1];
-
         string[] parts = request.fullRequest.Split(' ');
         if (parts.Length >= 2)
         {
             if (methodInputField != null) methodInputField.text = parts[0];
             if (urlInputField != null) urlInputField.text = parts[1];
-
             if (headersInputField != null) headersInputField.text = "";
             if (bodyInputField != null) bodyInputField.text = "";
         }
@@ -160,15 +159,11 @@ public class ApiTerminalManager : MonoBehaviour
             body = bodyInputField.text;
         }
 
-        Debug.Log($"[ApiTerminalManager] Enviando Petición: {method} {fullUrl}");
-        Debug.Log($"[ApiTerminalManager] Puzzles activos para validar: {activePuzzles.Count}");
-
         bool puzzleSolved = false;
         if (activePuzzles != null && activePuzzles.Count > 0)
         {
             foreach (var puzzle in activePuzzles)
             {
-                Debug.Log($"[ApiTerminalManager] Validando contra puzzle: {puzzle.puzzleName} (ID: {puzzle.puzzleID})");
                 if (ValidatePuzzleRequest(puzzle, method, fullUrl, headers, body))
                 {
                     puzzleSolved = true;
@@ -176,14 +171,9 @@ public class ApiTerminalManager : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            Debug.LogWarning("[ApiTerminalManager] No hay puzzles activos en la lista.");
-        }
 
         if (!puzzleSolved)
         {
-            Debug.Log("[ApiTerminalManager] Ningún puzzle fue resuelto con esta petición.");
             if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalErrorSound);
             ShowResponse($"<color=cyan>Simulación:</color> {method} {fullUrl}\n<color=red>Error 404 o Petición Inválida</color>");
         }
@@ -194,19 +184,18 @@ public class ApiTerminalManager : MonoBehaviour
         bool isSuccess = puzzle.ValidateRequest(method, url, headers, body);
         if (isSuccess)
         {
-            Debug.Log($"[ApiTerminalManager] ¡EXITO! Puzzle resuelto: {puzzle.puzzleName}");
-
             if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(AudioManager.Instance.terminalSuccessSound);
 
             ShowResponse($"<color=green>200 OK</color>\n{puzzle.successResponse}");
+
             puzzle.OnPuzzleSolved?.Invoke();
+            OnAnyPuzzleSolved?.Invoke(puzzle.puzzleID);
 
             ConfirmItemsUsed();
 
             if (puzzle.itemReward != null)
             {
                 InventoryManager.instance.AddItem(puzzle.itemReward, 1);
-                Debug.Log($"[ApiTerminalManager] Recompensa entregada: {puzzle.itemReward.itemName}");
             }
             if (puzzle.loreReward != null)
             {
@@ -214,16 +203,7 @@ public class ApiTerminalManager : MonoBehaviour
             }
 
             if (DungeonObjectiveManager.instance != null)
-            {
-                // CORRECCIÓN AQUÍ: puzzle.puzzleID.ToString()
-                string idString = puzzle.puzzleID.ToString();
-                Debug.Log($"[ApiTerminalManager] Notificando objetivo completado con ID: {idString}");
-                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, idString);
-            }
-            else
-            {
-                Debug.LogError("[ApiTerminalManager] DungeonObjectiveManager es NULL.");
-            }
+                DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.SolvePuzzle, puzzle.puzzleID.ToString());
 
             if (isCentralTerminal && CodexManager.instance != null)
             {
@@ -231,15 +211,12 @@ public class ApiTerminalManager : MonoBehaviour
             }
             return true;
         }
-
-        Debug.Log($"[ApiTerminalManager] Validación fallida para {puzzle.puzzleName}.");
         return false;
     }
 
     private void ConfirmItemsUsed()
     {
         if (!isCentralTerminal) return;
-
         methodSlot?.ConsumeItem();
         urlSlot?.ConsumeItem();
         headerSlot?.ConsumeItem();
