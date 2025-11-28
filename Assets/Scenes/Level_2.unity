@@ -558,27 +558,27 @@ MonoBehaviour:
     spawnInCenter: 0
   - roomType: 1
     possiblePrefabs:
-    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
+    - {fileID: 552333880729880537, guid: 4acf65a6f5c8686458561187a0599ef2, type: 3}
     minCount: 1
     maxCount: 1
     spawnInCenter: 1
   - roomType: 4
     possiblePrefabs:
-    - {fileID: 8143680767361266764, guid: a1101f279dc7e8142a531bd172b55275, type: 3}
+    - {fileID: 552333880729880537, guid: 4acf65a6f5c8686458561187a0599ef2, type: 3}
     minCount: 3
     maxCount: 5
     spawnInCenter: 1
   - roomType: 3
     possiblePrefabs:
-    - {fileID: 4219334257837548999, guid: fc1bd46991fdb49488235dae64d77886, type: 3}
+    - {fileID: 4219334257837548999, guid: 8762a3437e3008244b30638ba4143941, type: 3}
     minCount: 1
     maxCount: 1
     spawnInCenter: 1
   - roomType: 2
     possiblePrefabs:
-    - {fileID: 7274841823510977759, guid: d73ae3a06c4308141846b24cc273ce2c, type: 3}
+    - {fileID: 5246450596737110708, guid: 4992867e0d72dff44bb7810121ed8bf5, type: 3}
     - {fileID: 2965214234353795549, guid: 6b3e500c96f0f90498ec5d88fe231ead, type: 3}
-    - {fileID: 1695067899540087355, guid: 716cf7c9474dd8e4a88f7210225afaad, type: 3}
+    - {fileID: 1695067899540087355, guid: a18f9a3d4eed31241a230302fa62a022, type: 3}
     minCount: 3
     maxCount: 3
     spawnInCenter: 1
@@ -1216,17 +1216,17 @@ MonoBehaviour:
     type: 1
     requiredAmount: 1
     itemTarget: {fileID: 0}
-    puzzleTarget: {fileID: 11400000, guid: e359905d8922d7247a232f665bec94d1, type: 2}
+    puzzleTarget: {fileID: 11400000, guid: 9beb8d5e7c3f7c44aa8993db953d36d7, type: 2}
     manualTargetId: 
   - description: "Elimina al Guardi\xE1n del Nivel"
     type: 0
     requiredAmount: 1
     itemTarget: {fileID: 0}
     puzzleTarget: {fileID: 0}
-    manualTargetId: 1
+    manualTargetId: 101
   puzzlesInRoom:
-  - {fileID: 11400000, guid: dc80d3c986479d84b81187fd8ec27360, type: 2}
   - {fileID: 11400000, guid: e359905d8922d7247a232f665bec94d1, type: 2}
+  - {fileID: 11400000, guid: 9beb8d5e7c3f7c44aa8993db953d36d7, type: 2}
   pcTerminal: {fileID: 0}
 --- !u!4 &1191478111
 Transform:

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: DialogoNivel2
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 2bc2570cb6bc0054aa8ea049127711c3, type: 2}
+    text: "Ah, una nueva petici\xF3n en el sistema. Hace tiempo que no veo una con
+      intenciones leg\xEDtimas."
+  - speaker: {fileID: 11400000, guid: f81ef350667152b41a680271e556158c, type: 2}
+    text: "\xA1No pises ah\xED! \xA1Ese \xEDndice estaba perfectamente ordenado!
+      Millones de estudiantes, profesores, administradores... todos archivados aqu\xED,
+      y t\xFA entras como una consulta sin WHERE."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: "Solo estoy intentando llegar al n\xFAcleo. El sistema est\xE1 corrupto."
+  - speaker: {fileID: 11400000, guid: f81ef350667152b41a680271e556158c, type: 2}
+    text: "\xBFCorrupto? \xA1Es un caos! Fui el dise\xF1ador de este m\xF3dulo. Optimic\xE9
+      cada query. Pero llegaron los Gremlins de Inyecci\xF3n y rompieron la integridad
+      referencial."
+  - speaker: {fileID: 11400000, guid: f81ef350667152b41a680271e556158c, type: 2}
+    text: "Si quieres pasar, tendr\xE1s que demostrar que sabes diferenciar un SELECT
+      de un DROP TABLE. No dejar\xE9 que corrompas m\xE1s mis datos."
+  options: []
+  loreToUnlock: {fileID: 11400000, guid: cc0c638f34688a9448f020d417fc58a5, type: 2}
+  itemReward: {fileID: 11400000, guid: 954c2c2fa95d3c34389c483a9f0e4a5e, type: 2}
+  itemRewardQuantity: 3

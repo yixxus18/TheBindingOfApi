@@ -19,10 +19,11 @@ MonoBehaviour:
   requiredUrlFragments:
   - /api
   - /v1
-  - /user
+  - /login
   requiredHeaders:
   - 'Accept: application/json'
-  requiredBodySnippets: []
+  requiredBodySnippets:
+  - '{"player":"Isaac","password":"ABC-123"}'
   successResponse: "Acceso concedido. Bienvenido. \r\n"
   failureErrorCode: '401 Unauthorized '
   OnPuzzleSolved:

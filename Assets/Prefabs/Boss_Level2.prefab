@@ -18,11 +18,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2788100917816358713, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: expReward
-      value: 350
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2788100917816358713, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: maxHealth
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2788100917816358713, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: attackRange
@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2788100917816358713, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: lootTable.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2788100917816358713, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: lootTable.Array.data[1].dropChance
@@ -88,21 +88,29 @@ PrefabInstance:
       propertyPath: lootTable.Array.data[8].itemToDrop
       value: 
       objectReference: {fileID: 11400000, guid: 9a3bcf2314efc9a49a32de6935b10a76, type: 2}
+    - target: {fileID: 2788100917816358713, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
+      propertyPath: lootTable.Array.data[9].dropChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2788100917816358713, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
+      propertyPath: lootTable.Array.data[9].itemToDrop
+      value: 
+      objectReference: {fileID: 11400000, guid: 9a3bcf2314efc9a49a32de6935b10a76, type: 2}
     - target: {fileID: 3651717864758154171, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: m_Name
-      value: Boss_Level1
+      value: Boss_Level2
       objectReference: {fileID: 0}
     - target: {fileID: 5103400209043222105, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.690566
       objectReference: {fileID: 0}
     - target: {fileID: 5103400209043222105, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: m_Color.g
-      value: 0.77376074
+      value: 0.14462799
       objectReference: {fileID: 0}
     - target: {fileID: 5103400209043222105, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: m_Color.r
-      value: 0.90188676
+      value: 0.32698044
       objectReference: {fileID: 0}
     - target: {fileID: 5886749476301940619, guid: f2a47c780ac1dd545a008c97492586a5, type: 3}
       propertyPath: m_LocalScale.x
@@ -185,4 +193,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265b4a1ee3a66ff42ba11bd049caf857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossUnit
-  bossID: 100
+  bossID: 101

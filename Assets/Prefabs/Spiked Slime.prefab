@@ -212,11 +212,13 @@ MonoBehaviour:
   stunTime: 0.4
   lootTable:
   - itemToDrop: {fileID: 11400000, guid: 3b41e364f241cea40a1723df05ebc709, type: 2}
-    dropChance: 0.778
+    dropChance: 0.235
   - itemToDrop: {fileID: 11400000, guid: 3b1407c67ce8c28499dfca8beb08fea8, type: 2}
-    dropChance: 0.778
+    dropChance: 0.578
   - itemToDrop: {fileID: 11400000, guid: 7b187781afd821c4987664ff50bcfee9, type: 2}
-    dropChance: 0.778
+    dropChance: 0.386
+  - itemToDrop: {fileID: 11400000, guid: 846a7142651f6d5418cb1bb6a28c1fe2, type: 2}
+    dropChance: 0.386
 --- !u!50 &6548729389780080980
 Rigidbody2D:
   serializedVersion: 5

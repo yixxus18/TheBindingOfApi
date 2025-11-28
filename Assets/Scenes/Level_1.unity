@@ -579,6 +579,8 @@ MonoBehaviour:
     - {fileID: 5246450596737110708, guid: 534c7c5cd9f1d4d44b76e9152daa250c, type: 3}
     - {fileID: 2965214234353795549, guid: 6b3e500c96f0f90498ec5d88fe231ead, type: 3}
     - {fileID: 1695067899540087355, guid: 716cf7c9474dd8e4a88f7210225afaad, type: 3}
+    - {fileID: 1695067899540087355, guid: 134a792d4861c6044bd3ead684db45e4, type: 3}
+    - {fileID: 1695067899540087355, guid: ec6cc8b82da15074ea6e902e046d2a35, type: 3}
     minCount: 3
     maxCount: 3
     spawnInCenter: 1
@@ -1220,7 +1222,7 @@ MonoBehaviour:
     manualTargetId: 
   - description: "Elimina al Guardi\xE1n del Nivel"
     type: 0
-    requiredAmount: 1
+    requiredAmount: 100
     itemTarget: {fileID: 0}
     puzzleTarget: {fileID: 0}
     manualTargetId: 1

@@ -17,7 +17,7 @@ MonoBehaviour:
     text: Voy a leer este libro a ver que  me dice
   - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
     text: "Para avanzar, necesitas construir una petici\xF3n HTTP. Observa: as\xED
-      se usa el m\xE9todo GET para solicitar datos."
+      se usa el m\xE9todo POST para enviar datos al sistema datos."
   - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
     text: "Cada petici\xF3n tiene tres partes: el m\xE9todo (GET, POST, PUT, DELETE),
       la URL del recurso, y los headers que\r\n contienen metadatos. Practica construyendo

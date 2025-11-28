@@ -23,6 +23,6 @@ MonoBehaviour:
   - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
     text: Creo que tendre que recordar esta informacion. Me va a ser util
   options: []
-  loreToUnlock: {fileID: 11400000, guid: 75461e2ae2607e74e96bbfe2c3a217ad, type: 2}
+  loreToUnlock: {fileID: 11400000, guid: 66dad9c7b9792954fb0a765296cd2874, type: 2}
   itemReward: {fileID: 11400000, guid: 005e848ae4e315548a139a00e7cd424c, type: 2}
   itemRewardQuantity: 1

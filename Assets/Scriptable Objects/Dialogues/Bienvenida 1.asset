@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
   lines:
   - speaker: {fileID: 11400000, guid: 5441cfc1900a84149b4f19fedd511571, type: 2}
-    text: "Shhh... El ruido de los datos corruptos es ensordecedor. Antes, esta biblioteca
-      era un \xEDndice perfecto de conocimiento. Ahora, las funciones hu\xE9rfanas
-      deambulan por los pasillos atacando a cualquiera."
+    text: Bienvenido viajero, Procura autenticarte para poder inicar eta aventura
+      y que puedas permanecer en el sevidor por el tiempo que requieras
   - speaker: {fileID: 11400000, guid: 5441cfc1900a84149b4f19fedd511571, type: 2}
     text: "Ten cuidado con lo que ejecutas. Un c\xF3digo mal escrito no solo falla,
       sino que puede cobrar vida. Esos monstruos... sol\xEDan ser funciones de 'Hola

@@ -228,13 +228,13 @@ MonoBehaviour:
   stunTime: 0.3
   lootTable:
   - itemToDrop: {fileID: 11400000, guid: 8180fe0ab1921344597732a6267216ee, type: 2}
-    dropChance: 0.465
+    dropChance: 0.386
   - itemToDrop: {fileID: 11400000, guid: b21710ebc76bfa342a9faf490a040fd6, type: 2}
-    dropChance: 0.009
+    dropChance: 0.093
   - itemToDrop: {fileID: 11400000, guid: 4dcd9cda07695c047bb46b5aea3ce0b3, type: 2}
-    dropChance: 0.754
+    dropChance: 0.371
   - itemToDrop: {fileID: 11400000, guid: 01b83017ab1026942be474781de62e94, type: 2}
-    dropChance: 0.668
+    dropChance: 0.381
 --- !u!95 &3415905060199774863
 Animator:
   serializedVersion: 7

@@ -2236,6 +2236,8 @@ MonoBehaviour:
     musicClip: {fileID: 8300000, guid: 40516379868db16448e21e0a7d06fa60, type: 3}
   - sceneName: IntroEscene
     musicClip: {fileID: 0}
+  - sceneName: Level_2
+    musicClip: {fileID: 8300000, guid: 01c88ff190df2e443a899adbc83aabf7, type: 3}
 --- !u!82 &716552872
 AudioSource:
   m_ObjectHideFlags: 0
