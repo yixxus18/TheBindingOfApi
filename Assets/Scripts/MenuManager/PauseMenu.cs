@@ -10,6 +10,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuPanel;
     public GameObject darkOverlay;
 
+    // [Header("Botones Específicos")] // Opcional si quieres controlarlos por código
+    // public Button returnToHubButton; 
+
     [Header("Settings Menu Elements")]
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
@@ -52,14 +55,8 @@ public class PauseMenu : MonoBehaviour
 
     public void TogglePause()
     {
-        if (gameIsPaused)
-        {
-            Resume();
-        }
-        else
-        {
-            Pause();
-        }
+        if (gameIsPaused) Resume();
+        else Pause();
     }
 
     public void Pause()
@@ -81,6 +78,27 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         gameIsPaused = false;
     }
+
+    // --- FUNCIÓN NUEVA ---
+    public void ReturnToHub()
+    {
+        Time.timeScale = 1f;
+        gameIsPaused = false;
+
+        // Guardar antes de salir (Opcional pero recomendado)
+        if (GameManager.Instance != null)
+        {
+            SaveSystem.SaveGame(
+                GameManager.Instance.codexManager,
+                GameManager.Instance.statsManager,
+                GameManager.Instance.inventoryManager,
+                GameManager.Instance.expManager
+            );
+        }
+
+        Loader.Load("Hub");
+    }
+    // ---------------------
 
     public void LoadMainMenu()
     {
@@ -116,10 +134,6 @@ public class PauseMenu : MonoBehaviour
                 fullscreenToggle.onValueChanged.RemoveAllListeners();
                 fullscreenToggle.onValueChanged.AddListener(SettingsManager.Instance.SetFullscreen);
             }
-        }
-        else
-        {
-            Debug.LogWarning("SettingsManager.Instance no encontrado.");
         }
     }
 }

@@ -67,7 +67,8 @@ public class DungeonObjectiveManager : MonoBehaviour
             currentObjectives.Add(obj);
         }
         UpdateUI();
-        CheckForAllObjectivesCompleted();
+
+        CheckForAllObjectivesCompleted(true);
     }
 
     public void NotifyProgress(ObjectiveType type, string id, int amount = 1)
@@ -84,13 +85,13 @@ public class DungeonObjectiveManager : MonoBehaviour
                     ProgressionManager.instance.CompleteObjective(obj.targetId);
                 }
                 UpdateUI();
-                CheckForAllObjectivesCompleted();
+                CheckForAllObjectivesCompleted(false);
                 return;
             }
         }
     }
 
-    private void CheckForAllObjectivesCompleted()
+    private void CheckForAllObjectivesCompleted(bool isInitialCheck)
     {
         if (currentObjectives.Count > 0 && currentObjectives.All(obj => obj.isCompleted))
         {
@@ -109,6 +110,15 @@ public class DungeonObjectiveManager : MonoBehaviour
                         );
                     }
                 }
+                return;
+            }
+            if (isInitialCheck)
+            {
+                if (MinimapManager.instance != null)
+                {
+                    MinimapManager.instance.RevealAllMap();
+                    Debug.Log("Nivel ya completado. Mapa revelado.");
+                }
             }
             else
             {
@@ -123,11 +133,6 @@ public class DungeonObjectiveManager : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.levelCompleteSound);
         }
-
-        yield return new WaitForSeconds(3f);
-
-        ProgressionManager.instance.UnlockNextLevel();
-
         if (GameManager.Instance != null)
         {
             SaveSystem.SaveGame(
@@ -137,7 +142,8 @@ public class DungeonObjectiveManager : MonoBehaviour
                 GameManager.Instance.expManager
             );
         }
-
+        if (MinimapManager.instance != null) MinimapManager.instance.RevealAllMap();
+        yield return new WaitForSeconds(3f);
         Loader.Load("Hub");
     }
 

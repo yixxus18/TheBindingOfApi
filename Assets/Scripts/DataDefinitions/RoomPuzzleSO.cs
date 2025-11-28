@@ -27,13 +27,26 @@ public class RoomPuzzleSO : ScriptableObject
 
     public bool ValidateRequest(string method, string url, List<string> headers, string body)
     {
+
+        Debug.Log($"[Puzzle Check] Validando Puzzle: {puzzleName}");
+        Debug.Log($"[Puzzle Check] Método Recibido: '{method}' | Esperado: '{requiredMethod}'");
+        Debug.Log($"[Puzzle Check] URL Recibida: '{url}'");
         // 1. Validar Método
-        if (method != requiredMethod) return false;
+        if (method != requiredMethod)
+        {
+            Debug.LogWarning("[Puzzle Check] Falló el método.");
+            return false;
+        }
 
         // 2. Validar URL (Limpiando espacios para evitar errores tontos)
         string cleanUrl = CleanString(url);
         foreach (var fragment in requiredUrlFragments)
         {
+            if (!url.Contains(fragment))
+            {
+                Debug.LogWarning($"[Puzzle Check] Falló URL. Falta el fragmento: '{fragment}'");
+                return false;
+            }
             string cleanFragment = CleanString(fragment);
             if (!cleanUrl.Contains(cleanFragment)) return false;
         }

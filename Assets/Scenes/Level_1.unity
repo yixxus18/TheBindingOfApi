@@ -576,7 +576,7 @@ MonoBehaviour:
     spawnInCenter: 1
   - roomType: 2
     possiblePrefabs:
-    - {fileID: 7274841823510977759, guid: d73ae3a06c4308141846b24cc273ce2c, type: 3}
+    - {fileID: 5246450596737110708, guid: 534c7c5cd9f1d4d44b76e9152daa250c, type: 3}
     - {fileID: 2965214234353795549, guid: 6b3e500c96f0f90498ec5d88fe231ead, type: 3}
     - {fileID: 1695067899540087355, guid: 716cf7c9474dd8e4a88f7210225afaad, type: 3}
     minCount: 3
