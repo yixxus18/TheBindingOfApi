@@ -96,19 +96,18 @@ public class DialogueManager : MonoBehaviour
 
     private void ShowNextDialogueLine()
     {
-        if (currentDialogue == null || dialogueIndex >= currentDialogue.lines.Length)
+        isWaitingForChoice = false;
+        ClearChoices();
+
+        if (dialogueIndex >= currentDialogue.lines.Length)
         {
             StartCoroutine(EndDialogueProcess());
-
             return;
         }
 
-        isWaitingForChoice = false;
-        ClearChoices();
         DialogueLine line = currentDialogue.lines[dialogueIndex];
-
-        if (portriat != null && line.speaker != null) portriat.sprite = line.speaker.portrait;
-        if (actorName != null && line.speaker != null) actorName.text = line.speaker.actorName;
+        if (portriat != null) portriat.sprite = line.speaker.portrait;
+        if (actorName != null) actorName.text = line.speaker.actorName;
 
         typingCoroutine = StartCoroutine(TypeSentence(line.text));
         dialogueIndex++;
@@ -117,14 +116,30 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeSentence(string sentence)
     {
         dialogueText.text = "";
-        foreach (char letter in sentence.ToCharArray())
+        for (int i = 0; i < sentence.Length; i++)
         {
-            dialogueText.text += letter;
-            if (AudioManager.Instance != null)
+            if (sentence[i] == '<')
             {
-                AudioManager.Instance.PlayTypingSound();
+                int closingTagIndex = sentence.IndexOf('>', i);
+                if (closingTagIndex != -1)
+                {
+                    dialogueText.text += sentence.Substring(i, closingTagIndex - i + 1);
+                    i = closingTagIndex;
+                }
+                else
+                {
+                    dialogueText.text += sentence[i];
+                }
             }
-            yield return new WaitForSecondsRealtime(typingSpeed);
+            else
+            {
+                dialogueText.text += sentence[i];
+                if (AudioManager.Instance != null && i % 2 == 0)
+                {
+                    AudioManager.Instance.PlayTypingSound();
+                }
+                yield return new WaitForSecondsRealtime(typingSpeed);
+            }
         }
         typingCoroutine = null;
     }
@@ -167,7 +182,6 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue != null && currentDialogue.itemReward != null)
         {
             InventoryManager.instance.AddItem(currentDialogue.itemReward, currentDialogue.itemRewardQuantity);
-            Debug.Log($"Recibido del diálogo: {currentDialogue.itemReward.itemName} x{currentDialogue.itemRewardQuantity}");
         }
 
         yield return StartCoroutine(FadeCanvasGroup(dialogueCanvasGroup, 1, 0, fadeDuration));

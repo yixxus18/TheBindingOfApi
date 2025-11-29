@@ -2660,7 +2660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4c068a1c558d04099da26966fba6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelDoor
-  levelIndex: 1
+  levelIndex: 2
   sceneNameToLoad: Level_2
   lockedIndicator: {fileID: 1712597062}
   unlockedIndicator: {fileID: 1262093678}
@@ -8751,7 +8751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4c068a1c558d04099da26966fba6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelDoor
-  levelIndex: 0
+  levelIndex: 1
   sceneNameToLoad: Level_1
   lockedIndicator: {fileID: 572993158}
   unlockedIndicator: {fileID: 1579625500}

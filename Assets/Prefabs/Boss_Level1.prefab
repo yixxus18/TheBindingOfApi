@@ -185,4 +185,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265b4a1ee3a66ff42ba11bd049caf857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossUnit
-  bossID: 100
+  bossID: 1000

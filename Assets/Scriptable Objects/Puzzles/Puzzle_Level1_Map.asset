@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f19f6af64f2774fa3d2691835a0ce5, type: 3}
   m_Name: Puzzle_Level1_Map
   m_EditorClassIdentifier: Assembly-CSharp::RoomPuzzleSO
-  puzzleID: 2
+  puzzleID: 102
   puzzleName: Descargar Mapa del Nivel
   descriptionHint: "El servidor de mapas requiere una petici\xF3n GET para revelar
     la topolog\xEDa."

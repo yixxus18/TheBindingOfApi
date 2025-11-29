@@ -8,7 +8,7 @@ public class ProgressionManager : MonoBehaviour
     public static event Action OnLevelUnlocked;
 
     public HashSet<string> completedObjectiveIDs = new HashSet<string>();
-    public int highestLevelUnlocked = 0;
+    public int highestLevelUnlocked = 1;
 
     public Dictionary<int, int> npcConversationStates = new Dictionary<int, int>();
 
@@ -45,8 +45,11 @@ public class ProgressionManager : MonoBehaviour
 
     public void UnlockNextLevel()
     {
-        highestLevelUnlocked++;
-        OnLevelUnlocked?.Invoke();
+        if (highestLevelUnlocked < 100)
+        {
+            highestLevelUnlocked++;
+            OnLevelUnlocked?.Invoke();
+        }
     }
 
     public int GetNPCConversationIndex(int npcID)

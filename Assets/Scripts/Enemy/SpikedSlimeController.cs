@@ -187,6 +187,12 @@ public class SpikedSlimeController : MonoBehaviour
         if (AudioManager.Instance != null && AudioManager.Instance.playerDeathSound != null)
             AudioManager.Instance.PlaySFX(AudioManager.Instance.playerDeathSound);
 
+        BossUnit bossUnit = GetComponent<BossUnit>();
+        if (bossUnit != null)
+        {
+            bossUnit.SendMessage("HandleDeath");
+        }
+
         OnMonsterDefeated?.Invoke(expReward);
         DropLoot();
         Destroy(gameObject, 2f);

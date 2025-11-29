@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f19f6af64f2774fa3d2691835a0ce5, type: 3}
   m_Name: Puzzle_Level2
   m_EditorClassIdentifier: Assembly-CSharp::RoomPuzzleSO
-  puzzleID: 3
+  puzzleID: 103
   puzzleName: Acceso a registro
   descriptionHint: El servidor requiere que te autentifiques para que no te saque
     por error

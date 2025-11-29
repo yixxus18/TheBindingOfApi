@@ -91,6 +91,12 @@ public class EnemyController : MonoBehaviour
             AudioManager.Instance.PlaySFX(AudioManager.Instance.playerDeathSound);
         }
 
+        BossUnit bossUnit = GetComponent<BossUnit>();
+        if (bossUnit != null)
+        {
+            bossUnit.SendMessage("HandleDeath");
+        }
+
         OnMonsterDefeated?.Invoke(expReward);
         DropLoot();
         Destroy(gameObject);

@@ -67,7 +67,6 @@ public class DungeonObjectiveManager : MonoBehaviour
             currentObjectives.Add(obj);
         }
         UpdateUI();
-
         CheckForAllObjectivesCompleted(true);
     }
 
@@ -97,27 +96,14 @@ public class DungeonObjectiveManager : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name == "Hub")
             {
-                if (ProgressionManager.instance.highestLevelUnlocked == 0)
-                {
-                    ProgressionManager.instance.UnlockNextLevel();
-                    if (GameManager.Instance != null)
-                    {
-                        SaveSystem.SaveGame(
-                            GameManager.Instance.codexManager,
-                            GameManager.Instance.statsManager,
-                            GameManager.Instance.inventoryManager,
-                            GameManager.Instance.expManager
-                        );
-                    }
-                }
                 return;
             }
+
             if (isInitialCheck)
             {
                 if (MinimapManager.instance != null)
                 {
                     MinimapManager.instance.RevealAllMap();
-                    Debug.Log("Nivel ya completado. Mapa revelado.");
                 }
             }
             else
@@ -133,6 +119,7 @@ public class DungeonObjectiveManager : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.levelCompleteSound);
         }
+
         if (GameManager.Instance != null)
         {
             SaveSystem.SaveGame(
@@ -142,8 +129,13 @@ public class DungeonObjectiveManager : MonoBehaviour
                 GameManager.Instance.expManager
             );
         }
+
+        ProgressionManager.instance.UnlockNextLevel();
+
         if (MinimapManager.instance != null) MinimapManager.instance.RevealAllMap();
+
         yield return new WaitForSeconds(3f);
+
         Loader.Load("Hub");
     }
 

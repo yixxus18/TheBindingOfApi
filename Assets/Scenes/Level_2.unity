@@ -1223,7 +1223,7 @@ MonoBehaviour:
     requiredAmount: 1
     itemTarget: {fileID: 0}
     puzzleTarget: {fileID: 0}
-    manualTargetId: 101
+    manualTargetId: 1001
   puzzlesInRoom:
   - {fileID: 11400000, guid: e359905d8922d7247a232f665bec94d1, type: 2}
   - {fileID: 11400000, guid: 9beb8d5e7c3f7c44aa8993db953d36d7, type: 2}

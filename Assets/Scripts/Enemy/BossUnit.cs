@@ -31,6 +31,7 @@ public class BossUnit : MonoBehaviour
     private void HandleDeath()
     {
         isDead = true;
+        Debug.Log($"Boss with ID {bossID} has been defeated. isDead: {isDead}");
         if (DungeonObjectiveManager.instance != null)
         {
             DungeonObjectiveManager.instance.NotifyProgress(ObjectiveType.KillBoss, bossID.ToString());
