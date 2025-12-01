@@ -174,9 +174,15 @@ public class DialogueManager : MonoBehaviour
     {
         if (!isDialogueActive) yield break;
 
-        if (currentDialogue != null && currentDialogue.loreToUnlock != null)
+        if (currentDialogue != null && currentDialogue.loreToUnlock != null && currentDialogue.loreToUnlock.Length > 0)
         {
-            CodexManager.instance.AddLoreEntry(currentDialogue.loreToUnlock);
+            foreach (LoreSO lore in currentDialogue.loreToUnlock)
+            {
+                if (lore != null)
+                {
+                    CodexManager.instance.AddLoreEntry(lore);
+                }
+            }
         }
 
         if (currentDialogue != null && currentDialogue.itemReward != null)

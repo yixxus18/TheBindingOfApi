@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75f19f6af64f2774fa3d2691835a0ce5, type: 3}
+  m_Name: Puzzle_Level6
+  m_EditorClassIdentifier: Assembly-CSharp::RoomPuzzleSO
+  puzzleID: 107
+  puzzleName: "Despliegue a Producci\xF3n"
+  descriptionHint: "Todo listo. Lanza el sistema a producci\xF3n."
+  requiredMethod: POST
+  requiredUrlFragments:
+  - /api
+  - /v1
+  - /system
+  - /reboot
+  requiredHeaders:
+  - 'Authorization: Bearer <ADMIN_TOKEN>'
+  requiredBodySnippets:
+  - '{"mode":"safe","confirm":true}'
+  successResponse: Autenticacion concedida , sistema desplegado.
+  failureErrorCode: '401 Unauthorized '
+  OnPuzzleSolved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  itemReward: {fileID: 11400000, guid: c1b84625c10d9904690f706492b89bb0, type: 2}
+  loreReward: {fileID: 11400000, guid: f51026f6af4fda543ae18630661784f3, type: 2}

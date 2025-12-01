@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: libro1_nivel6
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Voy a leer este libro a ver que  me dice
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: "PROTOCOLO DE RECUPERACI\xD3N DE DESASTRES. SOLO PARA USO DE ADMINISTRADORES."
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: "Si el n\xFAcleo se corrompe, la \xFAnica soluci\xF3n es un reinicio forzado
+      en modo producci\xF3n."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: 'Paso 1: Endpoint /api/v1/system/reboot.'
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: "Paso 2: Cuerpo de confirmaci\xF3n {\\\"mode\\\":\\\"safe\\\", \\\"confirm\\\":true}.
+      Se requiere el Token del Jefe (Dropped by Boss)."
+  options: []
+  loreToUnlock:
+  - {fileID: 11400000, guid: 3435996f71f3ef34492a51aa2de37ded, type: 2}
+  itemReward: {fileID: 11400000, guid: 3b41e364f241cea40a1723df05ebc709, type: 2}
+  itemRewardQuantity: 1

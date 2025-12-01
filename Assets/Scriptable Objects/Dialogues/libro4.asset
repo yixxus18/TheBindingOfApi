@@ -27,6 +27,7 @@ MonoBehaviour:
   - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
     text: 'Busca por todas partes '
   options: []
-  loreToUnlock: {fileID: 11400000, guid: c0b9b1fbe80b4ba4ea184f52e98c4000, type: 2}
+  loreToUnlock:
+  - {fileID: 11400000, guid: 75461e2ae2607e74e96bbfe2c3a217ad, type: 2}
   itemReward: {fileID: 11400000, guid: 7dd706252fd12494ab291ed66e52766a, type: 2}
   itemRewardQuantity: 1

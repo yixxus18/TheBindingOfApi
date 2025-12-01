@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "Ant\xEDdoto"
   itemDescription: Cura envenenamiento y otros efectos de estado negativos. Limpia
     debuffs aplicados por enemigos.
-  icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
+  icon: {fileID: 6418316351626968627, guid: 76976507e34da59419a28648f0852e47, type: 3}
   stackSize: 99
   itemType: 0
   apiValue: potion:antidote

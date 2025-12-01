@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: libro1_nivel4
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Voy a leer este libro a ver que  me dice
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: "Bit\xE1cora del a\xF1o 2010: Hemos migrado a JSON, pero la puerta trasera
+      sigue hablando XML. Es la \xFAnica forma de entrar al mainframe antiguo."
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: 'Ruta de acceso: /api/v1/legacy.'
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: 'Payload requerido: <command>open</command>. Y recuerda especificar el
+      Content-Type: application/xml en los headers.'
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Ok , esta es toda la informacion para poder resolver el nivel , tenog que
+      completar la peticion correctamente.
+  options: []
+  loreToUnlock:
+  - {fileID: 11400000, guid: 9bf72bec8d544514496bbc19eeee1d36, type: 2}
+  - {fileID: 11400000, guid: 121e88e248f9217498e39a333cafb050, type: 2}
+  itemReward: {fileID: 11400000, guid: 3b41e364f241cea40a1723df05ebc709, type: 2}
+  itemRewardQuantity: 1

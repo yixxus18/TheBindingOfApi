@@ -53,6 +53,10 @@ PrefabInstance:
       value: NPC_Nivel2
       objectReference: {fileID: 0}
     - target: {fileID: 7472263005399243441, guid: dcb6cac58eafd3b40b14f1f69b1498d3, type: 3}
+      propertyPath: npcID
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472263005399243441, guid: dcb6cac58eafd3b40b14f1f69b1498d3, type: 3}
       propertyPath: defaultConversation
       value: 
       objectReference: {fileID: 11400000, guid: 537619570ed2f5540913ed4e4abae702, type: 2}

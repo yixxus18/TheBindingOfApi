@@ -2238,6 +2238,14 @@ MonoBehaviour:
     musicClip: {fileID: 0}
   - sceneName: Level_2
     musicClip: {fileID: 8300000, guid: 01c88ff190df2e443a899adbc83aabf7, type: 3}
+  - sceneName: Level_4
+    musicClip: {fileID: 8300000, guid: 9a0df07e03eb5c844841ac6cab3b2e78, type: 3}
+  - sceneName: Level_4
+    musicClip: {fileID: 8300000, guid: 004dfb8f47f388746a02cfc9dc94d17d, type: 3}
+  - sceneName: Level_6
+    musicClip: {fileID: 8300000, guid: 9020ebeb19f073447a14aafc1eb35085, type: 3}
+  - sceneName: Level_3
+    musicClip: {fileID: 8300000, guid: 12a291cbab12be84c8c4901254de7873, type: 3}
 --- !u!82 &716552872
 AudioSource:
   m_ObjectHideFlags: 0

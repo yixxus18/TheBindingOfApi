@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5550fe4d0b1b4b44912b130a2ef43f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCController
-  npcID: 2
+  npcID: 22
   isStaticObject: 1
   defaultState: 0
   speed: 0

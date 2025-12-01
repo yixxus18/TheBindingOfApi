@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Token Bearer (JWT)
   itemDescription: Abre puertas comunes del calabozo. Consumible de un solo uso para
     desbloquear acceso a nuevas salas.
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: -4477023409456450531, guid: fba6e55ca88d184429e3151d525aca8b, type: 3}
   stackSize: 99
   itemType: 4
   apiValue: standard

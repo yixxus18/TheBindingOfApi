@@ -30,6 +30,7 @@ MonoBehaviour:
     text: "El m\xE9todo POST se usa para enviar credenciales al servidor. Pero recuerda:
       siempre encripta las contrase\xF1as. Nunca\r\n las env\xEDes en texto plano."
   options: []
-  loreToUnlock: {fileID: 11400000, guid: cc0c638f34688a9448f020d417fc58a5, type: 2}
+  loreToUnlock:
+  - {fileID: 11400000, guid: 369a4f7cfe4b9df43b1701227e330ff4, type: 2}
   itemReward: {fileID: 11400000, guid: 954c2c2fa95d3c34389c483a9f0e4a5e, type: 2}
   itemRewardQuantity: 3

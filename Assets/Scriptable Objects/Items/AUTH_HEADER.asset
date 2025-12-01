@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Header Authorization
   itemDescription: "Autentica al jugador con el servidor. Requerido para acceder
     a \xE1reas protegidas y rutas de jefe."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: -1790086351125129114, guid: 77d0041a8f9a7af4a9eb1f616c6923eb, type: 3}
   stackSize: 99
   itemType: 3
   apiValue: 'Authorization: Bearer <TOKEN>'

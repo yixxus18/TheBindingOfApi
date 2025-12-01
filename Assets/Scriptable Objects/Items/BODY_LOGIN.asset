@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BODY_LOGIN
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemID: 5
-  itemName: Payload de Login
+  itemName: Body de Login
   itemDescription: "Contiene credenciales para autenticaci\xF3n: {\"player\":\"Isaac\",\"password\":\"ABC-123\"}.
     Genera token al usarse."
   icon: {fileID: -8976311154680220234, guid: d491445fcac2a684b9115eab4ee25914, type: 3}

@@ -21,6 +21,7 @@ MonoBehaviour:
     text: 'Para cada nivel tienes que completar los objetivos de cada nivel , ahora
       tendras que derrotar al boss  y hacer la peticon del nivel. '
   options: []
-  loreToUnlock: {fileID: 0}
+  loreToUnlock:
+  - {fileID: 11400000, guid: a7fbcb23d44af7a408ceb07fbea3ac50, type: 2}
   itemReward: {fileID: 0}
   itemRewardQuantity: 1

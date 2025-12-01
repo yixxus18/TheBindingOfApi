@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Token de Escaneo
   itemDescription: "Permite escanear salas ocultas y revelar informaci\xF3n adicional
     sobre enemigos y tesoros."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: 920447403447904970, guid: fba6e55ca88d184429e3151d525aca8b, type: 3}
   stackSize: 99
   itemType: 4
   apiValue: token:scan

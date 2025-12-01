@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "Poci\xF3n de Velocidad"
   itemDescription: "Aumenta velocidad de movimiento en 50% por 45 segundos. \xDAtil
     para escapar o explorar r\xE1pidamente."
-  icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
+  icon: {fileID: -6871600384058977472, guid: 1affcbf4d2e4a1e4e938e18beedc6e8b, type: 3}
   stackSize: 99
   itemType: 0
   apiValue: potion:speed

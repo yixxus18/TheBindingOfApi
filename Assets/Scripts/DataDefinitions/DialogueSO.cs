@@ -23,7 +23,7 @@ public class DialogueSO : ScriptableObject
     public DialogueOption[] options;
 
     [Header("Recompensa de Lore")]
-    public LoreSO loreToUnlock;
+    public LoreSO[] loreToUnlock;
 
     [Header("Recompensa de Item")]
     public ItemSO itemReward;

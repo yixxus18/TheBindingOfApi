@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Llave Maestra
   itemDescription: "Llave dorada que abre puertas especiales y atajos. M\xE1s valiosa
     que las llaves est\xE1ndar."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: -1858723362784609332, guid: fba6e55ca88d184429e3151d525aca8b, type: 3}
   stackSize: 99
   itemType: 4
   apiValue: master

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: DialogoNivel4
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 85bff3ef2bd51f044bee18b629db83fa, type: 2}
+    text: "Ah... una visita. Hace ciclos que nadie ven\xEDa por aqu\xED. Todos prefieren
+      la API v2, con su JSON brillante y r\xE1pido."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: "Este lugar se ve... antiguo. \xBFPor qu\xE9 no se actualiz\xF3?"
+  - speaker: {fileID: 11400000, guid: 85bff3ef2bd51f044bee18b629db83fa, type: 2}
+    text: "Porque muchos sistemas vitales a\xFAn dependen de este c\xF3digo viejo.
+      Si lo borramos, el servidor colapsa. As\xED que aqu\xED me quedo, manteniendo
+      rutas obsoletas."
+  - speaker: {fileID: 11400000, guid: 85bff3ef2bd51f044bee18b629db83fa, type: 2}
+    text: "Pero ten cuidado. Los datos aqu\xED son pegajosos. Los Cache Ghosts se
+      regeneran infinitamente porque el servidor cree que la informaci\xF3n no ha
+      cambiado (HTTP 304). Necesitas forzar una actualizaci\xF3n."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: Ok, creo que seguire con mi camino.
+  options: []
+  loreToUnlock:
+  - {fileID: 11400000, guid: c7bdec1b22a1b3a47915828b3cd5e8be, type: 2}
+  - {fileID: 11400000, guid: f310b253c09e088418ff85e0be42d7e0, type: 2}
+  itemReward: {fileID: 11400000, guid: 954c2c2fa95d3c34389c483a9f0e4a5e, type: 2}
+  itemRewardQuantity: 3

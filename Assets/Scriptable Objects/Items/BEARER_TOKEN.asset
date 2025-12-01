@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Token Bearer (JWT)
   itemDescription: "Token de autenticaci\xF3n obtenido al iniciar sesi\xF3n. Permite
     acceder a endpoints protegidos por 3600 segundos."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: -5872015680299187853, guid: fba6e55ca88d184429e3151d525aca8b, type: 3}
   stackSize: 99
   itemType: 4
   apiValue: 'Authorization: Bearer <JWT_TOKEN>'

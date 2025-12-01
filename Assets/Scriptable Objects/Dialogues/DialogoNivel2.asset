@@ -30,6 +30,9 @@ MonoBehaviour:
     text: "Si quieres pasar, tendr\xE1s que demostrar que sabes diferenciar un SELECT
       de un DROP TABLE. No dejar\xE9 que corrompas m\xE1s mis datos."
   options: []
-  loreToUnlock: {fileID: 11400000, guid: cc0c638f34688a9448f020d417fc58a5, type: 2}
+  loreToUnlock:
+  - {fileID: 11400000, guid: 3c1148a505e09c54887cc04a5546feab, type: 2}
+  - {fileID: 11400000, guid: 20191198f454008488803c539afd2f12, type: 2}
+  - {fileID: 11400000, guid: c6afd098f50a84d4390d499ca69a1d9f, type: 2}
   itemReward: {fileID: 11400000, guid: 954c2c2fa95d3c34389c483a9f0e4a5e, type: 2}
   itemRewardQuantity: 3

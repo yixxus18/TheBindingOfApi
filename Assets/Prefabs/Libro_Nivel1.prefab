@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5466929215309494885, guid: 2fca72293865cbc4f993f8cf85b23f61, type: 3}
+      propertyPath: npcID
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5466929215309494885, guid: 2fca72293865cbc4f993f8cf85b23f61, type: 3}
       propertyPath: defaultConversation
       value: 
       objectReference: {fileID: 11400000, guid: e920638e01fa2894a8b04ef0f84f186d, type: 2}

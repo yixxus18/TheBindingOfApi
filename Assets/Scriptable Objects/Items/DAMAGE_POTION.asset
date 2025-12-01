@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "Poci\xF3n de Ataque"
   itemDescription: "Aumenta da\xF1o temporalmente en +25 puntos. Buff de 60 segundos
     para enfrentar enemigos m\xE1s fuertes."
-  icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
+  icon: {fileID: 3175706964540721925, guid: d999a35aecaecde448c6ffe910fffc1f, type: 3}
   stackSize: 99
   itemType: 0
   apiValue: potion:damage

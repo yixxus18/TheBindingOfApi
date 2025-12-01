@@ -36,6 +36,9 @@ MonoBehaviour:
   - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
     text: Oh. Ok te hare caso por el momento.
   options: []
-  loreToUnlock: {fileID: 11400000, guid: 90277c2b8c0ee584eaaf1c06811c9866, type: 2}
+  loreToUnlock:
+  - {fileID: 11400000, guid: 90277c2b8c0ee584eaaf1c06811c9866, type: 2}
+  - {fileID: 11400000, guid: c0b9b1fbe80b4ba4ea184f52e98c4000, type: 2}
+  - {fileID: 11400000, guid: fa01cc2d51299f54794e95c5bceb575a, type: 2}
   itemReward: {fileID: 11400000, guid: 41e94b79fa96c3c4a9f07506a9e1df0b, type: 2}
   itemRewardQuantity: 1

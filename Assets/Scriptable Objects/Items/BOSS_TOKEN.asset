@@ -16,10 +16,10 @@ MonoBehaviour:
   itemName: Token de Jefe
   itemDescription: "Token especial requerido para abrir puertas de salas de jefes.
     Se obtiene completando \xE1reas completas."
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: -604045147, guid: b631ed305dfd43c488e0f8edf5c829bc, type: 3}
   stackSize: 99
   itemType: 4
-  apiValue: token:boss
+  apiValue: 'Authorization: Bearer <ADMIN_TOKEN>'
   isGold: 0
   goldAmount: 0
   healAmount: 0

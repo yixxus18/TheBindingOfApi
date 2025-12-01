@@ -24,6 +24,8 @@ MonoBehaviour:
   - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
     text: OK
   options: []
-  loreToUnlock: {fileID: 0}
+  loreToUnlock:
+  - {fileID: 11400000, guid: 0c5ebc7148c23e443a6562e026542f59, type: 2}
+  - {fileID: 11400000, guid: 75461e2ae2607e74e96bbfe2c3a217ad, type: 2}
   itemReward: {fileID: 0}
   itemRewardQuantity: 1

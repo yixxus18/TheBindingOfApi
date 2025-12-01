@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
+  m_Name: BODY_LEGACY
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: 43
+  itemName: Payload de XML
+  itemDescription: Contiene la antiguo formato de header del estandar xml.
+  icon: {fileID: -1706695883, guid: b631ed305dfd43c488e0f8edf5c829bc, type: 3}
+  stackSize: 99
+  itemType: 5
+  apiValue: <command>open</command>
+  isGold: 0
+  goldAmount: 0
+  healAmount: 0
+  damageInfo: 0

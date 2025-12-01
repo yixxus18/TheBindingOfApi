@@ -19,6 +19,7 @@ MonoBehaviour:
     text: Necesitaras de varios distintos fragmentos para completar una peticion
       , usalos sabiamente
   options: []
-  loreToUnlock: {fileID: 11400000, guid: cc0c638f34688a9448f020d417fc58a5, type: 2}
+  loreToUnlock:
+  - {fileID: 11400000, guid: 3c1148a505e09c54887cc04a5546feab, type: 2}
   itemReward: {fileID: 11400000, guid: 954c2c2fa95d3c34389c483a9f0e4a5e, type: 2}
   itemRewardQuantity: 3

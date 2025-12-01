@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "Poci\xF3n de Invisibilidad"
   itemDescription: Te vuelve invisible por 30 segundos. Los enemigos no detectan
     tu presencia durante su efecto.
-  icon: {fileID: -3164809056393425246, guid: aaa4154a24005754eb0b2b7530b9e673, type: 3}
+  icon: {fileID: -7670126635493115527, guid: 190db04e56dc0a3438edc8d046518be2, type: 3}
   stackSize: 99
   itemType: 0
   apiValue: potion:invisibility

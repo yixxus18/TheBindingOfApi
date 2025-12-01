@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: DialogoNivel6
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 0171b8b691df2fd48a4fde9d56f435a9, type: 2}
+    text: "ALERTA DE INTRUSI\xD3N. ENTIDAD NO RECONOCIDA. NIVEL DE AMENAZA: CR\xCDTICO."
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: "\xA1No soy un virus! \xA1Vengo a arreglarlo! \xA1Tengo las credenciales!"
+  - speaker: {fileID: 11400000, guid: adf2412dea3b87e43a149d6f391237bb, type: 2}
+    text: "\xA1Peticiones anidadas! \xA1Una dentro de otra, infinitamente! Estamos
+      atrapados en un bucle while(true). El servidor de eco est\xE1 repitiendo todo
+      lo que hacemos."
+  - speaker: {fileID: 11400000, guid: adf2412dea3b87e43a149d6f391237bb, type: 2}
+    text: "INCORRECTO. Un desarrollador leg\xEDtimo sabr\xEDa c\xF3mo ejecutar el
+      despliegue perfecto. Prep\xE1rate para la eliminaci\xF3n. Ejecutando rm -rf
+      /..."
+  options: []
+  loreToUnlock:
+  - {fileID: 11400000, guid: f01b8a0b2b6bc8641bff1d879c9385fa, type: 2}
+  - {fileID: 11400000, guid: 3435996f71f3ef34492a51aa2de37ded, type: 2}
+  itemReward: {fileID: 11400000, guid: 954c2c2fa95d3c34389c483a9f0e4a5e, type: 2}
+  itemRewardQuantity: 3

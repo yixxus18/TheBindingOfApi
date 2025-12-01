@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Header Content-Type
   itemDescription: Especifica el formato de datos enviados. Necesario para resolver
     puzzles y enviar payloads correctamente.
-  icon: {fileID: -3164809056393425246, guid: 86530634c6dbf8f42ab51ac544f070b5, type: 3}
+  icon: {fileID: 855651783291896285, guid: 77d0041a8f9a7af4a9eb1f616c6923eb, type: 3}
   stackSize: 99
   itemType: 3
   apiValue: 'Content-Type: application/json'

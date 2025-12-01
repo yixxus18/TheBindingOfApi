@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
+  m_Name: Nivel6_6
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
+    text: "Todo est\xE1... en blanco. Como si fuera c\xF3digo puro."
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: "Est\xE1s en el n\xFAcleo. Aqu\xED no hay representaciones visuales, solo
+      l\xF3gica pura. Este es el cerebro del servidor."
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: "ADMIN_ROOT protege este espacio. Para ella, cualquier entidad no autorizada
+      es un virus. Debes construir la\r\npetici\xF3n perfecta para demostrar que
+      eres leg\xEDtimo."
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: "Terminal central activada. Construye la petici\xF3n perfecta usando todo
+      lo que has aprendido: m\xE9todo POST, URL\r\ncompleta, todos los headers necesarios,
+      y body JSON v\xE1lido."
+  - speaker: {fileID: 11400000, guid: 7c42967f6f4351d4f913b6be1cca30e4, type: 2}
+    text: "Revisa tu inventario. Tienes todos los componentes: Bearer Token, JWT
+      con userId, API Key Universal, Token\r\nMaestro. Comb\xEDnalos correctamente."
+  options: []
+  loreToUnlock:
+  - {fileID: 11400000, guid: 4e429dcb64c1cbe4483524a09ff5cdbf, type: 2}
+  - {fileID: 11400000, guid: 8ac9fe031120cd349837fd191e975381, type: 2}
+  - {fileID: 11400000, guid: 886fda03f0661954f9e2e6e6848eeb8e, type: 2}
+  itemReward: {fileID: 0}
+  itemRewardQuantity: 1

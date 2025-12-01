@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
+  m_Name: LEGACY_HEADER
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: 44
+  itemName: Header Legacy
+  itemDescription: Header antiguo de la serie Legacy de xml.
+  icon: {fileID: -280111653474977177, guid: 77d0041a8f9a7af4a9eb1f616c6923eb, type: 3}
+  stackSize: 99
+  itemType: 3
+  apiValue: 'Content-Type: application/xml'
+  isGold: 0
+  goldAmount: 0
+  healAmount: 0
+  damageInfo: 0

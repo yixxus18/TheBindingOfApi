@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d4e41ceac65ae42b36db5963db057b, type: 3}
+  m_Name: URL_FRAGMENT_WEBHOOKS
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemID: 45
+  itemName: Fragmento /webhooks
+  itemDescription: Segmento base de la ruta API. Colecciona fragmentos para construir
+    rutas completas contra el bucle.
+  icon: {fileID: 5783800865643179473, guid: 2fef2c6e793f86d41852d8d7b015aa4a, type: 3}
+  stackSize: 99
+  itemType: 2
+  apiValue: /webhooks
+  isGold: 0
+  goldAmount: 0
+  healAmount: 0
+  damageInfo: 0

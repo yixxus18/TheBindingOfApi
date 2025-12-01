@@ -24,6 +24,7 @@ MonoBehaviour:
   - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
     text: Atte. Arturo 1992-2025
   options: []
-  loreToUnlock: {fileID: 11400000, guid: c0b9b1fbe80b4ba4ea184f52e98c4000, type: 2}
+  loreToUnlock:
+  - {fileID: 11400000, guid: 94d5c099d95a2264f83b35d9a881240b, type: 2}
   itemReward: {fileID: 11400000, guid: 846a7142651f6d5418cb1bb6a28c1fe2, type: 2}
   itemRewardQuantity: 1
