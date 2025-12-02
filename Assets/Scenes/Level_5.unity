@@ -1218,7 +1218,7 @@ MonoBehaviour:
     itemTarget: {fileID: 0}
     puzzleTarget: {fileID: 11400000, guid: e69c82fd15b6262419a901c1348963ff, type: 2}
     manualTargetId: 
-  - description: "Elimina al Guardi\xE1n del Nivel 5"
+  - description: "Elimina al Guardi\xE1n del Nivel 4"
     type: 0
     requiredAmount: 1
     itemTarget: {fileID: 0}
