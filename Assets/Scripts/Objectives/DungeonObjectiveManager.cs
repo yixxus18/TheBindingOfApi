@@ -96,6 +96,10 @@ public class DungeonObjectiveManager : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name == "Hub")
             {
+                if (!isInitialCheck)
+                {
+                    StartCoroutine(HubTutorialCompleteRoutine());
+                }
                 return;
             }
 
@@ -111,6 +115,28 @@ public class DungeonObjectiveManager : MonoBehaviour
                 StartCoroutine(LevelCompleteRoutine());
             }
         }
+    }
+
+    private IEnumerator HubTutorialCompleteRoutine()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.levelCompleteSound);
+        }
+
+        ProgressionManager.instance.UnlockNextLevel();
+
+        if (GameManager.Instance != null)
+        {
+            SaveSystem.SaveGame(
+                GameManager.Instance.codexManager,
+                GameManager.Instance.statsManager,
+                GameManager.Instance.inventoryManager,
+                GameManager.Instance.expManager
+            );
+        }
+
+        yield return null;
     }
 
     private IEnumerator LevelCompleteRoutine()
@@ -136,7 +162,14 @@ public class DungeonObjectiveManager : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        Loader.Load("Hub");
+        if (ProgressionManager.instance.highestLevelUnlocked >= 6)
+        {
+            Loader.Load("EndScene");
+        }
+        else
+        {
+            Loader.Load("Hub");
+        }
     }
 
     public void UpdateUI()

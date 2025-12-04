@@ -16,13 +16,14 @@ MonoBehaviour:
   puzzleName: Romper el Bucle
   descriptionHint: "El eco es infinito. Cancela la suscripci\xF3n para detener el
     ruido."
-  requiredMethod: POST
+  requiredMethod: DELETE
   requiredUrlFragments:
   - /api
   - /v1
   - /webhooks
   - /subscription
-  requiredHeaders: []
+  requiredHeaders:
+  - 'Authorization: Bearer <JWT_TOKEN>'
   requiredBodySnippets:
   - '{"id":"loop_123"}'
   successResponse: 'Autenticacion concedida , bienvenido al sistema, '

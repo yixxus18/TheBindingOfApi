@@ -535,17 +535,17 @@ MonoBehaviour:
   wallTile: {fileID: 11400000, guid: 2fe64d24547996241abdd60c39785242, type: 2}
   roomColorMappings:
   - roomType: 2
-    color: {r: 0.78867924, g: 0.43773735, b: 0.08184399, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - roomType: 3
-    color: {r: 0.7882353, g: 0.12660046, b: 0.08235292, a: 1}
+    color: {r: 0.97735846, g: 0.97735846, b: 0.97735846, a: 1}
   - roomType: 1
     color: {r: 1, g: 1, b: 1, a: 1}
   - roomType: 5
-    color: {r: 0.17441794, g: 0.37704957, b: 0.7056604, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - roomType: 0
-    color: {r: 0.0986899, g: 0.13062176, b: 0.3132075, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - roomType: 4
-    color: {r: 0.0986899, g: 0.13062176, b: 0.3132075, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   roomWidthInTiles: 16
   roomHeightInTiles: 12
   roomContents:
@@ -578,7 +578,7 @@ MonoBehaviour:
     possiblePrefabs:
     - {fileID: 5246450596737110708, guid: 2a2ff8fc883cd8645b31e3c1e8570839, type: 3}
     - {fileID: 2965214234353795549, guid: 69527993dfd4d654191c38780b6e2bda, type: 3}
-    - {fileID: 1695067899540087355, guid: 41e94f03b4c12474b885005f8a25ac3e, type: 3}
+    - {fileID: 1695067899540087355, guid: 4872829c2291fe940be54010dc767a11, type: 3}
     minCount: 3
     maxCount: 3
     spawnInCenter: 1

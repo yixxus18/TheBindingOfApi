@@ -231,61 +231,50 @@ public class Room : MonoBehaviour
         float h_offset_single = offsetX / 2f;
         float v_offset_single = offsetY / 2f;
 
-        var cellA = cell.cellList[0];
-        var cellB = cell.cellList[1];
-        var cellC = cell.cellList[2];
-
-        if (cellA + 1 == cellB && cellA + 10 == cellC)
+        // Calculate Centroid
+        float sumX = 0, sumY = 0;
+        foreach (int idx in cell.cellList)
         {
-            Vector2 localCenterA = new Vector2(-offsetX / 3f, offsetY / 3f);
-            Vector2 localCenterB = new Vector2(offsetX * 2f / 3f, offsetY / 3f);
-            Vector2 localCenterC = new Vector2(-offsetX / 3f, -offsetY * 2f / 3f);
-
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            sumX += idx % 10;
+            sumY += idx / 10;
         }
-        else if (cellA + 1 == cellB && cellB + 9 == cellC)
-        {
-            Vector2 localCenterA = new Vector2(-offsetX * 2f / 3f, offsetY / 3f);
-            Vector2 localCenterB = new Vector2(offsetX / 3f, offsetY / 3f);
-            Vector2 localCenterC = new Vector2(offsetX / 3f, -offsetY * 2f / 3f);
+        float centroidX = sumX / 3f;
+        float centroidY = sumY / 3f;
 
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-        }
-        else if (cellA + 10 == cellB && cellB + 1 == cellC)
+        foreach (int idx in cell.cellList)
         {
-            Vector2 localCenterA = new Vector2(-offsetX / 3f, offsetY * 2f / 3f);
-            Vector2 localCenterB = new Vector2(-offsetX / 3f, -offsetY / 3f);
-            Vector2 localCenterC = new Vector2(offsetX * 2f / 3f, -offsetY / 3f);
+            int gridX = idx % 10;
+            int gridY = idx / 10;
 
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-        }
-        else if (cellA + 9 == cellB && cellA + 10 == cellC)
-        {
-            Vector2 localCenterA = new Vector2(offsetX / 3f, offsetY * 2f / 3f);
-            Vector2 localCenterB = new Vector2(-offsetX * 2f / 3f, -offsetY / 3f);
-            Vector2 localCenterC = new Vector2(offsetX / 3f, -offsetY / 3f);
+            // Calculate local position relative to the room center
+            Vector2 localCenter = new Vector2(
+                (gridX - centroidX) * offsetX,
+                -(gridY - centroidY) * offsetY
+            );
 
-            TryPlaceDoor(cellA, localCenterA + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
-            TryPlaceDoor(cellA, localCenterA + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellB, localCenterB + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
-            TryPlaceDoor(cellC, localCenterC + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            // Check Up (-10)
+            if (!cell.cellList.Contains(idx - 10))
+            {
+                TryPlaceDoor(idx, localCenter + new Vector2(0, v_offset_single - doorInset), EdgeDirection.Up, floorplan, cellList, cell);
+            }
+
+            // Check Down (+10)
+            if (!cell.cellList.Contains(idx + 10))
+            {
+                TryPlaceDoor(idx, localCenter + new Vector2(0, -v_offset_single + doorInset), EdgeDirection.Down, floorplan, cellList, cell);
+            }
+
+            // Check Left (-1)
+            if (!cell.cellList.Contains(idx - 1))
+            {
+                TryPlaceDoor(idx, localCenter + new Vector2(-h_offset_single + doorInset, 0), EdgeDirection.Left, floorplan, cellList, cell);
+            }
+
+            // Check Right (+1)
+            if (!cell.cellList.Contains(idx + 1))
+            {
+                TryPlaceDoor(idx, localCenter + new Vector2(h_offset_single - doorInset, 0), EdgeDirection.Right, floorplan, cellList, cell);
+            }
         }
     }
 

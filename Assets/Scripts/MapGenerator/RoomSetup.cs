@@ -26,9 +26,10 @@ public class RoomSetup : MonoBehaviour
     [Tooltip("HUB: Arrástralo manual. NIVEL 1: Déjalo vacío (se asigna solo).")]
     public TerminalActivator pcTerminal;
 
-    private void Start()
+    private System.Collections.IEnumerator Start()
     {
         ConfigurarObjetivos();
+        yield return new WaitForSeconds(0.1f);
         ConfigurarPuzzleEnTerminal();
     }
 

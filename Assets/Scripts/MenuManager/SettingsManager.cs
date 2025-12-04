@@ -41,6 +41,12 @@ public class SettingsManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private void Start()
+    {
+        FindMusicAudioSource();
+        FindUIReferences(SceneManager.GetActiveScene().name);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindMusicAudioSource();

@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
     private bool isWaitingForChoice = false;
 
     private Coroutine typingCoroutine;
+    private bool isFading = false;
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (isDialogueActive && !isWaitingForChoice && Input.GetKeyDown(KeyCode.E))
+        if (isDialogueActive && !isWaitingForChoice && !isFading && Input.GetKeyDown(KeyCode.E))
         {
             AdvanceDialogue();
         }
@@ -51,6 +52,7 @@ public class DialogueManager : MonoBehaviour
 
         isDialogueActive = true;
         isWaitingForChoice = false;
+        isFading = true;
         currentDialogue = dialogue;
         dialogueIndex = 0;
 
@@ -61,6 +63,7 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator ShowDialogueProcess()
     {
         yield return StartCoroutine(FadeCanvasGroup(dialogueCanvasGroup, 0, 1, fadeDuration));
+        isFading = false;
         ShowNextDialogueLine();
     }
 
@@ -98,6 +101,8 @@ public class DialogueManager : MonoBehaviour
     {
         isWaitingForChoice = false;
         ClearChoices();
+
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
 
         if (dialogueIndex >= currentDialogue.lines.Length)
         {

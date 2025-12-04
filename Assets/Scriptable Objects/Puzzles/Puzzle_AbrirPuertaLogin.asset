@@ -15,7 +15,7 @@ MonoBehaviour:
   puzzleID: 101
   puzzleName: Abrir Puerta de Login
   descriptionHint: 
-  requiredMethod: GET
+  requiredMethod: POST
   requiredUrlFragments:
   - /api
   - /v1

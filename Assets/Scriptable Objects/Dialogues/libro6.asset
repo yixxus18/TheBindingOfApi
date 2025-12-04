@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20cfcbdec6ed3dd47a98bff01abd736a, type: 3}
-  m_Name: libro1_nivel5
+  m_Name: libro6
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
   lines:
   - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
     text: Voy a leer este libro a ver que  me dice
   - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
-    text: 'Status: Pending... Pending... Pending... ERROR: Timeout.'
+    text: Como ya te diste cuenta cada libor contiene una pista para completar el
+      puzzle del tutorial y avanzar al primer nivel , si aun no encuentras todas
+      las pistas te las sigo de una vez
   - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
-    text: "Detectada suscripci\xF3n maliciosa al evento 'infinite_loop'. ID del recurso:
-      loop_123."
+    text: La ruta es api/v1/login
   - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
-    text: 'Para detener el proceso, ejecute: DELETE /api/v1/webhooks/subscription
-      enviando el token para que no te bloquee el sistema'
-  - speaker: {fileID: 11400000, guid: 7ea9acbda82268142bb821951f9cf825, type: 2}
-    text: Ok , esta es toda la informacion para poder resolver el nivel , tengo que
-      completar la peticion correctamente.
+    text: 'Necesitaras un header accept y un body de login , completa la peticion
+      y completa los objetivos del tutorial '
+  - speaker: {fileID: 11400000, guid: 303aa6aa41cc30842b452aceed6a9712, type: 2}
+    text: Mucha suerte
   options: []
   loreToUnlock:
-  - {fileID: 11400000, guid: 3435996f71f3ef34492a51aa2de37ded, type: 2}
-  itemReward: {fileID: 11400000, guid: 3b41e364f241cea40a1723df05ebc709, type: 2}
+  - {fileID: 11400000, guid: 2b4d182d119d029419c79a017614b42e, type: 2}
+  itemReward: {fileID: 11400000, guid: a1985c662d0220543a4ccea6d9eebe8c, type: 2}
   itemRewardQuantity: 1
