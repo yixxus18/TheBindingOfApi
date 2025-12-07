@@ -2977,7 +2977,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 188.47, y: -37.908203}
+  m_AnchoredPosition: {x: 206, y: -59}
   m_SizeDelta: {x: 376.94, y: 75.8164}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &233025994
@@ -3000,7 +3000,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Pocion para poder hacer peticiones ejemplo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2920e62a586d6514d9c897f8db402155, type: 2}
   m_sharedMaterial: {fileID: 1082230625739709042, guid: 2920e62a586d6514d9c897f8db402155, type: 2}
@@ -3027,8 +3027,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17
-  m_fontSizeBase: 17
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3039,7 +3039,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 60
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -3065,7 +3065,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 21.795593, w: 17.027893}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3195,7 +3195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 188.47, y: -60}
+  m_AnchoredPosition: {x: 206.00006, y: -81.09183}
   m_SizeDelta: {x: 376.94, y: 235.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &277761876
@@ -3218,7 +3218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "Texto de descripcion para hacer pruebas de dise\xF1o"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2920e62a586d6514d9c897f8db402155, type: 2}
   m_sharedMaterial: {fileID: 1082230625739709042, guid: 2920e62a586d6514d9c897f8db402155, type: 2}
@@ -3257,7 +3257,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 55
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -3275,7 +3275,7 @@ MonoBehaviour:
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
-  m_horizontalMapping: 0
+  m_horizontalMapping: 2
   m_verticalMapping: 0
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
@@ -3283,7 +3283,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 26.394745, w: 86.223015}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6246,7 +6246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -104, y: -60}
+  m_AnchoredPosition: {x: -104, y: -82}
   m_SizeDelta: {x: 456.0579, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &575605316
@@ -30703,8 +30703,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1710769586}
   m_HandleRect: {fileID: 1710769585}
   m_Direction: 2
-  m_Value: 1.0000148
-  m_Size: 0.98407286
+  m_Value: 1.0000088
+  m_Size: 0.9840728
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31215,7 +31215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -34217,7 +34217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5313373525269731127, guid: 95318c4eb0dc1d44195fe96b68e24a45, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -64.015
+      value: -104.01499
       objectReference: {fileID: 0}
     - target: {fileID: 5313373525269731127, guid: 95318c4eb0dc1d44195fe96b68e24a45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -38232,7 +38232,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2089237558}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.015927136}
+  m_AnchorMin: {x: 0, y: 0.015927196}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -41999,8 +41999,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.2389, y: -40.545}
-  m_SizeDelta: {x: 1433.2908, y: 516.09}
+  m_AnchoredPosition: {x: -1.2389, y: -47}
+  m_SizeDelta: {x: 1433.2908, y: 380.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2029217918
 MonoBehaviour:
@@ -42020,7 +42020,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 50
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
