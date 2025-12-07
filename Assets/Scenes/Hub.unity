@@ -2080,7 +2080,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 'Nombre del personaje que esta dando un dialogo
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2920e62a586d6514d9c897f8db402155, type: 2}
   m_sharedMaterial: {fileID: 1082230625739709042, guid: 2920e62a586d6514d9c897f8db402155, type: 2}
@@ -32744,7 +32746,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 30
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
