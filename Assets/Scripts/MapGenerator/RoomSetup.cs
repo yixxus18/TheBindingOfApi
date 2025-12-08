@@ -29,7 +29,8 @@ public class RoomSetup : MonoBehaviour
     private System.Collections.IEnumerator Start()
     {
         ConfigurarObjetivos();
-        yield return new WaitForSeconds(0.1f);
+        // Esperamos un poco más para asegurar que todas las salas y PCs se hayan generado
+        yield return new WaitForSeconds(0.5f);
         ConfigurarPuzzleEnTerminal();
     }
 
@@ -71,15 +72,27 @@ public class RoomSetup : MonoBehaviour
 
     private void ConfigurarPuzzleEnTerminal()
     {
+        // Verificar primero si tenemos puzzles configurados
+        if (puzzlesInRoom == null || puzzlesInRoom.Count == 0)
+        {
+            Debug.LogWarning("[RoomSetup] No hay puzzles configurados en puzzlesInRoom. Asegúrate de asignarlos en el Inspector.");
+            return;
+        }
+
         if (pcTerminal == null)
         {
             pcTerminal = FindFirstObjectByType<TerminalActivator>();
+            
+            if (pcTerminal == null)
+            {
+                Debug.LogWarning("[RoomSetup] No se encontró ningún TerminalActivator en la escena. ¿Se generó una sala tipo Puzzle?");
+                return;
+            }
         }
-        if (pcTerminal != null)
-        {
-            pcTerminal.puzzleContexts = puzzlesInRoom;
-            Debug.Log($"[RoomSetup] Puzzles asignados al PC '{pcTerminal.name}' existente en escena.");
-        }
+        
+        // Asignar los puzzles a la terminal
+        pcTerminal.puzzleContexts = puzzlesInRoom;
+        Debug.Log($"[RoomSetup] ✓ {puzzlesInRoom.Count} puzzle(s) asignados correctamente al PC '{pcTerminal.name}'.");
     }
 
     public List<RoomPuzzleSO> GetPuzzles()

@@ -55,16 +55,9 @@ public class RoomManager : MonoBehaviour
                 GameObject pcPrefab = config.possiblePrefabs[0];
                 Vector3 spawnPos = roomContainer.transform.position;
                 spawnPos.z = -1f;
-                GameObject pcInstance = Instantiate(pcPrefab, spawnPos, Quaternion.identity, roomContainer.transform);
-                RoomSetup roomSetup = FindFirstObjectByType<RoomSetup>();
-                if (roomSetup != null)
-                {
-                    TerminalActivator activator = pcInstance.GetComponent<TerminalActivator>();
-                    if (activator != null)
-                    {
-                        activator.puzzleContexts = roomSetup.GetPuzzles();
-                    }
-                }
+                // Solo instanciamos la PC aquí. RoomSetup se encargará de asignarle los puzzles
+                // ya que tiene la referencia correcta a los puzzles del nivel.
+                Instantiate(pcPrefab, spawnPos, Quaternion.identity, roomContainer.transform);
             }
             return;
         }
