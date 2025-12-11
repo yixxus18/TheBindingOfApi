@@ -10,7 +10,7 @@
 #define MyAppExeName "My project.exe"
 
 ; ⚠️ IMPORTANTE: Cambia esta ruta a donde exportaste tu build de Unity
-#define BuildFolder "C:\Users\yisus\OneDrive\Escritorio\UnityProjects\TheBindingOfApi\ejecutable"
+#define BuildFolder "C:\Users\yisus\Downloads\compilado"
 
 [Setup]
 ; Información básica del instalador
@@ -31,7 +31,7 @@ DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=Output
 OutputBaseFilename=TheBindingOfApi_Setup_v{#MyAppVersion}
-SetupIconFile={#BuildFolder}\TheBindingOfApi.ico
+SetupIconFile={#BuildFolder}\TheBindingIcon.ico
 Compression=lzma2/ultra64
 SolidCompression=yes
 WizardStyle=modern
