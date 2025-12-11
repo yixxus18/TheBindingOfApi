@@ -24,6 +24,25 @@ public class LoadingManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Notificar al GameManager para que actualice la UI
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnSceneChanged(scene.name);
+        }
+    }
 
     public void LoadScene(string sceneName)
     {

@@ -81,8 +81,6 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    // ... (El resto de métodos SaveGameData y LoadGameData NO CAMBIAN, ya estaban bien en tu versión anterior) ...
-    // Solo asegúrate de copiar el resto del script que ya tenías.
 
     public void SaveGameData(SaveData data)
     {
